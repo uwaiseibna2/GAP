@@ -85,27 +85,6 @@ Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/dow
 which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all 2-hidden layered architectures.
 
 
-
-
-### `find_associated_genes()`
-
-- **Description**:
-  - Identifies gene IDs trained with zero cross-validation error in a previous analysis.
-- **Arguments**:
-  - `path_to_result`: Path storing previous analysis results.
-  - `start_range`, `end_range`: File name range in raw data for association.
-  - `path_genes`: Repository of raw data for known species for neural network model training.
-  - `path_corresponding_genes`: Repository of raw data for status-unknown species.
-- **Flags**:
-  - `use_tree_features_flag`: Flag for tree features (as previously explained).
-  - `path_tree`: Directory for tree features.
-
-## Usage
-
-- **Execution**:
-  - Replace placeholders with appropriate values.
-  - Run functions in the R environment with specified arguments.
-
 ## Get Associated Genes
 
 This command-line interface (CLI) command facilitates the execution of the `run_associated.R` script. It trains neural networks using a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
@@ -126,6 +105,27 @@ This method requires execution from the shell due to resource constraints and fo
 
 Sample Command:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 2 21030 21040.
+Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 1 21030 21040.
 ```
-where the package is located under the directory `C:/users/username/documents/GAP`
+where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory.
+
+### `find_associated_genes()`
+
+- **Description**:
+  - Identifies gene IDs trained with zero cross-validation error in a previous analysis.
+- **Arguments**:
+  - `path_to_result`: Path storing previous analysis results.
+  - `start_range`, `end_range`: File name range in raw data for association.
+  - `path_genes`: Repository of raw data for known species for neural network model training.
+  - `path_corresponding_genes`: Repository of raw data for status-unknown species.
+- **Flags**:
+  - `use_tree_features_flag`: Flag for tree features (as previously explained).
+  - `path_tree`: Directory for tree features.
+
+## Usage
+
+- **Execution**:
+  - Replace placeholders with appropriate values.
+  - Run functions in the R environment with specified arguments.
+
+
