@@ -2,7 +2,7 @@
 
 GAP is a R implementation of the research by Islam, UI and Assis, R : A Framework for learning associations between genes and phenotypes from multi-speices sequence alignments.
 
-This package provides users the following functionalites: 1. Find Neural Network architectures for a given gene (GULO), that accounts for Cross validation error of zero where the network maps the multi-species exons of the gene to a specific binary trait. If a specific architecture can be mapp between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values. It runs Batch command with a list of genes to map them with the trait of interest based on the architecture that performs well from the previous function. It can also find all the genes that can be associated to the trait from the result of previous analysis.
+This package provides users the following functionalites: 1. Find Neural Network architectures for a given gene (GULO), that accounts for Cross validation error of zero where the network maps the multi-species exons of the gene to a specific binary trait. If a specific architecture can be mapp between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values. It runs Batch command with a list of genes to map them with the trait of interest based on the architecture that performs well from the previous function. It can also find all the genes that can be associated to the trait from the result of previous analysis. `/data-raw` directory contain testing dataset where the range of gene number is 21001-21050.
 
 # Required Packages
 
@@ -67,7 +67,7 @@ This command-line interface (CLI) command executes the `runGeneArchi.R` script. 
 ### Command Structure
 
 ```bash
-Rscript <path_to_runGeneArchi.R> boolean_tree_flag num_hidden_layers
+Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_layers
 ```
 **Arguments**:
   - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
@@ -80,7 +80,7 @@ Rscript <path_to_runGeneArchi.R> boolean_tree_flag num_hidden_layers
     
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" TRUE 2.
+Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" TRUE 2.
 ```
 which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all 2-hidden layered architectures.
 
@@ -108,32 +108,24 @@ which runs the script to identify NN architectures with minimum CV error with tr
 
 ## Get Associated Genes
 
-This command-line interface (CLI) command facilitates the execution of the `run_associated.R` script. It trains neural networks using a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in a designated folder.
+This command-line interface (CLI) command facilitates the execution of the `run_associated.R` script. It trains neural networks using a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
 
 ### Command Structure
 
 ```bash
-<path_to_Rscript.exe> <path_to_run_associated.R> <path_to_tree_features> <path_to_gene_list> <path_to_results_folder> <path_to_corresponding_genes> number_of_species hidden_layers use_tree_features_flag starting_gene ending_gene
+Rscript.exe <path_to_run_associated.R> <path_source> boolean_tree_flag num_hidden_layers starting_gene ending_gene
 ```
-### Method Overview
+This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
-This method requires execution from the shell due to resource constraints and follows a specific command structure:
-
-- **Usage Details**:
-  - `Tree Features`: Obtained from species tree approximation through genetic data available at `~/data-raw/feature_from_dendrogram_species`.
-  - `Gene List`: Users can provide their genomic data directory or use the provided gene list at `~/data-raw/`.
-  - `Results Path`: Path to store the obtained results.
-
-- **Command Structure**:
-  - `number_of_species`: Represents the count of species in the dataset (e.g., 34 in our datasets).
-  - `starting_gene` and `ending_gene`: Define the range of genes to be trained from the list.
-
-
-
-
+**Arguments**:
+  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
+  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
+  - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
+  - `starting_gene`: specifies the gene number from where processing will start.
+  - `ending_gene`: species the ending gene number of processing.
 
 Sample Command:
 ```bash 
-"C:/program files/R/R-4.2.1/bin/Rscript.exe" "C:/Users/username/Documents/GAP/R/run_associated.R" "C:/Users/username/Documents/GAP/data-raw/feature_from_dendrogram_species" "C:/Users/username/Documents/GAP/data-raw/known_genes/" "C:/Users/username/Documents/GAP/data-raw/unknown_genes/" "D:/results/" 34 0 FALSE 21030 21040.
+Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 2 21030 21040.
 ```
 where the package is located under the directory `C:/users/username/documents/GAP`
