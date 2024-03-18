@@ -75,14 +75,14 @@ Rscript <path_to_runGeneArchi.R> boolean_tree_flag num_hidden_layers
   - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
     
 **Details**:
-  - For `hidden_layers` > 0, explores permutations (1,2,3,..., number_of_species).
+  - For `num_hidden_layers` > 0, explores permutations (1,2,3,..., number_of_species).
   - Displays a Manhattan plot for qualifying architectures.
     
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" TRUE 0.
+Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" TRUE 2.
 ```
-which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all zero-hidden layered architectures.
+which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all 2-hidden layered architectures.
 
 
 
