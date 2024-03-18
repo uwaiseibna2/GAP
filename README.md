@@ -41,25 +41,7 @@ Notes
 Ensure the Newick tree string format is accurate.
 Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
 
-# GAP Functions: NN Architecture Analysis
-
-## Overview
-
-The GAP package provides tools for exploring gene architectures using neural networks to map binary traits and identify associated genes.
-
-### Setup
-
-1. **Working Directory**:
-   - Ensure the R environment's working directory contains:
-     - `get_gene_archi.r` script.
-     - `data-raw` subdirectory with relevant example datasets.
-
-2. **Function Loading**:
-   - Load GAP package functions using:
-     ```R
-     source("getGeneArchi.R")
-     source("run_associated.R")
-     ```
+# GAP methods for performing model training.
 
 ## Architecture with minimum CV error
 This command-line interface (CLI) command executes the `runGeneArchi.R` script. It tries different architectures of neural networks based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
