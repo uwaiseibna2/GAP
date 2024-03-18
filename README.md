@@ -61,19 +61,28 @@ The GAP package provides tools for exploring gene architectures using neural net
      source("run_associated.R")
      ```
 
-## Methods
+## Architecture with minimum CV error
+This command-line interface (CLI) command executes the `runGeneArchi.R` script. It tries different architectures of neural networks based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
 
-### `get_gene_architecture()`
+### Command Structure
 
-- **Description**:
-  - Identifies architectures mapping genes to binary traits with zero cross-validation error.
+```bash
+Rscript <path_to_runGeneArchi.R> boolean_tree_flag num_hidden_layers
+```
 - **Arguments**:
   - `path_source`: Source of the downloaded tool, i.e. '/users/username/downloads/_GAP/'.
-  - `use_tree_features`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `hidden_layers`: Hidden layer count {0,1,2,3}.
+  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
+  - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
 - **Details**:
   - For `hidden_layers` > 0, explores permutations (1,2,3,..., number_of_species).
   - Displays a Manhattan plot for qualifying architectures.
+- **Sample Command:
+```bash 
+Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" TRUE 0.
+```
+
+
+
 
 ### `find_associated_genes()`
 
