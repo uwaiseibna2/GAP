@@ -69,14 +69,14 @@ This command-line interface (CLI) command executes the `runGeneArchi.R` script. 
 ```bash
 Rscript <path_to_runGeneArchi.R> boolean_tree_flag num_hidden_layers
 ```
-- **Arguments**:
-  - `path_source`: Source of the downloaded tool, i.e. '/users/username/downloads/_GAP/'.
+**Arguments**:
+  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
-- **Details**:
+**Details**:
   - For `hidden_layers` > 0, explores permutations (1,2,3,..., number_of_species).
   - Displays a Manhattan plot for qualifying architectures.
-- **Sample Command**:
+**Sample Command**:
 ```bash 
 Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" TRUE 0.
 ```
