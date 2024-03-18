@@ -68,7 +68,7 @@ The GAP package provides tools for exploring gene architectures using neural net
 - **Description**:
   - Identifies architectures mapping genes to binary traits with zero cross-validation error.
 - **Arguments**:
-  - `gene_number`: Gene stored in `data-raw/gene_number`.
+  - `path_source`: Source of the downloaded tool, i.e. '/users/username/downloads/_GAP/'.
   - `use_tree_features`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `hidden_layers`: Hidden layer count {0,1,2,3}.
 - **Details**:
