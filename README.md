@@ -81,7 +81,7 @@ This method requires execution from the shell due to resource constraints and fo
 **Arguments**:
   - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `num_hidden_layers`: Hidden layer count {0,1,2,3}, use 0 <-no hidden layers, integer(n)<-single hidden layer with n nodes, string(a,b,..,e)<- 5 hidden layer architecture with each layer having nodes corresponding to its positions, 1st layer<-a nodes, 2nd layer<-b nodes, 5th layer<-e nodes etc.
+  - `num_hidden_layers`: Hidden layer count and nodes for each layers; for hidden layers < 2, use any integer, where 0 means no hidden layer, and integer n means single hidden layer with n nodes, for hidden layers >= 2, use comma separated integers, i.e., 8,1,4; meaning 3 hidden-layered architecture with 1st, 2nd, and 3rd layer having 8, 1, and 4 nodes respectively. 
   - `starting_gene`: specifies the gene number from where processing will start.
   - `ending_gene`: species the ending gene number of processing.
 
