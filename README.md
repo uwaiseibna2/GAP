@@ -29,9 +29,8 @@ This Python script extracts tree features from a Newick format tree using the ET
         Input: tree_str (Newick format tree string)
         Output: Feature vectors for each branch in the tree
 
-    Example:
-        Replace newick_tree variable with your tree string.
-        Run the script to display feature vectors for each branch.
+    Example Input:
+        "((A,(B,C),D),E)"
 
 **Output**
 
