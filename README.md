@@ -16,13 +16,13 @@ Functionality of GAP is dependant on these prebuilt R packages. R packages can b
 
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
-Requirements
+**Requirements**
 
     Python 3.x
     ETE Toolkit (ete3)
     Pandas (pandas)
 
-Usage
+**Usage**
 
     Function: generate_features(tree_str)
         Input: tree_str (Newick format tree string)
@@ -32,11 +32,11 @@ Usage
         Replace newick_tree variable with your tree string.
         Run the script to display feature vectors for each branch.
 
-Output
+**Output**
 
 The code outputs feature vectors indicating species presence/absence within tree branches.
 
-Notes
+**Notes**
 
 Ensure the Newick tree string format is accurate.
 Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
@@ -46,7 +46,7 @@ Species names should be represented as comma-separated alphanumeric strings in t
 ## Architecture with minimum CV error
 This command-line interface (CLI) command executes the `runGeneArchi.R` script. It tries different architectures of neural networks based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
 
-### Command Structure
+**Command Structure**
 
 ```bash
 Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_layers
@@ -71,7 +71,7 @@ which runs the script to identify NN architectures with minimum CV error with tr
 
 This command-line interface (CLI) command facilitates the execution of the `run_associated.R` script. It trains neural networks using a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
 
-### Command Structure
+**Command Structure**
 
 ```bash
 Rscript.exe <path_to_run_associated.R> <path_source> boolean_tree_flag num_hidden_layers starting_gene ending_gene
@@ -85,7 +85,7 @@ This method requires execution from the shell due to resource constraints and fo
   - `starting_gene`: specifies the gene number from where processing will start.
   - `ending_gene`: species the ending gene number of processing.
 
-Sample Command:
+**Sample Command**:
 ```bash 
 Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 1 21030 21040.
 ```
