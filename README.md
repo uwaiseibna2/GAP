@@ -95,23 +95,26 @@ where the tool is located under the directory `/users/username/downloads/_GAP/` 
 ```bash 
 Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 15,4 21030 21040.
 ```
-### Get list of associated genes
+## Run selected architecture on a range of genes
 
-**Description**:
-  - Identifies gene IDs trained with zero cross-validation error in a previous analysis.
-- **Arguments**:
-  - `path_to_result`: Path storing previous analysis results.
-  - `start_range`, `end_range`: File name range in raw data for association.
-  - `path_genes`: Repository of raw data for known species for neural network model training.
-  - `path_corresponding_genes`: Repository of raw data for status-unknown species.
-- **Flags**:
-  - `use_tree_features_flag`: Flag for tree features (as previously explained).
-  - `path_tree`: Directory for tree features.
+This command-line interface (CLI) command executes the `findAssociated.R` script. It checks genes within a provided range for genes that can predict the trait with minimum CV score, the list of genes is stored in the file `associated_genes.csv`. under the designated folder `results`, please make sure the directory `/users/username/downloads/_GAP/results` exists.
 
-## Usage
+**Command Structure**
 
-- **Execution**:
-  - Replace placeholders with appropriate values.
-  - Run functions in the R environment with specified arguments.
+```bash
+Rscript.exe <path_to_findAssociated.R> <path_source> boolean_tree_flag starting_gene ending_gene
+```
+This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
+**Arguments**:
+  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
+  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
+  - `starting_gene`: specifies the start of the range to be checked.
+  - `ending_gene`: species the end of the range to be checked.
+
+**Sample Command**:
+```bash 
+Rscript.exe "/users/username/downloads/_GAP/findAssociated.R" "/users/username/downloads/_GAP/" FALSE 21030 21040.
+```
+where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
 
