@@ -67,9 +67,9 @@ Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/dow
 which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all 2-hidden layered architectures.
 
 
-## Get Associated Genes
+## Run selected architecture on a range of genes
 
-This command-line interface (CLI) command facilitates the execution of the `run_associated.R` script. It trains neural networks using a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
+This command-line interface (CLI) command executes the `run_associated.R` script. It trains neural network architectures with satsifactory CV scores found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
 
 **Command Structure**
 
@@ -81,7 +81,7 @@ This method requires execution from the shell due to resource constraints and fo
 **Arguments**:
   - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
+  - `num_hidden_layers`: Hidden layer count {0,1,2,3}, use 0 <-no hidden layers, integer(n)<-single hidden layer with n nodes, string(a,b,..,e)<- 5 hidden layer architecture with each layer having nodes corresponding to its positions, 1st layer<-a nodes, 2nd layer<-b nodes, 5th layer<-e nodes etc.
   - `starting_gene`: specifies the gene number from where processing will start.
   - `ending_gene`: species the ending gene number of processing.
 
