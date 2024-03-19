@@ -384,31 +384,7 @@ get_zero<-function(results)
     }
   }
 }
-get_azero<-function(path_gene,results,tree_features,path_tree){
-  if(length((which(results$CV==0)))==0)
-  {
-    return(FALSE)
-  }
-  set<-which(results$CV==0)
-  for (subset in set)
-  {
-    if(is.null(results[subset,]$layers))
-    {
-      hl<-NA
-    }
-    else
-    {
 
-      hl<-results[subset,]$layers
-    }
-    miss<-fit.model(get_data(path_gene,gulo,corresponding_genes,use_tree_features,path_tree),subset,results,hl)
-    if(miss==0)
-    {
-      return (TRUE)
-      break
-    }
-  }
-}
 
 get_gene_architecture<-function(path_gene,use_tree_features,hidden_layers){
 
@@ -424,25 +400,5 @@ get_gene_architecture<-function(path_gene,use_tree_features,hidden_layers){
   }}
 
 
-find_associated_genes<-function(path_to_result,start_range,end_range,path_genes,tree_feats,path_tree){
-  expected_files <- sprintf("%d.csv", start_range:end_range)
-  files_in_folder <- list.files(path = path_to_result)
-  actual_gene_numbers <- as.numeric(sub("(\\d+)\\.csv", "\\1", files_in_folder))
-  missing<- setdiff(start_range:end_range, actual_gene_numbers)
 
-
-
-  genes<-list()
-  for (g in start_range:end_range){
-    if(g %in% missing){next}
-    results<-data.frame(read.csv(paste(path_to_result,g,'.csv',sep="")))
-    path_gene<-paste0(path_genes,g)
-    if(get_azero(path_gene,results,tree_feats,path_tree))
-    {
-      append(genes,gene_info(path_gene))
-    }
-  }
-  write.csv(genes,paste(path_to_result,'associated_genes.csv'),row.names = FALSE)
-
-}
 get_gene_architecture(path_gene,use_tree_features,hidden_layers)

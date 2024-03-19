@@ -6,7 +6,7 @@ library(rjson)
 
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
-hidden_layers<-as.integer(commandArgs(trailingOnly = TRUE)[3])
+hidden_layers<-commandArgs(trailingOnly = TRUE)[3]
 start<-as.integer(commandArgs(trailingOnly = TRUE)[4])
 end<-as.integer(commandArgs(trailingOnly = TRUE)[5])
 
@@ -25,6 +25,7 @@ path_tree<-paste0(path_source,path_tree)
 path_genes<-paste0(path_source,path_genes)
 corresponding_geneset<-fromJSON(file=paste0(path_source,path_corresponding_gene_file))
 path_corresponding_genes<-paste0(path_source,path_corresponding_genes)
+path_to_results<-paste0(path_source,path_to_results)
 
 gene_info<-function(path){
   return((data.frame(read.table(path), row.names=2))$V1[1])
@@ -94,7 +95,7 @@ train_ANN<-function(data,hl,num_species,path_to_result,num){
 
 
         nn.train<- neuralnetwork(X = train_X, y = train_y,
-                                 hidden.layers = ifelse(hl != 0, hl, NA),
+                                 hidden.layers = ifelse(hl != "0", as.numeric(strsplit(hl, ",")[[1]]), NA),
                                  val.prop = 0,
                                  optim.type = 'adam',
                                  loss.type = "log",
@@ -126,7 +127,7 @@ train_ANN<-function(data,hl,num_species,path_to_result,num){
       }
       if(flag!=FALSE)
       {
-        cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/num_species))))
+        cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/num_species),HL=hl)))
       }
     }
     count<-count+1
