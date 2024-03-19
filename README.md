@@ -16,6 +16,7 @@ Functionality of GAP is dependant on these prebuilt R packages. R packages can b
 
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
+
 **Requirements**
 
     Python 3.x
