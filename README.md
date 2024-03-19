@@ -89,11 +89,15 @@ This method requires execution from the shell due to resource constraints and fo
 ```bash 
 Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 1 21030 21040.
 ```
-where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory.
+where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory. To run list of genes with hidden layers >= 2, command of following format can be used where a 2 hidden layer architecture is implemented for all the genes in the list with 1st and 2nd layer having 15 and 4 nodes respectively.
 
-### `find_associated_genes()`
+**Sample Command**:
+```bash 
+Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 15,4 21030 21040.
+```
+### Get list of associated genes
 
-- **Description**:
+**Description**:
   - Identifies gene IDs trained with zero cross-validation error in a previous analysis.
 - **Arguments**:
   - `path_to_result`: Path storing previous analysis results.
