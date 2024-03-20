@@ -62,9 +62,9 @@ Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_laye
     
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" TRUE 2.
+Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" FALSE 0
 ```
-which runs the script to identify NN architectures with minimum CV error with tree-features included dataset for all 2-hidden layered architectures.
+which runs the script to identify NN architectures with minimum CV error with alignment-only dataset for all 0-hidden layered architectures.
 
 
 ## Run selected architecture on a range of genes
