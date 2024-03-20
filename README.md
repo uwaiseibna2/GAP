@@ -95,7 +95,7 @@ where the tool is located under the directory `/users/username/downloads/_GAP/` 
 ```bash 
 Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 15,4 21030 21040.
 ```
-## Run selected architecture on a range of genes
+## List Associated Genes
 
 This command-line interface (CLI) command executes the `findAssociated.R` script. It checks genes within a provided range for genes that can predict the trait with minimum CV score, the list of genes is stored in the file `associated_genes.csv`. under the designated folder `results`, please make sure the directory `/users/username/downloads/_GAP/results` exists.
 
@@ -104,7 +104,6 @@ This command-line interface (CLI) command executes the `findAssociated.R` script
 ```bash
 Rscript.exe <path_to_findAssociated.R> <path_source> boolean_tree_flag starting_gene ending_gene
 ```
-This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
 **Arguments**:
   - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
