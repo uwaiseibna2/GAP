@@ -112,3 +112,6 @@ Rscript.exe "/users/username/downloads/_GAP/findAssociated.R" "/users/username/d
 ```
 where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
 
+**Note**
+1. For Windows OS, replace Rscript with the path to Rscript.exe while running the scripts.
+2. To run it for any gene beyond GULO, replace the GULO number to any gene of choice in `runGeneArchi.R`.
