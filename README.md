@@ -4,7 +4,7 @@ GAP is a R implementation of the research by Islam, UI and Assis, R : A machine 
 
 This software provides users the following functionalites: 
 
-1. Find Optimal Neural Network (NN) architecture from user-defined hidden layer and node range for a given gene (in GAP GULO gene alignment have been used), that has Cross validation error of zero where the network maps the multi-species alignment of the gene to a specific binary trait. If a specific architecture can accurately map the relation between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values
+1. Find Optimal Neural Network (NN) architecture from user-defined hidden layer and node range for a given gene (in GAP GULO gene alignment have been used), that has Cross validation error of zero where the network maps the multi-species alignment of the gene to a specific binary trait. If a specific architecture can accurately map the relation between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values.
 
 2. GAP provides user to run batch command with any architecture (based on the performance from the previous function) on a list of genes to map them with the trait of interest and stores the prediction results. 
 
