@@ -11,10 +11,11 @@ This software provides users the following functionalites:
 3. Finally, analyzing stored results GAP finds find all the genes  that can be associated to the trait from the result of previous analysis. Sample genes have been included under `/data-raw` directory contain train and test dataset where the range of gene number is 21001-21050.
 
 
+For improvment suggestions and queries, email: uislam2022@fau.edu
+
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
 
-For improvment suggestions and queries, email: uislam2022@fau.edu
 
 **Requirements**
 ```bash
