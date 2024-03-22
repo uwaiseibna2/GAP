@@ -34,7 +34,7 @@ Species names should be represented as comma-separated alphanumeric strings in t
 # GAP methods for performing model training.
 
 ## Architecture with minimum CV error
-This command-line interface (CLI) command executes the `runGeneArchi.R` script. It tries different architectures of neural networks based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
+This command executes the `runGeneArchi.R` script. It tries different NN architectures based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
 
 **Command Structure**
 
@@ -59,7 +59,7 @@ which runs the script to identify NN architectures with minimum CV error with al
 
 ## Run selected architecture on a range of genes
 
-This command-line interface (CLI) command executes the `run_associated.R` script. It trains neural network architectures with satsifactory CV scores found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes. The results are then stored in the designated folder `results`, please create a directory named results under the GAP directory, i.e., `/users/username/downloads/_GAP/results` where the results will be stored after processing.
+This command-line interface (CLI) command executes the `run_associated.R` script. It applies NN architecture zero CV error found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes.
 
 **Command Structure**
 
