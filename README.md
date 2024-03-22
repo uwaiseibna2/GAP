@@ -14,6 +14,8 @@ This software provides users the following functionalites:
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
 
+For improvment suggestions and queries, email: uislam2022@fau.edu
+
 **Requirements**
 ```bash
   pip install ete3
