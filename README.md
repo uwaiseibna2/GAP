@@ -1,6 +1,6 @@
 # GAP (Genotype-phenotype Association Predictor)
 
-GAP is a R implementation of the research by Islam, UI and Assis, R : A machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
+GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
 
 This software provides users the following functionalites: 
 
