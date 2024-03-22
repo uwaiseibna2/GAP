@@ -3,8 +3,7 @@ packages<-c('ANN2','dplyr','gtools','parallel','qqman','rjson')
 
 for (package in packages){
   if (!requireNamespace(package, quietly = TRUE)) {
-    # If not installed, install it
-    install.packages(package)
+    install.packages(package, repos = 'http://cran.us.r-project.org')
   }
 }
 library(ANN2)
@@ -18,6 +17,7 @@ library(rjson)
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 hidden_layers<-as.integer(commandArgs(trailingOnly = TRUE)[3])
+#modify GULO if you want to run different genes
 gulo<-21038
 path_tree<-"data-raw/tree-feature-all-species.csv"
 path_corresponding_gene_file<-"data-raw/corresponding_genes.json"
@@ -221,7 +221,7 @@ train_NN<-function(data,hidden_layer,num_species,path_gene){
           cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/num_species))))
         }
         count<-count+1
-        print(paste0('architecture ',as.character(count),' completed.'))
+        print(paste0('Running architecture ',as.character(count)))
       }
       else
       {
@@ -281,7 +281,7 @@ train_NN<-function(data,hidden_layer,num_species,path_gene){
             cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,layers=hl[j,],CV=(misclassified/num_species))))
           }
           count<-count+1
-          print(paste0('architecture ',as.character(count),' completed.'))
+          print(paste0('Running architecture ',as.character(count)))
         }
 
       }
@@ -387,16 +387,19 @@ get_zero<-function(results)
 
 
 get_gene_architecture<-function(path_gene,use_tree_features,hidden_layers){
-
+  if(hidden_layers>0)
+  {
+  print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
+  }
   x<-get_zero(train_NN(get_data(path_gene,gulo,corresponding_genes,use_tree_features,path_tree),hidden_layers,num_species,path_gene))
   if(x[[1]])
   {
-    print(paste0('found architecture with CV error = 0 with architecture: ',x[[2]]))
+    print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(x[[2]]=='NA',0,x[[2]])))
     hidden_layers<-x[[2]]
   }
   else
   {
-    print('try different hidden layer architecture!')
+    print('Please try different hidden layer architectures!')
   }}
 
 

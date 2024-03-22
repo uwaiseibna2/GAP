@@ -14,7 +14,7 @@ end<-as.integer(commandArgs(trailingOnly = TRUE)[4])
 path_tree<-"data-raw/tree-feature-all-species.csv"
 path_corresponding_gene_file<-"data-raw/corresponding_genes.json"
 path_corresponding_genes<-"data-raw/unknown_genes/"
-path_to_result<-"data-raw/results/"
+path_to_result<-"results/"
 path_genes<-"data-raw/known_genes/"
 
 num_species<-34

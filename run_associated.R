@@ -14,7 +14,7 @@ end<-as.integer(commandArgs(trailingOnly = TRUE)[5])
 path_tree<-"data-raw/tree-feature-all-species.csv"
 path_corresponding_gene_file<-"data-raw/corresponding_genes.json"
 path_corresponding_genes<-"data-raw/unknown_genes/"
-path_to_results<-"data-raw/results/"
+path_to_results<-"results/"
 path_genes<-"data-raw/known_genes/"
 
 
@@ -135,6 +135,9 @@ train_ANN<-function(data,hl,num_species,path_to_result,num){
   }
   results<-(do.call(rbind, lapply(cv_error, data.frame)))
   results<-apply(results,2,as.character)
+  if (!dir.exists(path_to_result)) {
+  dir.create(path_to_result)
+}
   write.csv(results,paste0(path_to_result,num,'.csv'),row.names = FALSE)
 }
 
@@ -149,6 +152,7 @@ f <- function(i) {
 
 run_associated_genes <- function(start, end) {
   cat("Starting parallel processing...\n")
+  cat("Please do not close the window, you will receive a message once the processing is completed, Results will be stored in the results folder under parent directory.")
   cl <- makeCluster(detectCores()-1)
   clusterEvalQ(cl, library(ANN2))
   clusterEvalQ(cl, library(rjson))
