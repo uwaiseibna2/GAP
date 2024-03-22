@@ -10,9 +10,8 @@ This Python script extracts tree features from a Newick format tree using the ET
 
 **Requirements**
 
-    Python 3
-    ete3
-    pandas
+  pip install ete3
+  pip install pandas
 
 **Usage**
 
