@@ -9,10 +9,10 @@ This software provides users the following functionalites: 1. Find Optimal Neura
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
 
 **Requirements**
-
+```bash
   pip install ete3
   pip install pandas
-
+```
 **Usage**
 
     Function: generate_features(tree_str)
