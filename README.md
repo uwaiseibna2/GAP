@@ -69,6 +69,7 @@ which runs the script to identify NN architectures with minimum CV error with al
 ## Run selected architecture on a range of genes
 
 This command-line interface (CLI) command executes the `run_associated.R` script. It applies NN architecture zero CV error found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes. The training results are stored in the `\results` folder under parent directory.
+
 **Command Structure**
 
 ```bash
