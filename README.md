@@ -59,8 +59,7 @@ which runs the script to identify NN architectures with minimum CV error with al
 
 ## Run selected architecture on a range of genes
 
-This command-line interface (CLI) command executes the `run_associated.R` script. It applies NN architecture zero CV error found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes.
-
+This command-line interface (CLI) command executes the `run_associated.R` script. It applies NN architecture zero CV error found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes. The training results are stored in the `\results` folder under parent directory.
 **Command Structure**
 
 ```bash
@@ -87,7 +86,7 @@ Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/d
 ```
 ## List Associated Genes
 
-This command-line interface (CLI) command executes the `findAssociated.R` script. It checks genes within a provided range for genes that can predict the trait with minimum CV score, the list of genes is stored in the file `associated_genes.csv`. under the designated folder `results`, please make sure the directory `/users/username/downloads/_GAP/results` exists.
+This command-line interface (CLI) command executes the `findAssociated.R` script. It analyses the training results from previous function on a provided list of genes to find genes with zero CV error, the list of such genes is stored in the file `associated_genes.csv`. under the designated folder `results` in parent directory.
 
 **Command Structure**
 
