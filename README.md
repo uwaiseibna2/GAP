@@ -61,7 +61,7 @@ Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_laye
     
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" FALSE 0
+Rscript "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" FALSE 0
 ```
 which runs the script to identify NN architectures with minimum CV error with alignment-only dataset for all 0-hidden layered architectures.
 
@@ -72,7 +72,7 @@ This command-line interface (CLI) command executes the `run_associated.R` script
 **Command Structure**
 
 ```bash
-Rscript.exe <path_to_run_associated.R> <path_source> boolean_tree_flag num_hidden_layers starting_gene ending_gene
+Rscript <path_to_run_associated.R> <path_source> boolean_tree_flag num_hidden_layers starting_gene ending_gene
 ```
 This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
@@ -91,7 +91,7 @@ where the tool is located under the directory `/users/username/downloads/_GAP/` 
 
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 15,4 21030 21040.
+Rscript "/users/username/downloads/_GAP/run_associated.R" "/users/username/downloads/_GAP/" TRUE 15,4 21030 21040.
 ```
 ## List Associated Genes
 
@@ -111,7 +111,7 @@ Rscript <path_to_findAssociated.R> <path_source> boolean_tree_flag starting_gene
 
 **Sample Command**:
 ```bash 
-Rscript.exe "/users/username/downloads/_GAP/findAssociated.R" "/users/username/downloads/_GAP/" FALSE 21030 21040.
+Rscript "/users/username/downloads/_GAP/findAssociated.R" "/users/username/downloads/_GAP/" FALSE 21030 21040.
 ```
 where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
 
