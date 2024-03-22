@@ -1,18 +1,9 @@
 # GAP (Genotype-phenotype Association Predictor)
 
-GAP is a R implementation of the research by Islam, UI and Assis, R : A Framework for learning associations between genes and phenotypes from multi-speices sequence alignments.
+GAP is a R implementation of the research by Islam, UI and Assis, R : A machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
 
-This package provides users the following functionalites: 1. Find Neural Network architectures for a given gene (GULO), that accounts for Cross validation error of zero where the network maps the multi-species exons of the gene to a specific binary trait. If a specific architecture can be mapp between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values. It runs Batch command with a list of genes to map them with the trait of interest based on the architecture that performs well from the previous function. It can also find all the genes that can be associated to the trait from the result of previous analysis. `/data-raw` directory contain testing dataset where the range of gene number is 21001-21050.
+This software provides users the following functionalites: 1. Find Optimal Neural Network architecture from user-defined hidden layer and node range for a given gene (in GAP GULO gene alignment have been used), that has Cross validation error of zero where the network maps the multi-species alignment of the gene to a specific binary trait. If a specific architecture can be mapp between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values. GAP provides user to run batch command with any architecture (based on the performance from the previous function) on a list of genes to map them with the trait of interest and stores the prediction results. Finally, analyzing stored results GAP finds find all the genes  that can be associated to the trait from the result of previous analysis. Sample genes have been included under `/data-raw` directory contain train and test dataset where the range of gene number is 21001-21050.
 
-# Required Packages
-
-Functionality of GAP is dependant on these prebuilt R packages. R packages can be installed from the R console with the command: `install.packages("package_name")`.
-
-1.  "ann2"
-2.  "parallel" for second function only
-3.  "dplyr"
-4.  "gtools"
-5.  "qqman"
 
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
