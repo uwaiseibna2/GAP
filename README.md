@@ -2,13 +2,7 @@
 
 GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
 
-This software provides users the following functionalites: 
-
-1. Find Optimal Neural Network (NN) architecture from user-defined hidden layer and node range for a given gene (in GAP GULO gene alignment have been used), that has Cross validation error of zero where the network maps the multi-species alignment of the gene to a specific binary trait. If a specific architecture can accurately map the relation between the gene and trait perfectly, the positions within the exons of the gene that have greater significance is highlighted by dispalying a manhattan plot based on benjamini adjusted p-values.
-
-2. GAP provides user to run batch command with any architecture (based on the performance from the previous function) on a list of genes to map them with the trait of interest and stores the prediction results. 
-
-3. Finally, analyzing stored results GAP finds find all the genes  that can be associated to the trait from the result of previous analysis. Sample genes have been included under `/data-raw` directory contain train and test dataset where the range of gene number is 21001-21050.
+We introduce \texttt{GAP}, a novel machine learning framework for predicting a binary phenotype from gaps in a multi-species sequence alignment of a genomic region. In particular, \texttt{GAP} employs a neural network to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-input species tree. \texttt{GAP} can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. Here, we demonstrate the utility of \texttt{GAP} by exploiting the well-known association between the gulonolactone (L-) oxidase \textit{Gulo} gene and vitamin C synthesis.
 
 
 For improvment suggestions and queries, email: uislam2022@fau.edu
