@@ -31,13 +31,13 @@ GAP accepts multi-species sequence data as input in a specified format. In a GAP
 
 ```bash
 
-Gene_ID           species_name  phenotype_status  alignment_columns
+gene_id             species_name  phenotype_status  alignment_columns
 ENSMUSG00000059970  nile_tilapia  0                 - - - A - T - G C A A T C G C T A -
 ENSMUSG00000059970  mus_musculus  1                 A C G A C T A G C A A T C G C T A C
 ENSMUSG00000059970  sloth         NA                - - - A - T - G C A - - - - - C T A 
 ```
 
-GAP input files have numbered filename where each file contains aforementioned formatted multi-species sequence alignment.
+GAP input files have numbered filename where each file contains aforementioned formatted multi-species sequence alignment. Sample data located in data-raw directory contains alignment files where data for phenotype status-known and status-unknown species are stored in known_species and unknown_species respectively.
 
 
 # Tree Feature Extraction from Newick Format Tree
