@@ -78,8 +78,6 @@ Rscript run_associated.R <path_source> boolean_tree_flag num_hidden_layers start
 This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
 **Arguments**:
-  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
-  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `num_hidden_layers`: Hidden layer count and nodes for each layers; for hidden layers < 2, use any integer, where 0 means no hidden layer, and integer n means single hidden layer with n nodes, for hidden layers >= 2, use comma separated integers, i.e., 8,1,4; meaning 3 hidden-layered architecture with 1st, 2nd, and 3rd layer having 8, 1, and 4 nodes respectively. 
   - `starting_gene`: specifies the gene number from where processing will start.
   - `ending_gene`: species the ending gene number of processing.
@@ -88,7 +86,7 @@ This method requires execution from the shell due to resource constraints and fo
 ```bash 
 Rscript run_associated.R ./ TRUE 1 21030 21040
 ```
-where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory. To run list of genes with hidden layers >= 2, command of following format can be used where a 2 hidden layer architecture is implemented for all the genes in the list with 1st and 2nd layer having 15 and 4 nodes respectively.
+where the tool is located under the current terminal directory and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory. To run list of genes with hidden layers >= 2, command of following format can be used where a 2 hidden layer architecture is implemented for all the genes in the list with 1st and 2nd layer having 15 and 4 nodes respectively.
 
 **Sample Command**:
 ```bash 
@@ -101,20 +99,14 @@ This command-line interface (CLI) command executes the `findAssociated.R` script
 **Command Structure**
 
 ```bash
-Rscript <path_to_findAssociated.R> <path_source> boolean_tree_flag starting_gene ending_gene
+Rscript findAssociated.R <path_source> boolean_tree_flag starting_gene ending_gene
 ```
-
-**Arguments**:
-  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
-  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `starting_gene`: specifies the start of the range to be checked.
-  - `ending_gene`: species the end of the range to be checked.
 
 **Sample Command**:
 ```bash 
-Rscript "/users/username/downloads/_GAP/findAssociated.R" "/users/username/downloads/_GAP/" FALSE 21030 21040.
+Rscript findAssociated.R "./" FALSE 21030 21040.
 ```
-where the tool is located under the directory `/users/username/downloads/_GAP/` and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
+where the tool is located under the current terminal directory and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
 
 **Note**
 1. For Windows OS, replace Rscript with the path to Rscript.exe while running the scripts.
