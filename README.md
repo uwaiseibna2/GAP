@@ -7,6 +7,39 @@ We introduce GAP, a novel machine learning framework for predicting a binary phe
 
 For improvment suggestions and queries, email: uislam2022@fau.edu
 
+# Cite GAP
+
+Thank you for using GAP! 
+
+Citation is appreciated: UI Islam, AL Campelo dos Santos, R Kanjilal, and R Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments 
+
+# Getting Started
+
+Running GAP scripts installation of Python3 (version > 3.9) and R (version > 4.0) is recommended into the system. GAP installs the required R and Python packages from within the script. If GAP fails to install a package itself and users encounter a package installation error, they can install that particular package manually. 
+Commands to install R and Python packages from respective terminals:
+```bash
+# R package installation command
+install.packages("package_name")
+
+# Python package installation command
+pip3 install package_name
+```
+
+# GAP Input
+
+GAP accepts multi-species sequence data as input in a specified format. In a GAP input dataset, Each row represent a species alignment, where the first three columns are GENE/Transcript name, Species Name, and Binary Phenotype Status (1/ 0/ NA) respectively. From the fourth column till end, input data have alignments for a genomic region, consistiting of gaps(-) or nucleotide bases. Following is a representation of GAP input:
+
+```bash
+
+Gene_ID           species_name  phenotype_status  alignment_columns
+ENSMUSG000059970  nile_tilapia  0                 - - - A - T - G C A A T C G C T A -
+ENSMUSG000059970  mus_musculus  1                 A C G A C T A G C A A T C G C T A C
+ENSMUSG000059970  sloth         NA                - - - A - T - G C A - - - - - C T A -
+```
+
+
+
+
 # Tree Feature Extraction from Newick Format Tree
 This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
 
