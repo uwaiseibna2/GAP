@@ -78,6 +78,7 @@ Rscript run_associated.R <path_source> boolean_tree_flag num_hidden_layers start
 This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
 **Arguments**:
+  - `boolean_tree_flag`: As introduced on the previous section
   - `num_hidden_layers`: Hidden layer count and nodes for each layers; for hidden layers < 2, use any integer, where 0 means no hidden layer, and integer n means single hidden layer with n nodes, for hidden layers >= 2, use comma separated integers, i.e., 8,1,4; meaning 3 hidden-layered architecture with 1st, 2nd, and 3rd layer having 8, 1, and 4 nodes respectively. 
   - `starting_gene`: specifies the gene number from where processing will start.
   - `ending_gene`: species the ending gene number of processing.
@@ -101,6 +102,11 @@ This command-line interface (CLI) command executes the `findAssociated.R` script
 ```bash
 Rscript findAssociated.R <path_source> boolean_tree_flag starting_gene ending_gene
 ```
+
+**Arguments**
+ - `boolean_tree_flag`: As introduced on the previous section.
+ - `starting_gene`: As introduced on the previous section.
+ - `ending_gene`: As introduced on the previous section.
 
 **Sample Command**:
 ```bash 
