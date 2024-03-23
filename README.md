@@ -126,7 +126,7 @@ GAP includes the phylogeny for the 59 species examined. However if uses want to 
 
 Input newick formatted species tree:
 ```  
-  "((gorilla,(chimp,human),baboon),orangutan);"
+"((gorilla,(chimp,human),baboon),orangutan);"
 ```
 To execute this python script navigate to the parent directory and simply execute the following command in a terminal.
 
