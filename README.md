@@ -140,4 +140,5 @@ python3 extract_tree_features.py
 
 1. Ensure the Newick tree string format is accurate.
 2. Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
+3. Replace variable `path_tree` with the newly generated tree_features.csv path in all three R scripts.
 
