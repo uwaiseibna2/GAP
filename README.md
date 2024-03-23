@@ -42,16 +42,16 @@ GAP input files have numbered filename where each file contains aforementioned f
 
 # GAP functions
 
-## Architecture with minimum CV error
-This command executes the `runGeneArchi.R` script. It tries different NN architectures based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
+## Predict Binary Phenotype Status
+This command executes the `runGeneArchi.R` script. It tries different NN architectures based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s). Navigate to the diretory of GAP and initiate a terminal from that directory to run this script.
 
 **Command Structure**
 
 ```bash
-Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_layers
+Rscript runGeneArchi.R ./ boolean_tree_flag num_hidden_layers
 ```
 **Arguments**:
-  - `path_source`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
+  - `./`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
     
@@ -61,9 +61,9 @@ Rscript <path_to_runGeneArchi.R> <path_source> boolean_tree_flag num_hidden_laye
     
 **Sample Command**:
 ```bash 
-Rscript "/users/username/downloads/_GAP/runGeneArchi.R" "/users/username/downloads/_GAP/" FALSE 0
+Rscript runGeneArchi.R ./ FALSE 0
 ```
-which runs the script to identify NN architectures with minimum CV error with alignment-only dataset for all 0-hidden layered architectures.
+which runs the script to identify NN architectures with minimum CV error with alignment-only dataset for all 0-hidden layered architectures to predict binary phenotypes.
 
 
 ## Run selected architecture on a range of genes
