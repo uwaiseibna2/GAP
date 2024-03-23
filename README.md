@@ -27,7 +27,7 @@ pip3 install package_name
 
 # GAP Input
 
-GAP accepts multi-species sequence data as input in a specified format. In a GAP input dataset, Each row represent a species alignment, where the first three columns are GENE/Transcript name, Species Name, and Binary Phenotype Status (1/ 0/ NA) respectively. From the fourth column till end, input data have alignments for a genomic region, consistiting of gaps(-) or nucleotide bases. Following is a representation of GAP input:
+GAP accepts multi-species sequence data as input in a specified format. In a GAP input dataset, Each row represent a species alignment, where the first three columns are gene / transcript name, species name, and binary phenotype status (1/ 0/ NA) respectively. From the fourth column till the end, input data have alignments for a genomic region, consistiting of gaps(-) or nucleotide bases. Following is a representation of GAP input:
 
 ```bash
 
@@ -37,7 +37,7 @@ ENSMUSG000059970  mus_musculus  1                 A C G A C T A G C A A T C G C 
 ENSMUSG000059970  sloth         NA                - - - A - T - G C A - - - - - C T A 
 ```
 
-
+GAP input files have numbered filename where each file contains aforementioned formatted multi-species sequence alignment.
 
 
 # Tree Feature Extraction from Newick Format Tree
