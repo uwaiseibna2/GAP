@@ -122,7 +122,7 @@ where the tool is located under the directory `/users/username/downloads/_GAP/` 
 
 # User-defined Phylogeny
 
-GAP includes the phylogeny for the 59 species examined. However if uses want to use custom phylogeny features it can be generated using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
+GAP includes the phylogeny for the 59 species examined. However, GAP can generate user-specific custom phylogeny features using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
 
 Input newick formatted species tree:
 ```  
