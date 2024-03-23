@@ -40,34 +40,7 @@ ENSMUSG00000059970  sloth         NA                - - - A - T - G C A - - - - 
 GAP input files have numbered filename where each file contains aforementioned formatted multi-species sequence alignment. Sample data located in data-raw directory contains alignment files where data for phenotype status-known and status-unknown species are stored in known_species and unknown_species respectively.
 
 
-# Tree Feature Extraction from Newick Format Tree
-This Python script extracts tree features from a Newick format tree using the ETE Toolkit (ete3). It generates feature vectors representing species presence/absence within different branches of the tree.
-
-
-**Requirements**
-```bash
-  pip install ete3
-  pip install pandas
-```
-**Usage**
-
-    Function: generate_features(tree_str)
-        Input: tree_str (Newick format tree string)
-        Output: Feature vectors for each branch in the tree
-
-    Example Input:
-        "((A,(B,C),D),E)"
-
-**Output**
-
-The code outputs feature vectors indicating species presence/absence within tree branches.
-
-**Notes**
-
-Ensure the Newick tree string format is accurate.
-Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
-
-# GAP methods for performing model training.
+# GAP functions
 
 ## Architecture with minimum CV error
 This command executes the `runGeneArchi.R` script. It tries different NN architectures based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s).
@@ -146,3 +119,25 @@ where the tool is located under the directory `/users/username/downloads/_GAP/` 
 **Note**
 1. For Windows OS, replace Rscript with the path to Rscript.exe while running the scripts.
 2. To run it for any gene beyond GULO, replace the GULO number to any gene of choice in `runGeneArchi.R`.
+
+# User-defined Phylogeny
+
+GAP includes the phylogeny for the 59 species examined. However if uses want to use custom phylogeny features it can be generated using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
+
+Input newick formatted species tree:
+```  
+  "((gorilla,(chimp,human),baboon),orangutan);"
+```
+To execute this python script navigate to the parent directory and simply execute the following command in a terminal.
+
+**Command**
+
+```bash
+python3 extract_tree_features.py
+```
+
+**Notes**
+
+1. Ensure the Newick tree string format is accurate.
+2. Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
+
