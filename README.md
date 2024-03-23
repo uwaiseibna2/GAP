@@ -34,7 +34,7 @@ GAP accepts multi-species sequence data as input in a specified format. In a GAP
 Gene_ID           species_name  phenotype_status  alignment_columns
 ENSMUSG000059970  nile_tilapia  0                 - - - A - T - G C A A T C G C T A -
 ENSMUSG000059970  mus_musculus  1                 A C G A C T A G C A A T C G C T A C
-ENSMUSG000059970  sloth         NA                - - - A - T - G C A - - - - - C T A -
+ENSMUSG000059970  sloth         NA                - - - A - T - G C A - - - - - C T A 
 ```
 
 
