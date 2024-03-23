@@ -1,3 +1,11 @@
+import subprocess
+
+def install_package(package_name):
+    subprocess.check_call(['pip3', 'install', package_name])
+packages=['ete3','pandas']
+for package in packages:
+    install_package(package)
+
 from ete3 import Tree
 import re
 import pandas as pd
@@ -29,7 +37,7 @@ def generate_features(tree_str):
     return feature_vectors
 
 # Example Newick tree string
-newick_tree = "((a,b),((c,d),e));"
+newick_tree = input("Insert the species tree in newick format with an ending semi-colon: ")
 
 features = generate_features(newick_tree)
 
@@ -37,4 +45,5 @@ species = re.findall(r'[a-zA-Z_ ]+', newick_tree)
 tree_feats=pd.DataFrame(features)
 tree_feats.index=species
 tree_feats.columns=range(1, len(tree_feats.columns) + 1)
-tree_feats.to_csv("path_to_directory_of_Tree_features_to_be_saved")
+tree_feats.to_csv("tree_feats.csv")
+print("Saved tree_features.csv in the parent directory")
