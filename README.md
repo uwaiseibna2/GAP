@@ -48,10 +48,10 @@ This command executes the `runGeneArchi.R` script. It tries different NN archite
 **Command Structure**
 
 ```bash
-Rscript runGeneArchi.R ./ boolean_tree_flag num_hidden_layers
+Rscript runGeneArchi.R <path_source> boolean_tree_flag num_hidden_layers
 ```
 **Arguments**:
-  - `./`: Source of the downloaded tool, i.e. `/users/username/downloads/_GAP/`.
+  - `path_source`: Source of the downloaded tool, in this case `./` as we are already in the GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
     
