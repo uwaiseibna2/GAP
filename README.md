@@ -47,17 +47,19 @@ The predictSpecies function take in the path of the input files, and then output
 **Command Structure**
 
 ```bash
-Rscript runGeneArchi.R <path_source> boolean_tree_flag
+Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
 ```
 **Arguments**:
   - `path_source`: Source of the downloaded tool, in this case `./` as we are already in the GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
+  - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO. 
 **Details**:
   - Output will be stored under the `results` folder in the parent directory.
     
 **Sample Command**:
 ```bash 
-Rscript runGeneArchi.R ./ FALSE 
+Rscript PredictPheno.R ./ FALSE ENSMUST00000059970 (unix-based OS)
+'C:/Program Files/.../Rscript.ex' PredictPheno.R 'C:/Users/username/downloads/GAP/' FALSE ENSMUST00000059970 
 ```
 which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice this approach excludes the tree features.
 
