@@ -88,12 +88,12 @@ where the tool is located under the current terminal (unix-based OS) directory a
 
 ## PredictGenes
 
-This command-line interface (CLI) command executes the `findAssociated.R` script. It analyses the training results from previous function on a provided list of genes to find genes with zero CV error, the list of such genes is stored in the file `associated_genes.csv`. under the designated folder `results` in parent directory.
+The predictGenes function should takes in input file as a list of transcripts to examine, and then output a list of predicted genomic regions with minimum CV error. Please note that, the input number of genomic regions is g>1 for this function.  
 
 **Command Structure**
 
 ```bash
-Rscript findAssociated.R <path_source> boolean_tree_flag <transcripts_list>
+Rscript PredictGenes.R <path_source> boolean_tree_flag <transcripts_list>
 ```
 
 **Arguments**
@@ -124,7 +124,7 @@ To execute this python script navigate to the parent directory and simply execut
 **Command**
 
 ```bash
-python3 extract_tree_features.py ((gorilla,(chimp,human),baboon),orangutan);
+python3 extract_tree_features.py
 ```
 
 
