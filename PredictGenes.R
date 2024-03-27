@@ -9,15 +9,15 @@ use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 transcript_list_path<-commandArgs(trailingOnly = TRUE)[3]
 hidden_layers<-0
 
-
-#path_source<-"/Users/uwaiseibna/Documents/InProgress/"
-#use_dendrogram_features<-FALSE
 loading_chars <- c("|", "/", "-", "\\")
-path_tree<-"data-raw/tree-feature-all-species.csv"
-path_to_results<-"results/associated.txt"
-path_file<-"data-raw/sample-dataset.fa"
-path_status<-"data-raw/species.txt"
 
+#update only the following directories for change in Input 1(path_status) , and/or 2 (path_file), and/or 3(path_tree).
+path_status<-"data-raw/species.txt"
+path_file<-"data-raw/sample-dataset.fa"
+path_tree<-"data-raw/tree-feature-all-species.csv"
+#end of update
+
+path_to_results<-"results/associated.txt"
 if (length(args) >= 3) {
     transcript_list_path <- args[3]
 } else {
