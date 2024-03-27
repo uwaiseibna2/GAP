@@ -99,7 +99,7 @@ Rscript findAssociated.R <path_source> boolean_tree_flag <transcripts_list>
 **Arguments**
   - `path_source`: Source of the downloaded tool/GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `transcript_list`(optional): List of transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default list under `data-raw/` in parent directory.
+  - `transcript_list`(optional): List of transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default list under `/data-raw` in parent directory.
 
 **Sample Command**:
 ```bash 
