@@ -86,7 +86,7 @@ Rscript PredictPositions.R ./ (unix-based OS)
 ```
 where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function.
 
-## PredcitGenes
+## PredictGenes
 
 This command-line interface (CLI) command executes the `findAssociated.R` script. It analyses the training results from previous function on a provided list of genes to find genes with zero CV error, the list of such genes is stored in the file `associated_genes.csv`. under the designated folder `results` in parent directory.
 
@@ -109,7 +109,7 @@ Rscript PredictGenes.R "./" FALSE ./data-raw/transcript_list (unix-based OS)
 where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used.
 
 **Note**
-1. 
+1. Notice that the Input 1, 2 and 3 (optional) are all set as default under the `/data-raw` directory as `species.txt`, `sample-dataset.fa`, and `phylo-tree.csv` respectively. In case of user-provided inputs, users only need to replace the path_status, path_file, and path_tree on the PredictPheno.R and PredictGenes.R scripts. These variables are marked with appropriate comments within the script. 
 
 # User-defined Phylogeny
 
@@ -124,12 +124,8 @@ To execute this python script navigate to the parent directory and simply execut
 **Command**
 
 ```bash
-python3 extract_tree_features.py
+python3 extract_tree_features.py ((gorilla,(chimp,human),baboon),orangutan);
 ```
 
-**Notes**
 
-1. Ensure the Newick tree string format is accurate.
-2. Species names should be represented as comma-separated alphanumeric strings in the Newick tree string.
-3. Replace variable `path_tree` with the newly generated tree_features.csv path in all three R scripts.
 
