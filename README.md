@@ -27,17 +27,14 @@ pip3 install package_name
 
 # GAP Input
 
-GAP accepts multi-species sequence data as input in a specified format. In a GAP input dataset, Each row represent a species alignment, where the first three columns are gene / transcript name, species name, and binary phenotype status (1/ 0/ NA) respectively. From the fourth column till the end, input data have alignments for a genomic region, consistiting of gaps(-) or nucleotide bases. Following is a representation of GAP input:
+**Input 1**: tab-delimited file with n rows and 2 columns, where n is the number of species. The first column should contain the species name, and the second column refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
 
-```bash
 
-gene_id             species_name  phenotype_status  alignment_columns
-ENSMUSG00000059970  nile_tilapia  0                 - - - A - T - G C A A T C G C T A -
-ENSMUSG00000059970  mus_musculus  1                 A C G A C T A G C A A T C G C T A C
-ENSMUSG00000059970  sloth         NA                - - - A - T - G C A - - - - - C T A 
-```
+**Input 2**: FASTA file containing multiple sequence alignments for the n species at g genomic regions. Each header should contain the species name followed by a space and then an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is completely absent in a species, then a sequence of gaps "-" can be used for that species.  
 
-GAP input files have numbered filename where each file contains aforementioned formatted multi-species sequence alignment. Sample data located in data-raw directory contains alignment files where data for phenotype status-known and status-unknown species are stored in known_species and unknown_species respectively.
+**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included.
+
+
 
 
 # GAP functions
