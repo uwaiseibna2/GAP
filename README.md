@@ -50,7 +50,7 @@ The predictSpecies function take in the path of the input files, and then output
 Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
 ```
 **Arguments**:
-  - `path_source`: Source of the downloaded tool, in this case `./` as we are already in the GAP directory.
+  - `path_source`: Source of the downloaded tool/GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO. 
 **Details**:
@@ -59,62 +59,56 @@ Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
 **Sample Command**:
 ```bash 
 Rscript PredictPheno.R ./ FALSE ENSMUST00000059970 (unix-based OS)
-'C:/Program Files/.../Rscript.ex' PredictPheno.R 'C:/Users/username/downloads/GAP/' FALSE ENSMUST00000059970 
+'C:/Program Files/.../Rscript.ex' PredictPheno.R 'C:/Users/username/downloads/GAP/' FALSE ENSMUST00000059970 (Windows OS)
 ```
-which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice this approach excludes the tree features.
+which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that this command excludes the tree features.
 
 
-## Run an architecture on genomic region(s)
+## PredictPositions
 
-This command-line interface (CLI) command executes the `run_associated.R` script. It applies NN architecture zero CV error found from previous function on a specified gene list against multi-species genetic data to map binary phenotypes. The training results are stored in the `\results` folder under parent directory.
+The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function with the transcript_id used for the previous function. 
 
 **Command Structure**
 
 ```bash
-Rscript run_associated.R <path_source> boolean_tree_flag num_hidden_layers starting_gene ending_gene
+Rscript PredictPostions.R <path_source>
 ```
 This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
 **Arguments**:
-  - `boolean_tree_flag`: As introduced on the previous section
-  - `num_hidden_layers`: Hidden layer count and nodes for each layers; for hidden layers < 2, use any integer, where 0 means no hidden layer, and integer n means single hidden layer with n nodes, for hidden layers >= 2, use comma separated integers, i.e., 8,1,4; meaning 3 hidden-layered architecture with 1st, 2nd, and 3rd layer having 8, 1, and 4 nodes respectively. 
-  - `starting_gene`: specifies the gene number from where processing will start.
-  - `ending_gene`: species the ending gene number of processing.
+  - `path_source`: Source of the downloaded tool/GAP directory.
 
 **Sample Command**:
 ```bash 
-Rscript run_associated.R ./ TRUE 1 21030 21040
+Rscript PredictPositions.R ./ (unix-based OS)
+'C:/Program Files/.../Rscript.ex' PredictPositions.R 'C:/Users/username/downloads/GAP/' (Windows OS)
 ```
-where the tool is located under the current terminal directory and this command will execute all the single-hidden layered architectures for the specified gene list and store the results under the specified directory. To run list of genes with hidden layers >= 2, command of following format can be used where a 2 hidden layer architecture is implemented for all the genes in the list with 1st and 2nd layer having 15 and 4 nodes respectively.
+where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function.
 
-**Sample Command**:
-```bash 
-Rscript run_associated.R ./ TRUE 15,4 21030 21040
-```
-## List Associated Genes
+## PredcitGenes
 
 This command-line interface (CLI) command executes the `findAssociated.R` script. It analyses the training results from previous function on a provided list of genes to find genes with zero CV error, the list of such genes is stored in the file `associated_genes.csv`. under the designated folder `results` in parent directory.
 
 **Command Structure**
 
 ```bash
-Rscript findAssociated.R <path_source> boolean_tree_flag starting_gene ending_gene
+Rscript findAssociated.R <path_source> boolean_tree_flag <transcripts_list>
 ```
 
 **Arguments**
- - `boolean_tree_flag`: As introduced on the previous section.
- - `starting_gene`: As introduced on the previous section.
- - `ending_gene`: As introduced on the previous section.
+  - `path_source`: Source of the downloaded tool/GAP directory.
+  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
+  - `transcript_list`(optional): List of transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default list under `data-raw/` in parent directory.
 
 **Sample Command**:
 ```bash 
-Rscript findAssociated.R "./" FALSE 21030 21040.
+Rscript PredictGenes.R "./" FALSE ./data-raw/transcript_list (unix-based OS)
+'C:/Program Files/.../Rscript.ex' PredictGenes.R 'C:/Users/username/downloads/GAP/' FALSE 'C:/Users/username/downloads/GAP/data-raw/transcript_list'(Windows OS)
 ```
-where the tool is located under the current terminal directory and this command will find and return (if any) of the genes with the range [21030,21040] has minimum CV scores, where the tree_features are not used.
+where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used.
 
 **Note**
-1. For Windows OS, replace Rscript with the path to Rscript.exe while running the scripts.
-2. To run it for any gene beyond GULO, replace the GULO number to any gene of choice in `runGeneArchi.R`.
+1. 
 
 # User-defined Phylogeny
 
