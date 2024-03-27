@@ -6,7 +6,7 @@ library(utils)
 library(parallel)
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
-#transcript_list_path<-commandArgs(trailingOnly = TRUE)[3]
+transcript_list_path<-commandArgs(trailingOnly = TRUE)[3]
 hidden_layers<-0
 
 
@@ -17,7 +17,12 @@ path_tree<-"data-raw/tree-feature-all-species.csv"
 path_to_results<-"results/associated.txt"
 path_file<-"data-raw/sample-dataset.fa"
 path_status<-"data-raw/species.txt"
-transcript_list_path<-"data-raw/Transcript_list.txt"
+
+if (length(args) >= 3) {
+    transcript_list_path <- args[3]
+} else {
+    transcript_list_path <-"data-raw/Transcript_list.txt"
+}
 num_species<-34
 
 path_transcripts<-paste0(path_source,transcript_list_path)
