@@ -15,7 +15,7 @@ Citation is appreciated: UI Islam, AL Campelo dos Santos, R Kanjilal, and R Assi
 
 # Getting Started
 
-Running GAP scripts installation of Python3 (version > 3.9) and R (version > 4.0) is recommended into the system. GAP installs the required R and Python packages from within the script. If GAP fails to install a package itself and users encounter a package installation error, they can install that particular package manually. 
+Running GAP scripts require installation of Python3 (version > 3.9) and R (version > 4.0) is recommended into the system. GAP installs the required R and Python packages from within the script. If GAP fails to install a package itself and users encounter a package installation error, they can install that particular package manually. 
 Commands to install R and Python packages from respective terminals:
 ```bash
 # R package installation command
