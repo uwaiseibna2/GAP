@@ -35,17 +35,15 @@ extract_sequence <- function(sequences, transcript_id) {
 #modify the path to source code
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
-#hidden_layers<-as.integer(commandArgs(trailingOnly = TRUE)[3])
-
-
-#modify GULO if you want to run different genes
 transcript_id<-commandArgs(trailingOnly = TRUE)[3]
 
 
-
+#update only the following directories for change in Input 1(path_status) , and/or 2 (path_file), and/or 3(path_tree).
+path_status<-"data-raw/species.txt"
 path_file<-"data-raw/sample-dataset.fa"
 path_tree<-"data-raw/tree-feature-all-species.csv"
-path_status<-"data-raw/species.txt"
+#end of update
+                            
 path_to_results<-"results/"
 
 num_species<-34
