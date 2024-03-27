@@ -109,7 +109,7 @@ Rscript PredictGenes.R "./" FALSE ./data-raw/transcript_list (unix-based OS)
 where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used.
 
 **Note**
-1. Notice that the Input 1, 2 and 3 (optional) are all set as default under the `/data-raw` directory as `species.txt`, `sample-dataset.fa`, and `phylo-tree.csv` respectively. In case of user-provided inputs, users only need to replace the path_status, path_file, and path_tree on the PredictPheno.R and PredictGenes.R scripts. These variables are marked with appropriate comments within the script. 
+1. Notice that the Input 1, 2 and 3 (optional) are all set as default under the `/data-raw` directory as `species.txt`, `sample-dataset.fa`, and `phylo-tree.csv` respectively. In case of user-provided inputs, users only need to replace the path_status, path_file, and path_tree on the `PredictPheno.R` and `PredictGenes.R` scripts. These variables are marked with appropriate comments within the script. 
 
 # User-defined Phylogeny
 
