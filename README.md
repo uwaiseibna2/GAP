@@ -39,28 +39,27 @@ pip3 install package_name
 
 # GAP functions
 
-## Predict Binary Phenotype Status
-This command executes the `runGeneArchi.R` script. It tries different NN architectures based on the input parameteres to map multi-species genetic data to binary phenotypes. Architectures with minimum CV error are displayed alonside the manhattan plot containing nucleotide positional importance for exons within the gene(s). Navigate to the diretory of GAP and initiate a terminal from that directory to run these scripts.
+All GAP functions are implemented from the terminal. To run this open a terminal on the parent directory of GAP. In UNIX based Operating system (linux and macOS), Rscript can be used to execute a R script from terminal, However in Windows, users need to replace the Rscript with the path to `Rscript.exe`.
+
+## PredictPhenotype
+The predictSpecies function take in the path of the input files, and then output a tab-delimited file containing predictions for each unknown species, with species name in the first column and predicted phenotype status (0 for absent or 1 for present) in the second column. Note that, input number of genomic regions, g=1 for this function. This functions trains neural network on the specified genomic region starting with simple architecture and proceeding to complex ones and stops if it find one with zero cross-validation error. 
 
 **Command Structure**
 
 ```bash
-Rscript runGeneArchi.R <path_source> boolean_tree_flag num_hidden_layers
+Rscript runGeneArchi.R <path_source> boolean_tree_flag
 ```
 **Arguments**:
   - `path_source`: Source of the downloaded tool, in this case `./` as we are already in the GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `num_hidden_layers`: Hidden layer count {0,1,2,3}.
-    
 **Details**:
-  - For `num_hidden_layers` > 0, explores permutations (1,2,3,..., number_of_species).
-  - Displays a Manhattan plot for qualifying architectures.
+  - Output will be stored under the `results` folder in the parent directory.
     
 **Sample Command**:
 ```bash 
-Rscript runGeneArchi.R ./ FALSE 0
+Rscript runGeneArchi.R ./ FALSE 
 ```
-which runs the script to identify NN architectures with minimum CV error with alignment-only dataset for all 0-hidden layered architectures to predict binary phenotypes.
+which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice this approach excludes the tree features.
 
 
 ## Run an architecture on genomic region(s)
