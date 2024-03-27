@@ -53,6 +53,7 @@ Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
   - `path_source`: Source of the downloaded tool/GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO. 
+
 **Details**:
   - Output will be stored under the `results` folder in the parent directory.
     
