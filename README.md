@@ -39,7 +39,7 @@ pip3 install package_name
 
 # GAP functions
 
-All GAP functions are implemented from the terminal. To run GAP commands open a terminal on the parent directory of GAP. In UNIX based Operating system (linux and macOS), Rscript can be used to execute a R script from terminal, However in Windows, users need to replace the Rscript with the path to `Rscript.exe`.
+All GAP functions are implemented from the terminal. To run GAP commands open a terminal on the parent directory of GAP. In UNIX based Operating system (linux and macOS), Rscript can be used to execute an R script from terminal, However in Windows, users need to replace the Rscript with the path to `Rscript.exe`.
 
 ## PredictPhenotype
 The predictSpecies function take in the path of the input files, and then output a tab-delimited file containing predictions for each unknown species, with species name in the first column and predicted phenotype status (0 for absent or 1 for present) in the second column. Note that, input number of genomic regions, g=1 for this function. This functions trains neural network on the specified genomic region starting with simple architecture and proceeding to complex ones and stops if it find one with zero cross-validation error. 
