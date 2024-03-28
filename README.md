@@ -45,21 +45,21 @@ GAP has three functions:
 
 GAP is run in a terminal. Below are detailed instructions for using each of the GAP functions.
 
-## PredictPhenotype
-The predictSpecies function take in the path of the input files, and then output a tab-delimited file containing predictions for each unknown species, with species name in the first column and predicted phenotype status (0 for absent or 1 for present) in the second column. Note that, input number of genomic regions, g=1 for this function. This functions trains NN on the specified genomic region starting with simple architecture and proceeding to complex ones and stops if it find one with zero cross-validation error. 
+## PredictSpecies
+The predictSpecies function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
 
 **Command Structure**
 
 ```bash
-Rscript PredictSpecies.R <path_source> boolean_tree_flag transcript_id <path_input_1> <path_input_2> <path_input3>
+Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input3>
 ```
 **Arguments**:
-  - `path_source`: Source of the downloaded tool/GAP directory.
-  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO.
-  - `path_input_1`: Path to the Input 1 file as described in the `GAP Input` section which list the phenotype status for a list of species.
-  - `path_input_2`: Path to the Input 2 .fasta file containing cross-speices transcript alignments as described in the `GAP Input` section .
-  - `path_input_3`: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, the default set of phylogeny features are located in `data-raw/tree-features.csv`
+- `path_source`: Source of the GAP directory
+- `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
+- `region_id`: Identifier for genomic region on which to train GAP
+- `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
+- `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
+- `path_input_3`: Path to Input 3 file described in `GAP Input` section above
 
 **Details**:
   - Output will be stored under the `results` folder in the parent directory.
