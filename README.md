@@ -121,7 +121,7 @@ Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.f
 #Windows OS
 'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/transcript_list
 ```
-where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used.
+where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
 **Note**
 1. The default phylogeny features are located at `data-raw/tree-features.csv`, in case of user-defined phylogeny (see instuctions below to generate), change the path accordingly. 
