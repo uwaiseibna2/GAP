@@ -62,19 +62,8 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_3`: Path to Input 3 file described in `GAP Input` section above
 
 **Details**:
-  - Output will be stored under the `results` folder in the parent directory.
+  - Output file `Predictions.csv` will be stored under the `results` folder in the parent directory.
     
-**Sample Command**:
-```bash
-#unix-based OS
-Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
-
-#Windows OS
-'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
-```
-which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that this command excludes the tree features. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
-
-
 ## PredictPositions
 
 The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function with the transcript_id used for the previous function. This function requires results from the previous function to generate the positional importance, please make sure you have the results of the previous function before running this command.
@@ -88,16 +77,8 @@ This method requires execution from the shell due to resource constraints and fo
 
 **Arguments**:
   - `path_source`: Source of the downloaded tool/GAP directory.
-
-**Sample Command**:
-```bash
-#unix-based OS
-Rscript PredictPositions.R ./
-
-#Windows OS
-'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ 
-```
-where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function. The positional importance for is stored in the `PositionalPvals.csv` file under the `results` directory.
+**Details**:
+  - Output file `PositionalPvals.csv` will be stored under the `results` folder in the parent directory.
 
 ## PredictGenes
 
@@ -117,19 +98,8 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `path_input_3`: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, the default set of phylogeny features are located in `data-raw/tree-features.csv`
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
 
-**Sample Command**:
-```bash
-#unix-based OS
-Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
-
-#Windows OS
-'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
-```
-where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
-
-**Note**
-1. The default phylogeny features are located at `data-raw/tree-features.csv`, in case of user-defined phylogeny (see instuctions below to generate), change the path accordingly. 
-
+**Details**:
+  - Output file `associated.csv` stored under the `results` folder in the parent directory will list associated genes.
 ## User-defined Phylogeny
 
 GAP includes the phylogeny for the 59 species examined. However, GAP can generate user-specific custom phylogeny features using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
@@ -145,6 +115,8 @@ To execute this python script navigate to the parent directory and simply execut
 ```bash
 python3 extract_tree_features.py
 ```
+
+## Example Application of GAP
 
 
 
