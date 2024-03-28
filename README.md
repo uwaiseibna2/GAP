@@ -117,7 +117,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
 
 #Windows OS
-'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/transcript_list.txt
+'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
 ```
 where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
