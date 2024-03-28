@@ -32,26 +32,35 @@ extract_sequence <- function(sequences, transcript_id) {
     return(NULL)
   }
 }
-#modify the path to source code
+
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 transcript_id<-commandArgs(trailingOnly = TRUE)[3]
+path_status<-commandArgs(trailingOnly = TRUE)[4]
+path_file<-commandArgs(trailingOnly = TRUE)[5]
+path_tree<-commandArgs(trailingOnly = TRUE)[6]
 
-
-#update only the following directories for change in Input 1(path_status) , and/or 2 (path_file), and/or 3(path_tree).
-path_status<-"data-raw/species.txt"
-path_file<-"data-raw/sample-dataset.fa"
-path_tree<-"data-raw/tree-feature-all-species.csv"
-#end of update
                             
 path_to_results<-"results/"
 
-num_species<-34
+
+
 
 path_file<-paste0(path_source,path_file)
 path_tree<-paste0(path_source,path_tree)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
+
+
+get_num_species<-function(path_status)
+{
+phylogeny<-read.table(path_status,header=1)
+colnames(phylogeny)<-c('species_name','target')
+return(sum(!is.na(phylogeny$target)))
+}
+num_species<-get_num_species(path_status)
+
+
 find_weights<-function(nn.params,use_tree_features,V,d){
   weights<-nn.params[[1]][[1]][1,]
   weights<-abs(weights)

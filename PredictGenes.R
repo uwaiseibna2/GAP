@@ -6,30 +6,42 @@ library(utils)
 library(parallel)
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
-transcript_list_path<-commandArgs(trailingOnly = TRUE)[3]
+path_status<-commandArgs(trailingOnly = TRUE)[3]
+path_file<-commandArgs(trailingOnly = TRUE)[4]
+path_tree<-commandArgs(trailingOnly = TRUE)[5]
+transcript_list_path<-commandArgs(trailingOnly = TRUE)[6]
 hidden_layers<-0
 
 loading_chars <- c("|", "/", "-", "\\")
 
-#update only the following directories for change in Input 1(path_status) , and/or 2 (path_file), and/or 3(path_tree).
-path_status<-"data-raw/species.txt"
-path_file<-"data-raw/sample-dataset.fa"
-path_tree<-"data-raw/tree-feature-all-species.csv"
-#end of update
+
+
+
 
 path_to_results<-"results/associated.txt"
-if (length(args) >= 3) {
+if (length(args) >= 6) {
     transcript_list_path <- args[3]
 } else {
     transcript_list_path <-"data-raw/Transcript_list.txt"
 }
-num_species<-34
+
 
 path_transcripts<-paste0(path_source,transcript_list_path)
 path_tree<-paste0(path_source,path_tree)
 path_file<-paste0(path_source,path_file)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
+
+get_num_species<-function(path_status)
+{
+phylogeny<-read.table(path_status,header=1)
+colnames(phylogeny)<-c('species_name','target')
+return(sum(!is.na(phylogeny$target)))
+}
+num_species<-get_num_species(path_status)
+
+
+
 if (!file.exists(path_to_results)) {
   file.create(path_to_results)
 }
