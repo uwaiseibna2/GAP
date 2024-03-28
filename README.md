@@ -93,7 +93,7 @@ Rscript PredictPositions.R ./
 #Windows OS
 'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ 
 ```
-where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function.
+where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function. The positional importance for is stored in the `PositionalPvals.csv` file under the `results` directory.
 
 ## PredictGenes
 
