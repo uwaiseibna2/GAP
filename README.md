@@ -47,7 +47,7 @@ The predictSpecies function take in the path of the input files, and then output
 **Command Structure**
 
 ```bash
-Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
+Rscript PredictPheno.R <path_source> boolean_tree_flag transcript_id
 ```
 **Arguments**:
   - `path_source`: Source of the downloaded tool/GAP directory.
@@ -63,7 +63,7 @@ Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
 Rscript PredictPheno.R ./ FALSE ENSMUST00000059970
 
 #Windows OS
-'C:/Program Files/.../Rscript.exe' PredictPheno.R '.\' FALSE ENSMUST00000059970 
+'C:/Program Files/.../Rscript.exe' PredictPheno.R .\ FALSE ENSMUST00000059970 
 ```
 which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that this command excludes the tree features.
 
