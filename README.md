@@ -63,7 +63,7 @@ Rscript runGeneArchi.R <path_source> boolean_tree_flag transcript_id
 Rscript PredictPheno.R ./ FALSE ENSMUST00000059970
 
 #Windows OS
-'C:/Program Files/.../Rscript.exe' PredictPheno.R 'C:/Users/username/downloads/GAP/' FALSE ENSMUST00000059970 
+'C:/Program Files/.../Rscript.exe' PredictPheno.R '.\' FALSE ENSMUST00000059970 
 ```
 which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that this command excludes the tree features.
 
@@ -85,7 +85,7 @@ This method requires execution from the shell due to resource constraints and fo
 **Sample Command**:
 ```bash 
 Rscript PredictPositions.R ./ (unix-based OS)
-'C:/Program Files/.../Rscript.exe' PredictPositions.R 'C:/Users/username/downloads/GAP/' (Windows OS)
+'C:/Program Files/.../Rscript.exe' PredictPositions.R '.\' (Windows OS)
 ```
 where the tool is located under the current terminal (unix-based OS) directory and this command will provide the positions importance for each of the positions in the transcript for the optimal architecture found through PreditPhenotype function.
 
@@ -107,7 +107,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <transcripts_list>
 **Sample Command**:
 ```bash 
 Rscript PredictGenes.R "./" FALSE ./data-raw/transcript_list (unix-based OS)
-'C:/Program Files/.../Rscript.exe' PredictGenes.R 'C:/Users/username/downloads/GAP/' FALSE 'C:/Users/username/downloads/GAP/data-raw/transcript_list'(Windows OS)
+'C:/Program Files/.../Rscript.exe' PredictGenes.R '.\' FALSE '.\data-raw/transcript_list'(Windows OS)
 ```
 where the tool is located under the current terminal directory and this command will find and return (if any) the ones within the listed genes having minimum CV scores, where the tree_features are not used.
 
