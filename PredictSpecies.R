@@ -138,7 +138,6 @@ train_NN<-function(data,hidden_layer,num_species){
   l1Vals = 10^seq(-4, 3, length.out = 100)
   alphas = seq(0, 1, 0.05)
   hl= generate_hidden_layer_tuples(hidden_layer,num_species-1)
-  print(paste0("hidden_layers: ",dim(hl)))
   count<-0
   print(paste0('Gene ',transcript_id,' running: '))
   for( l in l1Vals)
@@ -201,7 +200,8 @@ train_NN<-function(data,hidden_layer,num_species){
           cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/num_species))))
         }
         count<-count+1
-        print(paste0('Running architecture ',as.character(count)))
+        cat(paste0('\rRunning architecture ', as.character(count),'/',length(alphas)*length(l1Vals)))
+        flush.console()
       }
       else
       {
@@ -260,8 +260,9 @@ train_NN<-function(data,hidden_layer,num_species){
           {
             cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,layers=hl[j,],CV=(misclassified/num_species))))
           }
-          count<-count+1
-          print(paste0('Running architecture ',as.character(count)))
+          count=count+1
+          cat(paste0('\rRunning architecture ', as.character(count),'/',length(alphas)*length(l1Vals)*nrow(hl)))
+          flush.console()
         }
 
       }
