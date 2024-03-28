@@ -2,20 +2,17 @@
 
 GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
 
-We introduce GAP, a novel machine learning framework for predicting a binary phenotype from gaps in a multi-species sequence alignment of a genomic region. In particular, GAP employs a neural network (NN) to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-input species tree. GAP can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. Here, we demonstrate the utility of GAP by exploiting the well-known association between the gulonolactone (L-) oxidase *Gulo* gene and vitamin C synthesis.
+In particular, GAP employs a neural network (NN) to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-input species tree. GAP can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. 
 
+For queries, email: uislam2022@fau.edu.
 
-For improvment suggestions and queries, email: uislam2022@fau.edu
+# Citing GAP
 
-# Cite GAP
-
-Thank you for using GAP! 
-
-Citation is appreciated: UI Islam, AL Campelo dos Santos, R Kanjilal, and R Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments 
+If you use GAP, then please cite: Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. A machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments. Under review (2024). 
 
 # Getting Started
 
-Running GAP scripts require installation of Python3 (version > 3.9) and R (version > 4.0) into the system. GAP installs the required R and Python packages from within the script. If GAP fails to install a package itself and users encounter a package installation error, they can install that particular package manually. 
+Running GAP requires installation of R (version > 4.0) and Python (version > 3.9). GAP installs the required R and Python packages from within the script. If GAP encounters an error during installation of a package, they can be installed manually.
 Commands to install R and Python packages from respective terminals:
 ```bash
 # R package installation command
@@ -26,6 +23,7 @@ pip3 install package_name
 ```
 
 # GAP Input
+Gap requires two input files, with an optional third input file. These files are described in this section.
 
 **Input 1**: tab-delimited file with n rows and 2 columns, where n is the number of species. The first column should contain the species name, and the second column refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
 
