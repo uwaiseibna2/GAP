@@ -1,3 +1,4 @@
+species status
 zebra_finch	NA 
 rat	1
 panda	NA

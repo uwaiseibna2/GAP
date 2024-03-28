@@ -19,11 +19,7 @@ loading_chars <- c("|", "/", "-", "\\")
 
 
 path_to_results<-"results/associated.txt"
-if (length(args) >= 6) {
-    transcript_list_path <- args[3]
-} else {
-    transcript_list_path <-"data-raw/Transcript_list.txt"
-}
+
 
 
 path_transcripts<-paste0(path_source,transcript_list_path)

@@ -40,7 +40,6 @@ path_status<-commandArgs(trailingOnly = TRUE)[4]
 path_file<-commandArgs(trailingOnly = TRUE)[5]
 path_tree<-commandArgs(trailingOnly = TRUE)[6]
 
-                            
 path_to_results<-"results/"
 
 
