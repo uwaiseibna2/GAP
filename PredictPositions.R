@@ -41,6 +41,3 @@ df<-plot_manhattan(weights)
 df_<-df[df$P<0.05,]
 print('Positions: ')
 print(df_$position)
-print('--------------------------------------------------------------------------')
-print('Exons: ')
-print(unique(df_$CHR))
