@@ -55,7 +55,7 @@ Rscript PredictPheno.R <path_source> boolean_tree_flag transcript_id <path_input
   - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO.
   - `path_input_1`: Path to the Input 1 file as described in the `GAP Input` section which list the phenotype status for a list of species.
   -  `path_input_2`: Path to the Input 2 .fasta file containing cross-speices transcript alignments as described in the `GAP Input` section .
-  -  `path_input_3`(optional): Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section.
+  -  `path_input_3: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, this argument is optional, in case of empty input the default set of phylogeny features are located in `data-raw/tree-features.csv`
 
 **Details**:
   - Output will be stored under the `results` folder in the parent directory.
