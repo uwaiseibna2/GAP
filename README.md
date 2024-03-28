@@ -23,7 +23,7 @@ pip3 install package_name
 ```
 
 # GAP Input
-Gap requires two input files, with an optional third input file. These files are described in this section.
+GAP takes in two required input files and an optional third input file. 
 
 **Input 1**: tab-delimited file with n rows and 2 columns, where n is the number of species. The first column should contain the species name, and the second column refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
 
@@ -35,9 +35,15 @@ Gap requires two input files, with an optional third input file. These files are
 
 
 
-# GAP functions
+# Running GAP
 
-All GAP functions are implemented from the terminal. To run GAP commands open a terminal on the parent directory of GAP. In UNIX based Operating system (linux and macOS), Rscript can be used to execute an R script from terminal, However in Windows, users need to replace the Rscript with the path to `Rscript.exe`.
+
+GAP has three functions:
+- PredictSpecies - predicts presence or absence of a phenotype in one or more species from a known association with a genomic region
+- PredictPositions - predicts which positions within a genomic region are associated with a phenotype
+- PredictGenes - predicts genomic regions that are associated with a phenotype
+
+GAP is run in a terminal. Below are detailed instructions for using each of the GAP functions.
 
 ## PredictPhenotype
 The predictSpecies function take in the path of the input files, and then output a tab-delimited file containing predictions for each unknown species, with species name in the first column and predicted phenotype status (0 for absent or 1 for present) in the second column. Note that, input number of genomic regions, g=1 for this function. This functions trains NN on the specified genomic region starting with simple architecture and proceeding to complex ones and stops if it find one with zero cross-validation error. 
