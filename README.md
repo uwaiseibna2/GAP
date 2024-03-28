@@ -47,12 +47,15 @@ The predictSpecies function take in the path of the input files, and then output
 **Command Structure**
 
 ```bash
-Rscript PredictPheno.R <path_source> boolean_tree_flag transcript_id
+Rscript PredictPheno.R <path_source> boolean_tree_flag transcript_id <path_input_1> <path_input_2> <path_input3>
 ```
 **Arguments**:
   - `path_source`: Source of the downloaded tool/GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO. 
+  - `transcript_id`: Ensemble transcript ID for specifying the gene on which to train GAP, here we have added the transcript_id for GULO.
+  - `path_input_1`: Path to the Input 1 file as described in the `GAP Input` section which list the phenotype status for a list of species.
+  -  `path_input_2`: Path to the Input 2 .fasta file containing cross-speices transcript alignments as described in the `GAP Input` section .
+  -  `path_input_3`(optional): Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section.
 
 **Details**:
   - Output will be stored under the `results` folder in the parent directory.
