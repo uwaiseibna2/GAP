@@ -89,6 +89,8 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
     de<-data.frame(dendo_tree)
     unique_cols <- sapply(de, function(x) length(unique(x))) == 1
     de<- de[, !unique_cols]
+    de<-de[match(de$species_name,merged$species_name),]
+    de<-de[,-c(1)]
     data<-cbind(data,de)
   }
   all_data<-data[,-c(1)]

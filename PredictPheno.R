@@ -115,10 +115,12 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
   data<-cbind(target,pcs_d)
   if(tree_flag==TRUE)
   {
-    dendo_tree<-read.csv(path_tree,row.names = 1)
+    dendo_tree<-read.csv(path_tree,header = 1)
     de<-data.frame(dendo_tree)
     unique_cols <- sapply(de, function(x) length(unique(x))) == 1
     de<- de[, !unique_cols]
+    de<-de[match(de$species_name,merged$species_name),]
+    de<-de[,-c(1)]
     data<-cbind(data,de)
   }
   all_data<-data[,-c(1)]
@@ -127,7 +129,7 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
   
 }
 
-train_NN<-function(data,hidden_layer,num_species,path_gene){
+train_NN<-function(data,hidden_layer,num_species){
   nFolds <- num_species
   cv_error<-list()
   myFolds <- cut(seq(1, nrow(data)),
@@ -136,6 +138,7 @@ train_NN<-function(data,hidden_layer,num_species,path_gene){
   l1Vals = 10^seq(-4, 3, length.out = 100)
   alphas = seq(0, 1, 0.05)
   hl= generate_hidden_layer_tuples(hidden_layer,num_species-1)
+  print(paste0("hidden_layers: ",dim(hl)))
   count<-0
   print(paste0('Gene ',transcript_id,' running: '))
   for( l in l1Vals)
@@ -362,13 +365,13 @@ get_zero<-function(results,data,all_data,species)
 }
 
 
-get_gene_architecture<-function(path_gene,use_tree_features,hidden_layers){
+get_gene_architecture<-function(use_tree_features,hidden_layers){
   if(hidden_layers>0)
   {
   print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
   }
   dataset<-get_data(transcript_id, path_status,path_file,use_tree_features,path_tree)
-  x<-get_zero(train_NN(dataset[[1]],hidden_layers,num_species,path_gene),dataset[[1]],dataset[[5]],dataset[[2]])
+  x<-get_zero(train_NN(dataset[[1]],hidden_layers,num_species),dataset[[1]],dataset[[5]],dataset[[2]])
   if(x[[1]])
   {
     print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
@@ -389,7 +392,6 @@ get_gene_architecture<-function(path_gene,use_tree_features,hidden_layers){
 
 
 for (hl in 0:3) {
-  if(get_gene_architecture(path_gene,use_tree_features,hl))
+  if(get_gene_architecture(use_tree_features,hl))
   {break}
 }
-hidden_layers<-0
