@@ -60,10 +60,10 @@ Rscript PredictPheno.R <path_source> boolean_tree_flag transcript_id
 **Sample Command**:
 ```bash
 #unix-based OS
-Rscript PredictPheno.R ./ FALSE ENSMUST00000059970
+Rscript PredictPheno.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
 
 #Windows OS
-'C:/Program Files/.../Rscript.exe' PredictPheno.R .\ FALSE ENSMUST00000059970 
+'C:\Program Files\...\Rscript.exe' PredictPheno.R .\ FALSE ENSMUST00000059970 data-raw\species.txt data-raw\sample-dataset.fa data-raw\tree-features.csv
 ```
 which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that this command excludes the tree features.
 
