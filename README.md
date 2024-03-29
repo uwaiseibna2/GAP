@@ -170,6 +170,6 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
     #Windows OS
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
     ```
-This function list the genes that are associated to the given phenotype based on the optimal architecture configuration found in PredictSpecies. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
+This function lists the associated genes based on the optimal architecture configuration found in PredictSpecies from a user-defined list of transcripts. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
 
