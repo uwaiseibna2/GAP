@@ -113,10 +113,10 @@ python3 extract_tree_features.py
 
 ## Example Application of GAP
 
-Commands to run the three GAP functions are discussed here. For each function, sample commands are provided alongside explanation for both alignment only and tree-features based approach.
+Commands to run the three GAP functions are discussed here. For each function, sample commands are provided alongside explanation for both alignment-only and tree-features based approach.
 
 ## PredictSpecies
-**Sample Command**:
+**Sample Commands**:
 
 - Alignment-only approach
   ```bash
@@ -136,5 +136,40 @@ Commands to run the three GAP functions are discussed here. For each function, s
   ```
 which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
 
+## PredictPositions
+**Sample Commands**:
+
+- Both alignment-only and tree-features included approach
+  ```bash
+  #unix-based OS
+  Rscript PredictPositions.R ./ 
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ 
+  ```
+This function identifies positions within the sequence having p-values<= 0.05 within the alignment. PredictPositions needs the previous function implemented before in order to positions based on the identify optimal architecture idenfied in PredictSpecies. Results are stored in the `PositionalPvals.csv` file under the `results` directory.
+
+
+## PredictGenes
+**Sample Commands**:
+
+- Alignment-only approach
+    ```bash
+    #unix-based OS
+    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    
+    #Windows OS
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    ```
+
+- Tree-features included
+    ```bash
+    #unix-based OS
+    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    
+    #Windows OS
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    ```
+This function list the genes that are associated to the given phenotype based on the optimal architecture configuration found in PredictSpecies. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
 
