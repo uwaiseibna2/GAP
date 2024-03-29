@@ -61,8 +61,6 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
 - `path_input_3`: Path to Input 3 file described in `GAP Input` section above
 
-**Details**:
-  - Output file `Predictions.csv` will be stored under the `results` folder in the parent directory.
     
 ## PredictPositions
 
@@ -77,8 +75,7 @@ This method requires execution from the shell due to resource constraints and fo
 
 **Arguments**:
   - `path_source`: Source of the downloaded tool/GAP directory.
-**Details**:
-  - Output file `PositionalPvals.csv` will be stored under the `results` folder in the parent directory.
+
 
 ## PredictGenes
 
@@ -98,8 +95,6 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `path_input_3`: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, the default set of phylogeny features are located in `data-raw/tree-features.csv`
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
 
-**Details**:
-  - Output file `associated.csv` stored under the `results` folder in the parent directory will list associated genes.
 ## User-defined Phylogeny
 
 GAP includes the phylogeny for the 59 species examined. However, GAP can generate user-specific custom phylogeny features using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
@@ -117,6 +112,29 @@ python3 extract_tree_features.py
 ```
 
 ## Example Application of GAP
+
+Commands to run the three GAP functions are discussed here. For each function, sample commands are provided alongside explanation for both alignment only and tree-features based approach.
+
+## PredictSpecies
+**Sample Command**:
+
+- Alignment-only approach
+  ```bash
+  #unix-based OS
+  Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  ```
+- Tree-features included
+  ```bash
+  #unix-based OS
+  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  ```
+which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
 
 
 
