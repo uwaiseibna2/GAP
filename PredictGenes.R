@@ -85,7 +85,7 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
   data<-cbind(target,pcs_d)
   if(tree_flag==TRUE)
   {
-    dendo_tree<-read.csv(path_tree,row.names = 1)
+    dendo_tree<-read.csv(path_tree,header = 1)
     de<-data.frame(dendo_tree)
     unique_cols <- sapply(de, function(x) length(unique(x))) == 1
     de<- de[, !unique_cols]
