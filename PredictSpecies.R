@@ -272,7 +272,6 @@ train_NN<-function(data,hidden_layer,num_species){
   print(paste0(transcript_id,' completed'))
   return (do.call(rbind, lapply(cv_error, data.frame)))}
 fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
-  print(results[index,])
   nFolds <- 34
   myFolds <- cut(seq(1, nrow(data)),
                  breaks = nFolds,
@@ -331,7 +330,6 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
   if(misclassified==0){
     predictions=predict(nn.train,all_data)
     predicted_pheno=cbind(species,predictions$predictions)
-    print(predicted_pheno)
     weights = nn.train$Rcpp_ANN$getParams()$weights
     return(list(misclassified,predicted_pheno,weights))
   }
