@@ -84,7 +84,7 @@ The predictGenes function should takes in input file as a list of transcripts to
 **Command Structure**
 
 ```bash
-Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3> <path_transcripts_list>
+Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3> <path_transcripts_list> <hidden_layers> <min_CV>
 ```
 
 **Arguments**
@@ -94,6 +94,8 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `path_input_2`: Path to the Input 2 .fasta file containing cross-speices transcript alignments as described in the `GAP Input` section .
   - `path_input_3`: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, the default set of phylogeny features are located in `data-raw/tree-features.csv`
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
+  - `hidden_layers`: Best performing hidden layer architecture from PredictSpeies function.
+  - `min_CV`: Lowest CV error found from the optimal model in PredictSpecies function.
 
 ## User-defined Phylogeny
 
@@ -156,19 +158,19 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
 - Alignment-only approach
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 0 0.15
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 0 .15
     ```
 
 - Tree-features included
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 2,1 0.15
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 2,1 0.15
     ```
 This function lists the associated genes based on the optimal architecture configuration found in PredictSpecies from a user-defined list of transcripts. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
