@@ -7,43 +7,34 @@ for package in packages:
     install_package(package)
 
 from ete3 import Tree
-import re
 import pandas as pd
-def generate_features(tree_str):
-    tree = Tree(tree_str, format=1)
+def traverse_tree(tree, list_of_species):
+    if len(tree.get_leaf_names()) < 2:
+        return
+    list_of_species.append(tree.get_leaf_names())
+    for tr in tree.get_children():
+        traverse_tree(tr, list_of_species)
 
-    # Assign names to nodes without names or with empty names
-    for node in tree.traverse():
-        if not node.name or node.name.strip() == "":
-            node.name = f"Node_{id(node)}"
+def create_species_dataframe(lists_of_species):
+    data = {}
+    for i, species_list in enumerate(lists_of_species):
+        for species in lists_of_species[0]:
+            if species in species_list:
+                if species not in data:
+                    data[species] = [0] * len(lists_of_species)
+                data[species][i] = 1
 
-    # Initialize a dictionary to store features for each branch
-    features = {}
-
-    # Traverse the tree in postorder to ensure child branches are processed before their parent
-    for node in tree.traverse("postorder"):
-        if not node.is_leaf():
-            features[node.name] = set()
-            for descendant in node.iter_leaves():
-                features[node.name].add(descendant.name)
-
-    # Generate feature vectors
-    species_set = {species for branch_features in features.values() for species in branch_features}
-    feature_vectors = {}
-    for branch, branch_features in features.items():
-        feature_vector = [1 if species in branch_features else 0 for species in sorted(species_set)]
-        feature_vectors[branch] = feature_vector
-
-    return feature_vectors
-
+    df = pd.DataFrame(data, index=range(1, len(lists_of_species) + 1))
+    df = df.T
+    df = df.reset_index()
+    df = df.rename(columns={'index': 'species_name'})
+    return df
 # Example Newick tree string
-newick_tree = input("Insert the species tree in newick format with an ending semi-colon: ")
+newick_str = input("Insert the species tree in newick format with an ending semi-colon: ")
+tree = Tree(newick_str, format=1)
+listf = []
+traverse_tree(tree, listf)
+df = create_species_dataframe(listf)
+df.to_csv('results/tf-c-'+str(len(listf[0]))+'spcs.csv')
 
-features = generate_features(newick_tree)
-
-species = re.findall(r'[a-zA-Z_ ]+', newick_tree)
-tree_feats=pd.DataFrame(features)
-tree_feats.index=species
-tree_feats.columns=range(1, len(tree_feats.columns) + 1)
-tree_feats.to_csv("tree_feats.csv")
-print("Saved tree_features.csv in the parent directory")
+print("Saved tree_features in the parent directory")
