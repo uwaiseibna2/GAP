@@ -40,7 +40,23 @@ return(sum(!is.na(phylogeny$target)))
 #number of known species
 num_species<-get_num_species(path_status)
 
-
+read_fasta <- function(file_path) {
+  # Read the sequences from the FASTA file
+  fasta_sequences <- readDNAStringSet(file_path)
+  return(fasta_sequences)
+}
+extract_sequence <- function(sequences, transcript_id) {
+  matching_ids <- grep(transcript_id, names(sequences), value = TRUE)
+  check_lamprey <- paste(transcript_id, 'lamprey')
+  matching_ids <- matching_ids[matching_ids != check_lamprey]
+  if (length(matching_ids) > 0) {
+    sequence_list <- lapply(matching_ids, function(id) unlist(strsplit(as.character(sequences[[id]]), "")))
+    return(list(matching_ids, sequence_list))
+  } else {
+    print(paste("Transcript ID", transcript_id, "not found."))
+    return(NULL)
+  }
+}
 find_weights<-function(nn.params,use_tree_features,V,d){
   weights<-nn.params[[1]][[1]][1,]
   weights<-abs(weights)
