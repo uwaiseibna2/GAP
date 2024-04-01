@@ -10,7 +10,8 @@ path_status<-commandArgs(trailingOnly = TRUE)[3]
 path_file<-commandArgs(trailingOnly = TRUE)[4]
 path_tree<-commandArgs(trailingOnly = TRUE)[5]
 transcript_list_path<-commandArgs(trailingOnly = TRUE)[6]
-hidden_layers<-0
+hidden_layers<-commandArgs(trailingOnly = TRUE)[7]
+mincv<-as.numeric(commandArgs(trailingOnly = TRUE)[8])
 
 loading_chars <- c("|", "/", "-", "\\")
 
@@ -28,11 +29,10 @@ path_file<-paste0(path_source,path_file)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
 
-get_num_species<-function(path_status)
-{
-phylogeny<-read.table(path_status,header=1)
-colnames(phylogeny)<-c('species_name','target')
-return(sum(!is.na(phylogeny$target)))
+get_num_species<-function(path_status){
+  phylogeny<-read.table(path_status,header=1)
+  colnames(phylogeny)<-c('species_name','target')
+  return(sum(!is.na(phylogeny$target)))
 }
 num_species<-get_num_species(path_status)
 
@@ -58,8 +58,7 @@ extract_sequence <- function(sequences, transcript_id) {
     return(NULL)
   }
 }
-get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
-{
+get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
   sequence <- extract_sequence(read_fasta(path_file), transcript_id)
   sequence_list_chars <- lapply(sequence[[2]], function(seq) unlist(strsplit(as.character(seq), "")))
   sequence_df <- as.data.frame(do.call(rbind, sequence_list_chars))
@@ -122,7 +121,7 @@ fit.model <-function(data,index,results,hl){
     
     
     nn.train<- neuralnetwork(X = train_X, y = train_y,
-                             hidden.layers = hl,
+                             hidden.layers = ifelse(hl != "0", as.numeric(strsplit(hl, ",")[[1]]), NA),
                              val.prop = 0,
                              optim.type = 'adam',
                              loss.type = "log",
@@ -154,20 +153,16 @@ fit.model <-function(data,index,results,hl){
       {})
     
   }
-  return (misclassified)
+  return (misclassified/num_species)
 }
 get_azero<-function(results,data){
-  if(length((which(results$CV==0)))==0)
-  {
-    return(FALSE)
-  }
-  set<-which(results$CV==0)
+  set<-which(results$CV<=mincv)
   for (subset in set)
   {
     hl<-results[subset,]$HL
     hl<-ifelse(hl!= 0,hl, NA)
     miss<-fit.model(data,subset,results,hl)
-    if(miss==0)
+    if(miss<=mincv)
     {
       return (TRUE)
     }
@@ -176,6 +171,8 @@ get_azero<-function(results,data){
       return (FALSE)
     }
   }
+  return (FALSE)
+
 }
 train_ANN<-function(data,hl,num_species,gene){
   nFolds <- num_species
@@ -282,7 +279,7 @@ run_associated_genes<-function(gene_list){
                          "get_azero", "path_transcripts", "extract_sequence", 
                          "path_file", "path_status", "get_data", "path_to_results", 
                          "path_tree", "hidden_layers", "use_dendrogram_features", 
-                         "train_ANN", "num_species"))
+                         "train_ANN", "num_species","mincv"))
   clusterApply(cl, gene_list, f)
   stopCluster(cl)
   cat("Parallel processing completed.\n")

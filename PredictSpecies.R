@@ -320,22 +320,15 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
       {})
 
   }
-  
-  if(misclassified==0){
+    misclassified=misclassified/num_species
     predictions=predict(nn.train,all_data)
     predicted_pheno=cbind(species,predictions$predictions)
     weights = nn.train$Rcpp_ANN$getParams()$weights
     return(list(misclassified,predicted_pheno,weights))
-  }
-  return (misclassified)
 }
 get_zero<-function(results,data,all_data,species){
 
-  if(length((which(results$CV==0)))==0)
-  {
-    return(list(FALSE,hl))
-  }
-  set<-which(results$CV==0)
+  set<-which(results$CV==min(results$CV))
   for (subset in set)
   {
     if(is.null(results[subset,]$layers))
@@ -350,10 +343,7 @@ get_zero<-function(results,data,all_data,species){
     miss<-fit.model(data,subset,results,hl,use_tree_features,all_data,species)
 
   }
-  if(length(miss)>1)
-  {
-    return (list(TRUE,hl,miss[2],miss[3]))
-  }
+  return (list(miss[1],hl,miss[2],miss[3]))
 }
 get_gene_architecture<-function(use_tree_features,hidden_layers){
   if(hidden_layers>0)
@@ -362,7 +352,7 @@ get_gene_architecture<-function(use_tree_features,hidden_layers){
   }
   dataset<-get_data(transcript_id, path_status,path_file,use_tree_features,path_tree)
   x<-get_zero(train_NN(dataset[[1]],hidden_layers,num_species),dataset[[1]],dataset[[5]],dataset[[2]])
-  if(x[[1]])
+  if(x[[1]]==0)
   {
     print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
     if (!dir.exists(path_to_results)) 
@@ -374,13 +364,23 @@ get_gene_architecture<-function(use_tree_features,hidden_layers){
     writeLines(as.character(weights),paste0(path_to_results,'weights.txt'))
     return(TRUE)
   }
-  else
+  else if (x[[1]]<mincv) 
+  {
+    mincv=x[[1]]
+    print(paste0('found architecture with CV error =',x[[1]],' with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
+    if (!dir.exists(path_to_results)) 
     {
-      return(FALSE)
+      dir.create(path_to_results)
     }
+    write.csv(x[[3]],paste0(path_to_results,'predictions.csv'))
+    weights<-find_weights(x[[4]],use_tree_features,dataset[[3]],dataset[[4]])
+    writeLines(as.character(weights),paste0(path_to_results,'weights.txt'))
+    return(FALSE)
+  }
   }
 
 
+mincv=1
 for (hl in 0:3) {
   if(get_gene_architecture(use_tree_features,hl))
   {break}
