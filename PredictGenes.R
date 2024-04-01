@@ -100,7 +100,7 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
 }
 fit.model <-function(data,index,results,hl){
   print(results[index,])
-  nFolds <- 34
+  nFolds <- num_species
   myFolds <- cut(seq(1, nrow(data)),
                  breaks = nFolds,
                  labels=FALSE)
@@ -126,7 +126,7 @@ fit.model <-function(data,index,results,hl){
                              val.prop = 0,
                              optim.type = 'adam',
                              loss.type = "log",
-                             batch.size = 33,
+                             batch.size = num_species-1,
                              activ.functions = "relu",
                              standardize = FALSE,
                              learn.rates = 1e-2,
@@ -141,7 +141,7 @@ fit.model <-function(data,index,results,hl){
     {
       flag<-FALSE
       print("NAN encountered")
-      return(34)
+      return(num_species)
     }
     tryCatch(
       expr = {

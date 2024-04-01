@@ -1,5 +1,4 @@
 packages<-c('ANN2','dplyr','gtools','parallel','qqman','rjson','BiocManager','tidyr')
-
 for (package in packages){
   if (!requireNamespace(package, quietly = TRUE)) {
     install.packages(package, repos = 'http://cran.us.r-project.org')
@@ -15,24 +14,8 @@ library(tidyr)
 if(!requireNamespace('Biostrings',quietly = TRUE)){
 BiocManager::install("Biostrings")}
 library(Biostrings)
-read_fasta <- function(file_path) {
-  # Read the sequences from the FASTA file
-  fasta_sequences <- readDNAStringSet(file_path)
-  return(fasta_sequences)
-}
-extract_sequence <- function(sequences, transcript_id) {
-  matching_ids <- grep(transcript_id, names(sequences), value = TRUE)
-  check_lamprey <- paste(transcript_id, 'lamprey')
-  matching_ids <- matching_ids[matching_ids != check_lamprey]
-  if (length(matching_ids) > 0) {
-    sequence_list <- lapply(matching_ids, function(id) unlist(strsplit(as.character(sequences[[id]]), "")))
-    return(list(matching_ids, sequence_list))
-  } else {
-    print(paste("Transcript ID", transcript_id, "not found."))
-    return(NULL)
-  }
-}
 
+#get file paths
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 transcript_id<-commandArgs(trailingOnly = TRUE)[3]
@@ -40,23 +23,21 @@ path_status<-commandArgs(trailingOnly = TRUE)[4]
 path_file<-commandArgs(trailingOnly = TRUE)[5]
 path_tree<-commandArgs(trailingOnly = TRUE)[6]
 
+
+#implement paths
 path_to_results<-"results/"
-
-
-
-
 path_file<-paste0(path_source,path_file)
 path_tree<-paste0(path_source,path_tree)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
 
-
-get_num_species<-function(path_status)
-{
+get_num_species<-function(path_status){
 phylogeny<-read.table(path_status,header=1)
 colnames(phylogeny)<-c('species_name','target')
 return(sum(!is.na(phylogeny$target)))
 }
+
+#number of known species
 num_species<-get_num_species(path_status)
 
 
@@ -87,9 +68,7 @@ generate_hidden_layer_tuples <- function(n, x) {
   } else {
     return(permutations(x, n))
   }}
-
-get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
-{
+get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
   sequence <- extract_sequence(read_fasta(path_file), transcript_id)
   sequence_list_chars <- lapply(sequence[[2]], function(seq) unlist(strsplit(as.character(seq), "")))
   sequence_df <- as.data.frame(do.call(rbind, sequence_list_chars))
@@ -128,7 +107,6 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree)
   return (list(data,merged[,c(1,2)],V,d,all_data))
   
 }
-
 train_NN<-function(data,hidden_layer,num_species){
   nFolds <- num_species
   cv_error<-list()
@@ -272,7 +250,7 @@ train_NN<-function(data,hidden_layer,num_species){
   print(paste0(transcript_id,' completed'))
   return (do.call(rbind, lapply(cv_error, data.frame)))}
 fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
-  nFolds <- 34
+  nFolds <- num_species
   myFolds <- cut(seq(1, nrow(data)),
                  breaks = nFolds,
                  labels=FALSE)
@@ -298,7 +276,7 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
                              val.prop = 0,
                              optim.type = 'adam',
                              loss.type = "log",
-                             batch.size = 33,
+                             batch.size = num_species-1,
                              activ.functions = "relu",
                              standardize = FALSE,
                              learn.rates = 1e-2,
@@ -335,8 +313,7 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
   }
   return (misclassified)
 }
-get_zero<-function(results,data,all_data,species)
-{
+get_zero<-function(results,data,all_data,species){
 
   if(length((which(results$CV==0)))==0)
   {
@@ -362,8 +339,6 @@ get_zero<-function(results,data,all_data,species)
     return (list(TRUE,hl,miss[2],miss[3]))
   }
 }
-
-
 get_gene_architecture<-function(use_tree_features,hidden_layers){
   if(hidden_layers>0)
   {
