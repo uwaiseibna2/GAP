@@ -329,6 +329,8 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
 get_zero<-function(results,data,all_data,species){
 
   set<-which(results$CV==min(results$CV))
+  print(min(results$CV))
+  print(set)
   for (subset in set)
   {
     if(is.null(results[subset,]$layers))
