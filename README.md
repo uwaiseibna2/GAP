@@ -88,7 +88,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 ```
 
 **Arguments**
-  - `path_source`: Source of the downloaded tool/GAP directory.
+  - `path_source`: Source of the GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
   - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
