@@ -1,14 +1,14 @@
 # GAP (Genotype-phenotype Association Predictor)
 
-GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments.
+GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) learning genotype-phenotype associations from gaps in multi-species sequence alignments.
 
-In particular, GAP employs a neural network (NN) to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-input species tree. GAP can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. 
+In particular, GAP employs a neural network to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-input species tree. GAP can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. 
 
 For queries, email: uislam2022@fau.edu.
 
 # Citing GAP
 
-If you use GAP, then please cite: Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. A machine learning framework for predicting genotype-phenotype associations from multi-species sequence alignments. Under review (2024). 
+If you use GAP, then please cite: Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. Learning genotype-phenotype associations from gaps in multi-species sequence alignments. Under review (2024). 
 
 # Getting Started
 
@@ -46,7 +46,8 @@ GAP has three functions:
 GAP is run in a terminal. Below are detailed instructions for using each of the GAP functions.
 
 ## PredictSpecies
-The predictSpecies function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
+
+The PredictSpecies function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
 
 **Command Structure**
 
@@ -71,15 +72,14 @@ The predictPositions function output a tab-delimited file containing predictive 
 ```bash
 Rscript PredictPostions.R <path_source>
 ```
-This method requires execution from the shell due to resource constraints and follows a specific command structure with parallel processing:
 
 **Arguments**:
-  - `path_source`: Source of the downloaded tool/GAP directory.
+  - `path_source`: Source of the GAP directory.
 
 
 ## PredictGenes
 
-The predictGenes function should takes in input file as a list of transcripts to examine, and then output a list of predicted genomic regions with minimum CV error. Please note that, the input number of genomic regions is g>1 for this function.  
+The PredictGenes function implements optimal architecture identified in PredictSpecies function. It takes the input files 1, 2 , and 3 as described in the GAP Input. Additionally, it takes a list of transcript ids on which it implements the optimal architecture to identify the set of ids within the provided list with prediction error similar or less than the minimum cross-validation error found in the PredictSpecies function. The set of transcripts that meet this criteria is documented in the output file `associated.csv` under the results folder in the parent directory.
 
 **Command Structure**
 
@@ -90,9 +90,9 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 **Arguments**
   - `path_source`: Source of the downloaded tool/GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `path_input_1`: Path to the Input 1 file as described in the `GAP Input` section which list the phenotype status for a list of species.
-  - `path_input_2`: Path to the Input 2 .fasta file containing cross-speices transcript alignments as described in the `GAP Input` section .
-  - `path_input_3`: Path to the Input 3 file containing phylogeny fetures as described in the `GAP Input` section, the default set of phylogeny features are located in `data-raw/tree-features.csv`
+  - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
+  - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
+  - `path_input_3`: Path to Input 3 file described in `GAP Input` section above.
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
   - `hidden_layers`: Best performing hidden layer architecture from PredictSpeies function.
   - `min_CV`: Lowest CV error found from the optimal model in PredictSpecies function.
@@ -136,7 +136,7 @@ Commands to run the three GAP functions are discussed here. For each function, s
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
   ```
-which runs the script to identify NN architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
+which runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
 
 ## PredictPositions
 **Sample Commands**:
