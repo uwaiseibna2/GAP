@@ -1,15 +1,11 @@
-packages<-c('ANN2','dplyr','gtools','parallel','qqman','rjson','BiocManager','tidyr')
+packages<-c('ANN2','gtools','parallel','BiocManager','tidyr')
 for (package in packages){
   if (!requireNamespace(package, quietly = TRUE)) {
     install.packages(package, repos = 'http://cran.us.r-project.org')
   }
 }
 library(ANN2)
-library(dplyr)
 library(gtools)
-library(parallel)
-library(qqman)
-library(rjson)
 library(tidyr)
 if(!requireNamespace('Biostrings',quietly = TRUE)){
 BiocManager::install("Biostrings")}
@@ -32,11 +28,10 @@ path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
 
 get_num_species<-function(path_status){
-phylogeny<-read.table(path_status,header=1)
-colnames(phylogeny)<-c('species_name','target')
-return(sum(!is.na(phylogeny$target)))
+  phylogeny<-read.table(path_status,header=1)
+  colnames(phylogeny)<-c('species_name','target')
+  return(sum(!is.na(phylogeny$target)))
 }
-
 #number of known species
 num_species<-get_num_species(path_status)
 
@@ -45,30 +40,30 @@ read_fasta <- function(file_path) {
   fasta_sequences <- readDNAStringSet(file_path)
   return(fasta_sequences)
 }
-extract_sequence <- function(sequences, transcript_id) {
-  matching_ids <- grep(transcript_id, names(sequences), value = TRUE)
-  check_lamprey <- paste(transcript_id, 'lamprey')
+extract_sequence <- function(seqs, t_id) {
+  matching_ids <- grep(t_id, names(seqs), value = TRUE)
+  check_lamprey <- paste(t_id, 'lamprey')
   matching_ids <- matching_ids[matching_ids != check_lamprey]
   if (length(matching_ids) > 0) {
-    sequence_list <- lapply(matching_ids, function(id) unlist(strsplit(as.character(sequences[[id]]), "")))
+    sequence_list <- lapply(matching_ids, function(id) unlist(strsplit(as.character(seqs[[id]]), "")))
     return(list(matching_ids, sequence_list))
   } else {
-    print(paste("Transcript ID", transcript_id, "not found."))
+    print(paste("Transcript ID", t_id, "not found."))
     return(NULL)
   }
 }
-find_weights<-function(nn.params,use_tree_features,V,d){
-  weights<-nn.params[[1]][[1]][1,]
+find_weights<-function(params,tf,V,d){
+  weights<-params[[1]][[1]][1,]
   weights<-abs(weights)
-  if(length(nn.params)>1)
+  if(length(params)>1)
   {
-    for(i in 2:length(nn.params))
+    for(i in 2:length(params))
     {
-      weights<-t(weights)%*% t(nn.params[[i]])
+      weights<-t(weights)%*% t(params[[i]])
     }
   }
   
-  if (use_tree_features)
+  if (tf)
   {
     pca_weights<- ((V[,1:d])%*%as.matrix(weights[1:d]) )
   }
@@ -84,13 +79,13 @@ generate_hidden_layer_tuples <- function(n, x) {
   } else {
     return(permutations(x, n))
   }}
-get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
-  sequence <- extract_sequence(read_fasta(path_file), transcript_id)
+get_data<-function(trid,phenoStatus,SeqFile,TreeFlag,TreeFile){
+  sequence <- extract_sequence(read_fasta(SeqFile), trid)
   sequence_list_chars <- lapply(sequence[[2]], function(seq) unlist(strsplit(as.character(seq), "")))
   sequence_df <- as.data.frame(do.call(rbind, sequence_list_chars))
   sequence_df<-cbind(sequence[[1]],sequence_df)
-  sequence_df <- separate(sequence_df, 'sequence[[1]]', into = c("transcript_id", "species_name"), sep = " ")
-  phylogeny<-read.table(path_status,header=1)
+  sequence_df <- separate(sequence_df, 'sequence[[1]]', into = c("trid", "species_name"), sep = " ")
+  phylogeny<-read.table(phenoStatus,header=1)
   colnames(phylogeny)<-c('species_name','target')
   merged<-merge(phylogeny,sequence_df,by='species_name')
   merged <- merged[, c(3, 1, 2, seq(4, ncol(merged)))]
@@ -108,9 +103,9 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
   pcs_d<-data.frame(PCs)
   target<-merged[,c(3)]
   data<-cbind(target,pcs_d)
-  if(tree_flag==TRUE)
+  if(TreeFlag==TRUE)
   {
-    dendo_tree<-read.csv(path_tree,header = 1)
+    dendo_tree<-read.csv(TreeFile,header = 1)
     de<-data.frame(dendo_tree)
     unique_cols <- sapply(de, function(x) length(unique(x))) == 1
     de<- de[, !unique_cols]
@@ -118,20 +113,22 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
     de<-de[,-c(1)]
     data<-cbind(data,de)
   }
-  all_data<-data[,-c(1)]
+  unknownData<-data.frame(data)[is.na(data$target), ]
+  unknownData<-unknownData[,-c(1)]
   data<-na.omit(data)
-  return (list(data,merged[,c(1,2)],V,d,all_data))
+  spcsl<-data.frame(merged)[is.na(merged$target),]
+  return (list(data,spcsl[,c(1,2)],V,d,unknownData))
   
 }
-train_NN<-function(data,hidden_layer,num_species){
-  nFolds <- num_species
+train_NN<-function(InputNN,num_hidden_layer,numSpcs){
+  nFolds <- numSpcs
   cv_error<-list()
-  myFolds <- cut(seq(1, nrow(data)),
+  myFolds <- cut(seq(1, nrow(InputNN)),
                  breaks = nFolds,
                  labels=FALSE)
   l1Vals = 10^seq(-4, 3, length.out = 100)
   alphas = seq(0, 1, 0.05)
-  hl= generate_hidden_layer_tuples(hidden_layer,num_species-1)
+  hl= generate_hidden_layer_tuples(num_hidden_layer,numSpcs-1)
   count<-0
   print(paste0('Gene ',transcript_id,' running: '))
   for( l in l1Vals)
@@ -147,8 +144,8 @@ train_NN<-function(data,hidden_layer,num_species){
         for (i in 1:nFolds) {
           testObs  <- which(myFolds == i, arr.ind = TRUE)
 
-          dfTest   <- data[ testObs, ]
-          dfTrain  <- data[-testObs, ]
+          dfTest   <- InputNN[ testObs, ]
+          dfTrain  <- InputNN[-testObs, ]
 
           train_X<-data.matrix(dfTrain[,-c(1)])
 
@@ -163,9 +160,9 @@ train_NN<-function(data,hidden_layer,num_species){
                                    val.prop = 0,
                                    optim.type = 'adam',
                                    loss.type = "log",
-                                   batch.size = num_species-1,
+                                   batch.size = numSpcs-1,
                                    standardize = FALSE,
-                                   learn.rates = 0.01,
+                                   learn.rates = 1e-2,
                                    L1=l1,
                                    L2=l2,
                                    n.epochs = 500,
@@ -191,7 +188,7 @@ train_NN<-function(data,hidden_layer,num_species){
         }
         if(flag!=FALSE)
         {
-          cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/num_species))))
+          cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,CV=(misclassified/numSpcs))))
         }
         count<-count+1
         cat(paste0('\rRunning architecture ', as.character(count),'/',length(alphas)*length(l1Vals)))
@@ -208,8 +205,8 @@ train_NN<-function(data,hidden_layer,num_species){
           for (i in 1:nFolds) {
             testObs  <- which(myFolds == i, arr.ind = TRUE)
 
-            dfTest   <- data[ testObs, ]
-            dfTrain  <- data[-testObs, ]
+            dfTest   <- InputNN[ testObs, ]
+            dfTrain  <- InputNN[-testObs, ]
 
             train_X<-data.matrix(dfTrain[,-c(1)])
 
@@ -224,9 +221,9 @@ train_NN<-function(data,hidden_layer,num_species){
                                      val.prop = 0,
                                      optim.type = 'adam',
                                      loss.type = "log",
-                                     batch.size = num_species-1,
+                                     batch.size = numSpcs-1,
                                      standardize = FALSE,
-                                     learn.rates = 0.01,
+                                     learn.rates = 1e-2,
                                      L1=l1,
                                      L2=l2,
                                      n.epochs = 500,
@@ -252,7 +249,7 @@ train_NN<-function(data,hidden_layer,num_species){
           }
           if(flag!=FALSE)
           {
-            cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,layers=hl[j,],CV=(misclassified/num_species))))
+            cv_error <- append(cv_error,list(list(L1=l1,L2 = l2,alpha=alpha,layers=hl[j,],CV=(misclassified/numSpcs))))
           }
           count=count+1
           cat(paste0('\rRunning architecture ', as.character(count),'/',length(alphas)*length(l1Vals)*nrow(hl)))
@@ -264,20 +261,22 @@ train_NN<-function(data,hidden_layer,num_species){
     }
   }
   print(paste0(transcript_id,' completed'))
+  res<-do.call(rbind, lapply(cv_error, data.frame))
+  write.csv(res,'/Users/uwaiseibna/Downloads/result-tree.csv')
   return (do.call(rbind, lapply(cv_error, data.frame)))}
-fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
+fit.model <-function(InputVal,idx,ResNN,HiddenLayers,UnknownData,SpcsList){
   nFolds <- num_species
-  myFolds <- cut(seq(1, nrow(data)),
+  myFolds <- cut(seq(1, nrow(InputVal)),
                  breaks = nFolds,
                  labels=FALSE)
-  result_no<-index
+  result_no<-idx
   flag<-TRUE
   misclassified<-0
   for (i in 1:nFolds) {
     testObs  <- which(myFolds == i, arr.ind = TRUE)
 
-    dfTest   <- data[ testObs, ]
-    dfTrain  <- data[-testObs, ]
+    dfTest   <- InputVal[ testObs, ]
+    dfTrain  <- InputVal[-testObs, ]
 
     train_X<-data.matrix(dfTrain[,-c(1)])
 
@@ -288,7 +287,7 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
 
 
     nn.train<- neuralnetwork(X = train_X, y = train_y,
-                             hidden.layers = hl,
+                             hidden.layers = HiddenLayers,
                              val.prop = 0,
                              optim.type = 'adam',
                              loss.type = "log",
@@ -296,8 +295,8 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
                              activ.functions = "relu",
                              standardize = FALSE,
                              learn.rates = 1e-2,
-                             L1=results[index,]$L1,
-                             L2=results[index,]$L2,
+                             L1=ResNN[idx,]$L1,
+                             L2=ResNN[idx,]$L2,
                              n.epochs = 500,
                              verbose = FALSE,
                              random.seed = 1)
@@ -321,69 +320,68 @@ fit.model <-function(data,index,results,hl,use_tree_features,all_data,species){
 
   }
     misclassified=misclassified/num_species
-    predictions=predict(nn.train,all_data)
-    predicted_pheno=cbind(species,predictions$predictions)
+    predictions=predict(nn.train,UnknownData)
+    predicted_pheno=cbind(SpcsList,predictions$predictions)
     weights = nn.train$Rcpp_ANN$getParams()$weights
     return(list(misclassified,predicted_pheno,weights))
 }
-get_zero<-function(results,data,all_data,species){
+get_zero<-function(res,dtEx,unknownData,sps){
 
-  set<-which(results$CV==min(results$CV))
-  print(min(results$CV))
+  set<-which(res$CV==min(res$CV))
   print(set)
   for (subset in set)
   {
-    if(is.null(results[subset,]$layers))
+    if(is.null(res[subset,]$layers))
     {
       hl<-NA
     }
     else
     {
 
-      hl<-results[subset,]$layers
+      hl<-res[subset,]$layers
     }
-    miss<-fit.model(data,subset,results,hl,use_tree_features,all_data,species)
+    miss<-fit.model(dtEx,subset,res,hl,unknownData,sps)
 
   }
   return (list(miss[1],hl,miss[2],miss[3]))
 }
-get_gene_architecture<-function(use_tree_features,hidden_layers){
-  if(hidden_layers>0)
+get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
+  if(hla>0)
   {
-  print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
+    print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
   }
-  dataset<-get_data(transcript_id, path_status,path_file,use_tree_features,path_tree)
-  x<-get_zero(train_NN(dataset[[1]],hidden_layers,num_species),dataset[[1]],dataset[[5]],dataset[[2]])
-  if(x[[1]]==0)
-  {
-    print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
-    if (!dir.exists(path_to_results)) 
+    dataset<-get_data(tid, pst,pfi,utf,ptr)
+    x<-get_zero(train_NN(dataset[[1]],hla,numsp),dataset[[1]],dataset[[5]],dataset[[2]])
+    if(x[[1]]==0)
     {
-      dir.create(path_to_results)
+      print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
+      if (!dir.exists(pre)) 
+      {
+        dir.create(pre)
+      }
+      write.csv(x[[3]],paste0(pre,'predictions.csv'))
+      weights<-find_weights(x[[4]],utf,dataset[[3]],dataset[[4]])
+      writeLines(as.character(weights),paste0(pre,'weights.txt'))
+      return(TRUE)
     }
-    write.csv(x[[3]],paste0(path_to_results,'predictions.csv'))
-    weights<-find_weights(x[[4]],use_tree_features,dataset[[3]],dataset[[4]])
-    writeLines(as.character(weights),paste0(path_to_results,'weights.txt'))
-    return(TRUE)
-  }
-  else if (x[[1]]<mincv) 
-  {
-    mincv=x[[1]]
-    print(paste0('found architecture with CV error =',x[[1]],' with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
-    if (!dir.exists(path_to_results)) 
+    else if (x[[1]]<mincv) 
     {
-      dir.create(path_to_results)
+      mincv=x[[1]]
+      print(paste0('found architecture with CV error =',x[[1]],' with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
+      if (!dir.exists(pre)) 
+      {
+        dir.create(pre)
+      }
+      write.csv(x[[3]],paste0(pre,'predictions.csv'))
+      weights<-find_weights(x[[4]],utf,dataset[[3]],dataset[[4]])
+      writeLines(as.character(weights),paste0(pre,'weights.txt'))
+      return(FALSE)
     }
-    write.csv(x[[3]],paste0(path_to_results,'predictions.csv'))
-    weights<-find_weights(x[[4]],use_tree_features,dataset[[3]],dataset[[4]])
-    writeLines(as.character(weights),paste0(path_to_results,'weights.txt'))
-    return(FALSE)
-  }
   }
 
 
 mincv=1
 for (hl in 0:3) {
-  if(get_gene_architecture(use_tree_features,hl))
+  if(get_gene_architecture(transcript_id,path_status,path_file,path_tree,use_tree_features,path_to_results,hl,num_species))
   {break}
 }
