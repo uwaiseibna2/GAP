@@ -60,12 +60,12 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `region_id`: Identifier for genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `phylogenetic_tree`: (optional) Custom phylogenetic tree including as `Input 3` described `GAP Input`. If not provided, the default phylogeny features will be used.
+- `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
 
     
 ## PredictPositions
 
-The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function with the transcript_id used for the previous function. This function requires results from the previous function to generate the positional importance, please make sure you have the results of the previous function before running this command.
+The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function with the transcript_id used for the previous function. 
 
 **Command Structure**
 
@@ -79,12 +79,12 @@ Rscript PredictPostions.R <path_source>
 
 ## PredictGenes
 
-The PredictGenes function idenfies takes the input files described the GAP Input and a list of transcript ids. GAP examines each transcript in the list to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
+The PredictGenes function idenfies takes the input files described in the GAP Input. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
 
 **Command Structure**
 
 ```bash
-Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_transcripts_list> <phylogenetic_tree>
+Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3>
 ```
 
 **Arguments**
@@ -92,8 +92,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
   - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
-  - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
-  - `phylogenetic_tree`: (optional) Custom phylogenetic tree including as `Input 3` described `GAP Input`. If not provided, the default phylogeny features will be used.
+  - `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
 
 # Example Application of GAP
 
@@ -113,10 +112,10 @@ Commands to run the three GAP functions are discussed here. For each function, s
 - Tree-features included
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa 
+  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
 which runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
 
@@ -149,27 +148,9 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
 - Tree-features included
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
+    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     ```
 This function lists the associated genes based on the optimal architecture configuration and minimum CV error from the provided list of transcript ids. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
-
-**Sample Commands with Custom Phylogeny**:
-
-*PredictSpecies*
-```bash
-
-#unix-based OS
-Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
-#Windows OS
-'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
-```
-*PredictGenes*
-```bash
-#unix-based OS
-Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
-#Windows OS
-'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
-``` 
