@@ -1,8 +1,6 @@
 library(ANN2)
-library(dplyr)
 library(Biostrings)
 library(tidyr)
-library(utils)
 library(parallel)
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
@@ -10,15 +8,16 @@ path_status<-commandArgs(trailingOnly = TRUE)[3]
 path_file<-commandArgs(trailingOnly = TRUE)[4]
 path_tree<-commandArgs(trailingOnly = TRUE)[5]
 transcript_list_path<-commandArgs(trailingOnly = TRUE)[6]
-hidden_layers<-commandArgs(trailingOnly = TRUE)[7]
-mincv<-as.numeric(commandArgs(trailingOnly = TRUE)[8])
+
+hidden_layers<-0
+mincv<-0
 
 loading_chars <- c("|", "/", "-", "\\")
 
 
 
 
-
+path_order<-'data-raw/order.txt'
 path_to_results<-"results/associated.txt"
 
 
@@ -28,7 +27,7 @@ path_tree<-paste0(path_source,path_tree)
 path_file<-paste0(path_source,path_file)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
-
+path_order<-paste0(path_source,path_order)
 get_num_species<-function(path_status){
   phylogeny<-read.table(path_status,header=1)
   colnames(phylogeny)<-c('species_name','target')
@@ -58,16 +57,18 @@ extract_sequence <- function(sequences, transcript_id) {
     return(NULL)
   }
 }
-get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
-  sequence <- extract_sequence(read_fasta(path_file), transcript_id)
+get_data<-function(trid,phenoStatus,SeqFile,TreeFlag,TreeFile){
+  sequence <- extract_sequence(read_fasta(SeqFile), trid)
   sequence_list_chars <- lapply(sequence[[2]], function(seq) unlist(strsplit(as.character(seq), "")))
   sequence_df <- as.data.frame(do.call(rbind, sequence_list_chars))
   sequence_df<-cbind(sequence[[1]],sequence_df)
-  sequence_df <- separate(sequence_df, 'sequence[[1]]', into = c("transcript_id", "species_name"), sep = " ")
-  phylogeny<-read.table(path_status,header=1)
+  sequence_df <- separate(sequence_df, 'sequence[[1]]', into = c("trid", "species_name"), sep = " ")
+  phylogeny<-read.table(phenoStatus,header=1)
   colnames(phylogeny)<-c('species_name','target')
   merged<-merge(phylogeny,sequence_df,by='species_name')
   merged <- merged[, c(3, 1, 2, seq(4, ncol(merged)))]
+  order<-read.table(path_order)
+  merged<-merged[match(order$V1,merged$species_name),]
   data<-merged[,-c(1,2,3)]
   data = data.frame(lapply(data, function(x){gsub("-", 0, x)}))
   data = data.frame(lapply(data, function(x){gsub("A|T|G|C|a|t|g|c|N|n", 1, x)}))
@@ -82,9 +83,9 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
   pcs_d<-data.frame(PCs)
   target<-merged[,c(3)]
   data<-cbind(target,pcs_d)
-  if(tree_flag==TRUE)
+  if(TreeFlag==TRUE)
   {
-    dendo_tree<-read.csv(path_tree,header = 1)
+    dendo_tree<-read.csv(TreeFile,header = 1)
     de<-data.frame(dendo_tree)
     unique_cols <- sapply(de, function(x) length(unique(x))) == 1
     de<- de[, !unique_cols]
@@ -92,9 +93,11 @@ get_data<-function(transcript_id,path_status,path_file,tree_flag,path_tree){
     de<-de[,-c(1)]
     data<-cbind(data,de)
   }
-  all_data<-data[,-c(1)]
+  unknownData<-data.frame(data)[is.na(data$target), ]
+  unknownData<-unknownData[,-c(1)]
   data<-na.omit(data)
-  return (list(data,merged[,c(1,2)],V,d,all_data))
+  spcsl<-data.frame(merged)[is.na(merged$target),]
+  return (list(data,spcsl[,c(1,2)],V,d,unknownData))
   
 }
 fit.model <-function(data,index,results,hl){
@@ -279,7 +282,7 @@ run_associated_genes<-function(gene_list){
                          "get_azero", "path_transcripts", "extract_sequence", 
                          "path_file", "path_status", "get_data", "path_to_results", 
                          "path_tree", "hidden_layers", "use_dendrogram_features", 
-                         "train_ANN", "num_species","mincv"))
+                         "train_ANN", "num_species","mincv","path_order"))
   clusterApply(cl, gene_list, f)
   stopCluster(cl)
   cat("Parallel processing completed.\n")

@@ -18,14 +18,15 @@ transcript_id<-commandArgs(trailingOnly = TRUE)[3]
 path_status<-commandArgs(trailingOnly = TRUE)[4]
 path_file<-commandArgs(trailingOnly = TRUE)[5]
 path_tree<-commandArgs(trailingOnly = TRUE)[6]
-
-
-#implement paths
 path_to_results<-"results/"
+path_order<-'data-raw/order.txt'
+#implement paths
+
 path_file<-paste0(path_source,path_file)
 path_tree<-paste0(path_source,path_tree)
 path_to_results<-paste0(path_source,path_to_results)
 path_status<-paste0(path_source,path_status)
+path_order<-paste0(path_source,path_order)
 
 get_num_species<-function(path_status){
   phylogeny<-read.table(path_status,header=1)
@@ -89,6 +90,8 @@ get_data<-function(trid,phenoStatus,SeqFile,TreeFlag,TreeFile){
   colnames(phylogeny)<-c('species_name','target')
   merged<-merge(phylogeny,sequence_df,by='species_name')
   merged <- merged[, c(3, 1, 2, seq(4, ncol(merged)))]
+  order<-read.table(path_order)
+  merged<-merged[match(order$V1,merged$species_name),]
   data<-merged[,-c(1,2,3)]
   data = data.frame(lapply(data, function(x){gsub("-", 0, x)}))
   data = data.frame(lapply(data, function(x){gsub("A|T|G|C|a|t|g|c|N|n", 1, x)}))
@@ -120,7 +123,7 @@ get_data<-function(trid,phenoStatus,SeqFile,TreeFlag,TreeFile){
   return (list(data,spcsl[,c(1,2)],V,d,unknownData))
   
 }
-train_NN<-function(InputNN,num_hidden_layer,numSpcs){
+train_NN<-function(tid,InputNN,num_hidden_layer,numSpcs){
   nFolds <- numSpcs
   cv_error<-list()
   myFolds <- cut(seq(1, nrow(InputNN)),
@@ -130,7 +133,7 @@ train_NN<-function(InputNN,num_hidden_layer,numSpcs){
   alphas = seq(0, 1, 0.05)
   hl= generate_hidden_layer_tuples(num_hidden_layer,numSpcs-1)
   count<-0
-  print(paste0('Gene ',transcript_id,' running: '))
+  print(paste0('Gene ',tid,' running: '))
   for( l in l1Vals)
   {
     for( alpha in alphas)
@@ -260,7 +263,7 @@ train_NN<-function(InputNN,num_hidden_layer,numSpcs){
 
     }
   }
-  print(paste0(transcript_id,' completed'))
+  print(paste0(tid,' completed'))
   res<-do.call(rbind, lapply(cv_error, data.frame))
   return (do.call(rbind, lapply(cv_error, data.frame)))}
 fit.model <-function(InputVal,idx,ResNN,HiddenLayers,UnknownData,SpcsList){
@@ -350,7 +353,7 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
     print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
   }
     dataset<-get_data(tid, pst,pfi,utf,ptr)
-    x<-get_zero(train_NN(dataset[[1]],hla,numsp),dataset[[1]],dataset[[5]],dataset[[2]])
+    x<-get_zero(train_NN(tid,dataset[[1]],hla,numsp),dataset[[1]],dataset[[5]],dataset[[2]])
     if(x[[1]]==0)
     {
       print(paste0('found architecture with CV error = 0 with architecture: ',ifelse(is.na(x[[2]]),0,x[[2]])))
