@@ -95,7 +95,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
   - `phylogenetic_tree`: (optional) Custom phylogenetic tree including as `Input 3` described `GAP Input`. If not provided, the default phylogeny features will be used.
 
-## Example Application of GAP
+# Example Application of GAP
 
 Commands to run the three GAP functions are discussed here. For each function, sample commands are provided alongside explanation for both alignment-only and tree-features based approach.
 
