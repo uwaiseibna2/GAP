@@ -13,7 +13,7 @@ path_to_results<-"results/"
 path_order<-'data-raw/order.txt'
 
 #implement paths
-if(use_tree_features & length(commandArgs(trailingOnly = TRUE)) > 5)
+if(use_dendrogram_features & length(commandArgs(trailingOnly = TRUE)) > 5)
 {
   system(paste("python3", "extract_tree_feats.py", shQuote(custom_phylogeny)))
   path_tree<-'data-raw/custom-tree-features.csv'
