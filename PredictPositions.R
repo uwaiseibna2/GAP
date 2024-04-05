@@ -1,5 +1,3 @@
-library(dplyr)
-
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 path_files<-'results/weights.txt'
 path<-paste0(path_source,path_files)
