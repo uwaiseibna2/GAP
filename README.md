@@ -159,7 +159,7 @@ This function lists the associated genes based on the optimal architecture confi
 
 **Sample Commands with Custom Phylogeny**:
 
-    ```bash
+```bash
     #PredictSpecies
         #unix-based OS
             Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
@@ -170,4 +170,4 @@ This function lists the associated genes based on the optimal architecture confi
             Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
         #Windows OS
             'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt "(horse,(((((((((((((((stickleback,(fugu,(medaka,nile_tilapia))),atlantic_cod),zebrafish),tetraodon),coelacanth),x_tropicalis),((((zebra_finch,turkey),((budgerigar,opossum),chicken)),platypus),lizard)),painted_turtle),(tasmanian_devil,wallaby)),((armadillo,sloth),((rock_hyrax,elephant),manatee))),tenrec),((((((((gibbon,orangutan),gorilla),human),chimp),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),(mouse_lemur,bushbaby)),(((((rat,mouse),(guinea_pig,naked_mole-rat)),(kangaroo_rat,squirrel)),(rabbit,pika)),(tarsier,tree_shrew)))),(megabat,microbat)),((((cow,sheep),pig),alpaca),dolphin)),((cat,(dog,panda)),shrew)),hedgehog);"
-    ``` 
+``` 
