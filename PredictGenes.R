@@ -6,24 +6,29 @@ path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 path_status<-commandArgs(trailingOnly = TRUE)[3]
 path_file<-commandArgs(trailingOnly = TRUE)[4]
-transcript_list_path<-commandArgs(trailingOnly = TRUE)[5]
-custom_phylogeny<-commandArgs(trailingOnly=TRUE)[6]
-path_tree<-'data-raw/tree-features.csv'
-path_to_results<-"results/"
-path_order<-'data-raw/order.txt'
+path_phylo<-commandArgs(trailingOnly=TRUE)[5]
 
+path_tree<-'data-raw/tree-features.csv'
 #implement paths
-if(use_dendrogram_features & length(commandArgs(trailingOnly = TRUE)) > 5)
+if(use_dendrogram_features)
 {
-  system(paste("python3", "extract_tree_feats.py", shQuote(custom_phylogeny)))
-  path_tree<-'data-raw/custom-tree-features.csv'
+  if(length(commandArgs(trailingOnly = TRUE)) == 4)
+  {
+    stop("Path to Phylogeny not found")
+  }
+  if(length(commandArgs(trailingOnly = TRUE)) > 4)
+  {
+    system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
+    path_tree<-'data-raw/custom-tree-features.csv'
+  }
 }
+
+
+
 hidden_layers<-0
 mincv<-0
 
 loading_chars <- c("|", "/", "-", "\\")
-
-
 
 
 path_order<-'data-raw/order.txt'
@@ -31,7 +36,6 @@ path_to_results<-"results/associated.txt"
 
 
 
-path_transcripts<-paste0(path_source,transcript_list_path)
 path_tree<-paste0(path_source,path_tree)
 path_file<-paste0(path_source,path_file)
 path_to_results<-paste0(path_source,path_to_results)
@@ -287,8 +291,8 @@ run_associated_genes<-function(gene_list){
   clusterEvalQ(cl, library(ANN2))
   clusterEvalQ(cl, library(Biostrings))
   clusterEvalQ(cl, library(tidyr))
-  clusterExport(cl, list("f", "read_fasta","loading_chars", "fit.model", "gene_list", 
-                         "get_azero", "path_transcripts", "extract_sequence", 
+  clusterExport(cl, list("f", "read_fasta","loading_chars", "fit.model", "ids", 
+                         "get_azero", "extract_sequence", 
                          "path_file", "path_status", "get_data", "path_to_results", 
                          "path_tree", "hidden_layers", "use_dendrogram_features", 
                          "train_ANN", "num_species","mincv","path_order"))
@@ -297,6 +301,19 @@ run_associated_genes<-function(gene_list){
   cat("Parallel processing completed.\n")
 }
 
-genes<-read.table(path_transcripts)
-gene_list<-genes$V1
-run_associated_genes(gene_list)
+get_unique_transcript_ids <- function(fasta_file) {
+  unique_ids <- character()
+  con <- file(fasta_file, "r")
+  while (length(line <- readLines(con, n = 1, warn = FALSE)) > 0) {
+    if (startsWith(line, ">")) {
+      transcript_id <- strsplit(line, " ")[[1]][1]
+      transcript_id <- substr(transcript_id, 2, nchar(transcript_id))
+      unique_ids <- c(unique_ids, transcript_id)
+    }
+  }
+  close(con)
+  unique_ids <- unique(unique_ids)
+  return(unique_ids)
+}
+ids<-as.list(get_unique_transcript_ids(path_file))
+run_associated_genes(ids)

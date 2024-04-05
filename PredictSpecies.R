@@ -17,17 +17,25 @@ use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 transcript_id<-commandArgs(trailingOnly = TRUE)[3]
 path_status<-commandArgs(trailingOnly = TRUE)[4]
 path_file<-commandArgs(trailingOnly = TRUE)[5]
-custom_phylogeny<-commandArgs(trailingOnly=TRUE)[6]
+path_phylo<-commandArgs(trailingOnly=TRUE)[6]
 path_tree<-'data-raw/tree-features.csv'
 path_to_results<-"results/"
 path_order<-'data-raw/order.txt'
 
 #implement paths
-if(use_tree_features & length(commandArgs(trailingOnly = TRUE)) > 5)
+if(use_tree_features)
 {
-  system(paste("python3", "extract_tree_feats.py", shQuote(custom_phylogeny)))
-  path_tree<-'data-raw/custom-tree-features.csv'
+  if(length(commandArgs(trailingOnly = TRUE)) == 5)
+  {
+    stop("Path to Phylogeny not found")
+  }
+  if(length(commandArgs(trailingOnly = TRUE)) > 5)
+  {
+    system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
+    path_tree<-'data-raw/custom-tree-features.csv'
+  }
 }
+
 
   
 
