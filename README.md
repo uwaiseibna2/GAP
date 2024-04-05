@@ -30,7 +30,7 @@ GAP takes in two required input files and an optional third input file.
 
 **Input 2**: FASTA file containing multiple sequence alignments for the n species at g genomic regions. Each header should contain the species name followed by a space and then an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is completely absent in a species, then a sequence of gaps "-" can be used for that species.  
 
-**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included.
+**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included, example format: "((gorilla,(chimp,human),baboon),orangutan);" where n=5.
 
 
 
@@ -52,7 +52,7 @@ The PredictSpecies function takes in the paths to the input files and the identi
 **Command Structure**
 
 ```bash
-Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input3>
+Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <phylogenetic_tree>
 ```
 **Arguments**:
 - `path_source`: Source of the GAP directory
@@ -60,7 +60,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `region_id`: Identifier for genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `path_input_3`: Path to Input 3 file described in `GAP Input` section above
+- `phylogenetic_tree`: (optional) Custom phylogenetic tree including all species listed in the Input 1 in newick format, with identical species_name. If not provided, the default phylogeny features will be used.
 
     
 ## PredictPositions
@@ -79,7 +79,7 @@ Rscript PredictPostions.R <path_source>
 
 ## PredictGenes
 
-The PredictGenes function implements optimal architecture identified in PredictSpecies function. It takes the input files 1, 2 , and 3 as described in the GAP Input. Additionally, it takes a list of transcript ids on which it implements the optimal architecture to identify the set of ids within the provided list with prediction error similar or less than the minimum cross-validation error found in the PredictSpecies function. The set of transcripts that meet this criteria is documented in the output file `associated.csv` under the results folder in the parent directory.
+The PredictGenes function idenfies a list of candidates from a given input listing transcript ids. It takes the input files 1, 2 as described in the GAP Input. Additionally, it takes the list of transcript ids on which it implements the optimal architecture to identify the set of ids prediction error similar or less than the minimum cross-validation error. The set of transcripts that meet this criteria is documented in the output file `associated.csv` under the results folder in the parent directory.
 
 **Command Structure**
 
@@ -92,26 +92,9 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
   - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
-  - `path_input_3`: Path to Input 3 file described in `GAP Input` section above.
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
-  - `hidden_layers`: Best performing hidden layer architecture from PredictSpeies function.
-  - `min_CV`: Lowest CV error found from the optimal model in PredictSpecies function.
+  - `phylogenetic_tree`: (optional) Custom phylogenetic tree including all species listed in the Input 1 in newick format, with identical species_name. If not provided, the default phylogeny features will be used.
 
-## User-defined Phylogeny
-
-GAP includes the phylogeny for the 59 species examined. However, GAP can generate user-specific custom phylogeny features using the `extract_tree_feats.py` script. This script takes a species tree in newick format and generates output is a .csv file in the parent directory.
-
-Input newick formatted species tree:
-```  
-"((gorilla,(chimp,human),baboon),orangutan);"
-```
-To execute this python script navigate to the parent directory and simply execute the following command in a terminal.
-
-**Command**
-
-```bash
-python3 extract_tree_features.py
-```
 
 ## Example Application of GAP
 
@@ -123,18 +106,18 @@ Commands to run the three GAP functions are discussed here. For each function, s
 - Alignment-only approach
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
 - Tree-features included
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa 
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
 which runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
 
@@ -158,19 +141,19 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
 - Alignment-only approach
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 0 0.15
+    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 0 .15
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt
     ```
 
 - Tree-features included
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 2,1 0.15
+    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/tree-features.csv data-raw/Transcript_list.txt 2,1 0.15
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
     ```
 This function lists the associated genes based on the optimal architecture configuration found in PredictSpecies from a user-defined list of transcripts. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
 
