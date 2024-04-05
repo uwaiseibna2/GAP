@@ -262,7 +262,6 @@ train_NN<-function(InputNN,num_hidden_layer,numSpcs){
   }
   print(paste0(transcript_id,' completed'))
   res<-do.call(rbind, lapply(cv_error, data.frame))
-  write.csv(res,'/Users/uwaiseibna/Downloads/result-tree.csv')
   return (do.call(rbind, lapply(cv_error, data.frame)))}
 fit.model <-function(InputVal,idx,ResNN,HiddenLayers,UnknownData,SpcsList){
   nFolds <- num_species
