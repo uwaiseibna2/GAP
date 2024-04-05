@@ -30,7 +30,7 @@ GAP takes in two required input files and an optional third input file.
 
 **Input 2**: FASTA file containing multiple sequence alignments for the n species at g genomic regions. Each header should contain the species name followed by a space and then an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is completely absent in a species, then a sequence of gaps "-" can be used for that species.  
 
-**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included, example format: "((gorilla,(chimp,human),baboon),orangutan);" where n=5.
+**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included, example format: "((gorilla,(chimp,human),baboon),orangutan);", where n=5.
 
 
 
@@ -60,7 +60,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `region_id`: Identifier for genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `phylogenetic_tree`: (optional) Custom phylogenetic tree including all species listed in the Input 1 in newick format, with identical species_name. If not provided, the default phylogeny features will be used.
+- `phylogenetic_tree`: (optional) Custom phylogenetic tree including as `Input 3` described `GAP Input`. If not provided, the default phylogeny features will be used.
 
     
 ## PredictPositions
@@ -79,12 +79,12 @@ Rscript PredictPostions.R <path_source>
 
 ## PredictGenes
 
-The PredictGenes function idenfies a list of candidates from a given input listing transcript ids. It takes the input files 1, 2 as described in the GAP Input. Additionally, it takes the list of transcript ids on which it implements the optimal architecture to identify the set of ids prediction error similar or less than the minimum cross-validation error. The set of transcripts that meet this criteria is documented in the output file `associated.csv` under the results folder in the parent directory.
+The PredictGenes function idenfies takes the input files described the GAP Input and a list of transcript ids. GAP examines each transcript in the list to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
 
 **Command Structure**
 
 ```bash
-Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3> <path_transcripts_list> <hidden_layers> <min_CV>
+Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_transcripts_list> <phylogenetic_tree>
 ```
 
 **Arguments**
@@ -93,8 +93,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
   - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
   - `path_transcripts_list`: List of sample transcripts with a transcript_id in each row in a `.txt` file, if not provided, GAP will use the default sample list under `/data-raw` in parent directory.
-  - `phylogenetic_tree`: (optional) Custom phylogenetic tree including all species listed in the Input 1 in newick format, with identical species_name. If not provided, the default phylogeny features will be used.
-
+  - `phylogenetic_tree`: (optional) Custom phylogenetic tree including as `Input 3` described `GAP Input`. If not provided, the default phylogeny features will be used.
 
 ## Example Application of GAP
 
