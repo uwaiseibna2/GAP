@@ -1,5 +1,7 @@
 import subprocess
+import sys
 
+newick_str = sys.argv[1]
 def install_package(package_name):
     subprocess.check_call(['pip3', 'install', package_name])
 packages=['ete3','pandas']
@@ -29,12 +31,9 @@ def create_species_dataframe(lists_of_species):
     df = df.reset_index()
     df = df.rename(columns={'index': 'species_name'})
     return df
-# Example Newick tree string
-newick_str = input("Insert the species tree in newick format with an ending semi-colon: ")
+
 tree = Tree(newick_str, format=1)
 listf = []
 traverse_tree(tree, listf)
 df = create_species_dataframe(listf)
-df.to_csv('results/tf-c-'+str(len(listf[0]))+'spcs.csv')
-
-print("Saved tree_features in the parent directory")
+df.to_csv('data-raw/custom-tree-features.csv')

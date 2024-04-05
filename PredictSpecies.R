@@ -17,10 +17,19 @@ use_tree_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 transcript_id<-commandArgs(trailingOnly = TRUE)[3]
 path_status<-commandArgs(trailingOnly = TRUE)[4]
 path_file<-commandArgs(trailingOnly = TRUE)[5]
-path_tree<-commandArgs(trailingOnly = TRUE)[6]
+custom_phylogeny<-commandArgs(trailingOnly=TRUE)[6]
+path_tree<-'data-raw/tree-features.csv'
 path_to_results<-"results/"
 path_order<-'data-raw/order.txt'
+
 #implement paths
+if(use_tree_features & length(commandArgs(trailingOnly = TRUE)) > 5)
+{
+  system(paste("python3", "extract_tree_feats.py", shQuote(custom_phylogeny)))
+  path_tree<-'data-raw/custom-tree-features.csv'
+}
+
+  
 
 path_file<-paste0(path_source,path_file)
 path_tree<-paste0(path_source,path_tree)
@@ -352,7 +361,12 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
   {
     print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
   }
-    dataset<-get_data(tid, pst,pfi,utf,ptr)
+    tryCatch({
+      dataset <- get_data(tid, pst, pfi, utf, ptr)
+    }, error = function(e) {
+      cat("Error occurred due to incorrect custom phylogeny, please make sure the tree has correct species names and tree format! ", conditionMessage(e), "\n")
+      stop("Execution halted due to error.")
+    })
     x<-get_zero(train_NN(tid,dataset[[1]],hla,numsp),dataset[[1]],dataset[[5]],dataset[[2]])
     if(x[[1]]==0)
     {

@@ -6,9 +6,18 @@ path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 path_status<-commandArgs(trailingOnly = TRUE)[3]
 path_file<-commandArgs(trailingOnly = TRUE)[4]
-path_tree<-commandArgs(trailingOnly = TRUE)[5]
-transcript_list_path<-commandArgs(trailingOnly = TRUE)[6]
+transcript_list_path<-commandArgs(trailingOnly = TRUE)[5]
+custom_phylogeny<-commandArgs(trailingOnly=TRUE)[6]
+path_tree<-'data-raw/tree-features.csv'
+path_to_results<-"results/"
+path_order<-'data-raw/order.txt'
 
+#implement paths
+if(use_tree_features & length(commandArgs(trailingOnly = TRUE)) > 5)
+{
+  system(paste("python3", "extract_tree_feats.py", shQuote(custom_phylogeny)))
+  path_tree<-'data-raw/custom-tree-features.csv'
+}
 hidden_layers<-0
 mincv<-0
 
