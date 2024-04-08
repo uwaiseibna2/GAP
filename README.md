@@ -8,12 +8,12 @@ For queries, email: uislam2022@fau.edu.
 
 # Citing GAP
 
-If you use GAP, then please cite: Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. Learning genotype-phenotype associations from gaps in multi-species sequence alignments. Under review (2024). 
+If you use GAP, please cite Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. Learning genotype-phenotype associations from gaps in multi-species sequence alignments, under review (2024). 
 
 # Getting Started
 
-Running GAP requires installation of R (version > 4.0) and Python (version > 3.9). GAP installs the required R and Python packages from within the script. If GAP encounters an error during installation of a package, they can be installed manually.
-Commands to install R and Python packages from respective terminals:
+Running GAP requires the installation of R (version > 4.0) and Python (version > 3.9). GAP installs the required R and Python packages from within the script. If GAP encounters an error during the installation of a package, it can be installed manually.
+Commands to install R and Python packages manually from respective terminals:
 ```bash
 # R package installation command
 install.packages("package_name")
@@ -25,21 +25,21 @@ pip3 install package_name
 # GAP Input
 GAP takes in two required input files and an optional third input file. 
 
-**Input 1**: tab-delimited file with n rows and 2 columns, where n is the number of species. The first column should contain the species name, and the second column refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
+**Input 1**: Tab-delimited text file with n rows and two columns, where n is the number of species. The first column should contain the species name, and the second column refers to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
 
 
-**Input 2**: FASTA file containing multiple sequence alignments for the n species at g genomic regions. Each header should contain the species name followed by a space and then an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is completely absent in a species, then a sequence of gaps "-" can be used for that species.  
+**Input 2**: FASTA file containing multiple sequence alignments for the n species at _g_ genomic regions. Each header should contain the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species.  
 
-**Input 3 (optional)**: file containing phylogenetic tree of the n species in Newick format. No distances should be included, example format: `((gorilla,(chimp,human),baboon),orangutan);`, where n=5.
+**Input 3 (optional)**: A text file containing the phylogenetic tree of the n species in Newick format. No distances should be included, and the species name should match Input 1, example format: `((gorilla,(chimp,human),baboon),orangutan);`, where n=5.
 
 
 
 
 # Running GAP
 
-
 GAP has three functions:
-- PredictSpecies - predicts presence or absence of a phenotype in one or more species from a known association with a genomic region
+
+- PredictSpecies - predicts the presence or absence of a phenotype in one or more species from a known association with a genomic region
 - PredictPositions - predicts which positions within a genomic region are associated with a phenotype
 - PredictGenes - predicts genomic regions that are associated with a phenotype
 
