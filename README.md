@@ -30,7 +30,7 @@ GAP takes in two required input files and an optional third input file.
 
 **Input 2**: FASTA file containing multiple sequence alignments for the n species at g genomic regions. Each header should contain the species name followed by a space and then an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is completely absent in a species, then a sequence of gaps "-" can be used for that species.  
 
-**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included, example format: "((gorilla,(chimp,human),baboon),orangutan);", where n=5.
+**Input 3 (optional)**: phylogenetic tree of the n species in Newick format. No distances should be included, example format: `((gorilla,(chimp,human),baboon),orangutan);`, where n=5.
 
 
 
