@@ -52,7 +52,7 @@ The PredictSpecies function takes in the paths to the input files and the identi
 **Command Structure**
 
 ```bash
-Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <phylogenetic_tree>
+Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3>
 ```
 **Arguments**:
 - `path_source`: Source of the GAP directory
