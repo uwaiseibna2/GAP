@@ -65,7 +65,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
     
 ## PredictPositions
 
-The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function with the transcript_id used for the previous function. 
+The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function. 
 
 **Command Structure**
 
@@ -130,7 +130,7 @@ which runs the script to identify neural network architectures with minimum CV e
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ 
   ```
-This function identifies positions within the sequence having p-values<= 0.05 within the alignment. PredictPositions needs the previous function implemented before in order to positions based on the identify optimal architecture idenfied in PredictSpecies. Results are stored in the `PositionalPvals.csv` file under the `results` directory.
+This function identifies positions within the sequence having p-values<= 0.05 within the alignment. Results are stored in the `PositionalPvals.csv` file under the `results` directory.
 
 
 ## PredictGenes
@@ -153,4 +153,4 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
     #Windows OS
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     ```
-This function lists the associated genes based on the optimal architecture configuration and minimum CV error from the provided list of transcript ids. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
+This function lists the associated genes based on the optimal architecture configuration and minimum CV error from the list of transcript ids present in training dataset. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
