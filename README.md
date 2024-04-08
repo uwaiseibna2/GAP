@@ -65,21 +65,25 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
     
 ## PredictPositions
 
-The predictPositions function output a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function. 
+The predictPositions function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function. This file with positional importance is stored under the `results` directory as `PositionalPVals.csv`.
 
 **Command Structure**
 
 ```bash
-Rscript PredictPostions.R <path_source>
+Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3>
 ```
-
 **Arguments**:
-  - `path_source`: Source of the GAP directory.
+- `path_source`: Source of the GAP directory
+- `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
+- `region_id`: Identifier for genomic region on which to train GAP
+- `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
+- `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
+- `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
 
 
 ## PredictGenes
 
-The PredictGenes function idenfies takes the input files described in the GAP Input. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
+The PredictGenes function idenfies takes as input the paths to the input files described in the GAP Input. However, it does not require a genomic region as it works on all the genomic region present in the input 2. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
 
 **Command Structure**
 
