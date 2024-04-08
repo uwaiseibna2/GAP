@@ -139,10 +139,10 @@ This function identifies positions within the sequence having p-values<= 0.05 wi
 - Alignment-only approach
     ```bash
     #unix-based OS
-    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt 
+    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
     
     #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa data-raw/Transcript_list.txt
+    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
     ```
 
 - Tree-features included
