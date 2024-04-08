@@ -83,7 +83,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 
 ## PredictGenes
 
-The PredictGenes function idenfies takes as input the paths to the input files described in the GAP Input. However, it does not require a genomic region as it works on all the genomic region present in the input 2. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the results folder in the parent directory.
+The PredictGenes function idenfies takes as input the paths to the input files described in the GAP Input. However, it does not require a genomic region as it works on all the genomic regions present in the input 2. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the `results` folder in the parent directory.
 
 **Command Structure**
 
@@ -126,15 +126,23 @@ which runs the script to identify neural network architectures with minimum CV e
 ## PredictPositions
 **Sample Commands**:
 
-- Both alignment-only and tree-features included approach
+- Alignment-only approach
   ```bash
   #unix-based OS
-  Rscript PredictPositions.R ./ 
+  Rscript PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ 
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
-This function identifies positions within the sequence having p-values<= 0.05 within the alignment. Results are stored in the `PositionalPvals.csv` file under the `results` directory.
+- Tree-features included
+  ```bash
+  #unix-based OS
+  Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  ```
+This function runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Positions within the sequence having p-values<= 0.05 for this architecture, are then stored in the `PositionalPvals.csv` file under the `results` directory.
 
 
 ## PredictGenes
