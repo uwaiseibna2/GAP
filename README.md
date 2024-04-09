@@ -12,7 +12,7 @@ If you use GAP, please cite Islam UI, Campelo dos Santos AL, Kanjilal R, and Ass
 
 # Getting Started
 
-Running GAP requires the installation of R (version > 4.0) and Python (version > 3.9). GAP installs the required R and Python packages from within the script. If GAP encounters an error during the installation of a package, it can be installed manually.
+Running GAP requires the installation of R (version > 4.0) and Python (version > 3.9). GAP installs the required R and Python packages from within the script. If GAP encounters an error while installing a package, it can be installed manually.
 Commands to install R and Python packages manually from respective terminals:
 ```bash
 # R package installation command
@@ -25,7 +25,7 @@ pip3 install package_name
 # GAP Input
 GAP takes in two required input files and an optional third input file. 
 
-**Input 1**: Tab-delimited text file with n rows and two columns, where n is the number of species. The first column should contain the species name, and the second column refers to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and a NA indicating unknown. 
+**Input 1**: Tab-delimited text file with n rows and two columns, where n is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and an NA indicating unknown. 
 
 
 **Input 2**: FASTA file containing multiple sequence alignments for the n species at _g_ genomic regions. Each header should contain the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species.  
@@ -47,7 +47,7 @@ GAP is run in a terminal. Below are detailed instructions for using each of the 
 
 ## PredictSpecies
 
-The PredictSpecies function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
+The PredictSpecies function takes the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the most straightforward architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the most straightforward architecture with the least cross-validation errors. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
 
 **Command Structure**
 
@@ -57,15 +57,15 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 **Arguments**:
 - `path_source`: Source of the GAP directory
 - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
-- `region_id`: Identifier for genomic region on which to train GAP
+- `region_id`: Identifier for the genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
+- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
 
     
 ## PredictPositions
 
-The predictPositions function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then it uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that, that the input number of genomic regions g=1 for this function. This file with positional importance is stored under the `results` directory as `PositionalPVals.csv`.
+The predictPositions function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then, it uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with the position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that the number of genomic regions for this function is g=1. This file with positional importance is stored under the `results` directory as `PositionalPVals.csv`.
 
 **Command Structure**
 
@@ -76,14 +76,14 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 - `path_source`: Source of the GAP directory
 - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
 - `region_id`: Identifier for genomic region on which to train GAP
-- `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
-- `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
+- `path_input_1`: Path to Input 1 file described above in the `GAP Input` section.
+- `path_input_2`: Path to Input 2 file described above in the `GAP Input` section.
+- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
 
 
 ## PredictGenes
 
-The PredictGenes function idenfies takes as input the paths to the input files described in the GAP Input. However, it does not require a genomic region as it works on all the genomic regions present in the input 2. GAP examines each transcript present in the Input 2 file, to identify potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the `results` folder in the parent directory.
+The PredictGenes takes as input the paths to the input files described in the GAP Input. Unlike the previous functions, it does not require a genomic region as it works on all the genomic regions in the input 2. GAP examines each transcript in the Input 2 file to identify the potential association between the transcript and the said phenotype. The set of transcripts identified as associated is documented in the output file `associated.csv` under the `results` folder in the parent directory.
 
 **Command Structure**
 
@@ -94,13 +94,13 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 **Arguments**
   - `path_source`: Source of the GAP directory.
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above.
-  - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above.
-  - `path_input_3`: (optional) path to user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE` this input must be provided.
+  - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section.
+  - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section.
+  - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
 
 # Example Application of GAP
 
-Commands to run the three GAP functions are discussed here. For each function, sample commands are provided alongside explanation for both alignment-only and tree-features based approach.
+Commands to run the three GAP functions are discussed here. Sample commands are provided for each function alongside explanations for alignment-only and tree-features-based approaches. The `phylogeny.txt` file under the `data-raw` directory contains a sample Newick formatted tree that can be followed while specifying the user-defined phylogeny.
 
 ## PredictSpecies
 **Sample Commands**:
@@ -121,7 +121,7 @@ Commands to run the three GAP functions are discussed here. For each function, s
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-which runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Notice that the first set of commands exclude the tree features whereas the latter set include them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder.
+Which runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops the moment it finds an architecture with minimum CV error. Note that the first set of commands excludes the tree features, whereas the latter set includes them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder. To use the phylogeny features used in GAP analysis, replace the path to phylogeny features with the term `default`; in the following commands, `data-raw/phylogeny.txt` can be replaced by `default` to use these precomputed phylogeny features. 
 
 ## PredictPositions
 **Sample Commands**:
@@ -142,7 +142,7 @@ which runs the script to identify neural network architectures with minimum CV e
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-This function runs the script to identify neural network architectures with minimum CV error by exploring different architecture, progressing from 0-hidden layer architecutre to 3-hidden layer architectures and stops the moment it finds an architecture with minimum CV error. Positions within the sequence having p-values<= 0.05 for this architecture, are then stored in the `PositionalPvals.csv` file under the `results` directory.
+This function runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops when it finds an architecture with minimum CV error. Positions within the sequence having p-values<= 0.05 for this architecture are then stored in the `PositionalPvals.csv` file under the `results` directory.
 
 
 ## PredictGenes
@@ -165,4 +165,4 @@ This function runs the script to identify neural network architectures with mini
     #Windows OS
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     ```
-This function lists the associated genes based on the optimal architecture configuration and minimum CV error from the list of transcript ids present in training dataset. The associated transcript ids are stored in the `associated.csv` file under the `results` directory.
+This function lists the associated genes from the list of transcript IDs in Input 2 based on the optimal architecture configuration derived by calculating the minimum CV error. The transcript IDs are stored in the `associated.csv` file under the `results` directory.
