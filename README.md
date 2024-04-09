@@ -94,7 +94,7 @@ Rscript PredictRegions.R <path_source> boolean_tree_flag <path_input_1> <path_in
 
 # Example Application of GAP
 
-Before beginning, ensure that the working directory is set to the directory containing GAP functions and input files.  
+This example demonstrates the application of GAP outlined to predict the association between the _Gulo_ gene and vitamin C synthesis in 59 vertebrates, following the strategy outlined in Islam _et al._ 2024. For enhanced computational efficiency, the second input file contains multiple alignments from  100 of the 22,476 genes used in the manuscript. Before beginning, ensure that the working directory is set to the directory containing GAP functions and input files.  
 
 ## PredictSpecies
 
