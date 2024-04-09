@@ -114,12 +114,10 @@ To predict a phenotype in one or more species from a multiple alignment and phyl
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-This command runs the function PredictSpecies to identify optimal neural network architecture by exploring different parameters as described above. The simplest architecture with minimum CV error is used to predict the phenotype status of unknown species listed in the first input file. Note that the first set of commands excludes the tree features, whereas the latter set includes them, and the lengths of the arguments passed are different. 
 
 ## PredictPositions
-**Sample Commands**:
 
-- Alignment-only approach
+To predict positions in a genomic region that are associated with a phenotype from a multiple alignment, type:
   ```bash
   #unix-based OS
   Rscript PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
@@ -127,7 +125,7 @@ This command runs the function PredictSpecies to identify optimal neural network
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
-- Tree-features included
+To predict positions in a genomic region that are associated with a phenotype from a multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
   Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
@@ -135,13 +133,10 @@ This command runs the function PredictSpecies to identify optimal neural network
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-This command runs the function PredictPositions to identify optimal neural network architecture by exploring different parameters as described above. The simplest architecture with minimum CV error is used to measure the predictive importance of individual positions within the sequence of the given genomic region. All the positions within the sequence are listed alongside their p-values, and positions having p-values<= 0.05 are displayed separately for this architecture. 
-
 
 ## PredictGenes
-**Sample Commands**:
 
-- Alignment-only approach
+To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
     ```bash
     #unix-based OS
     Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
@@ -150,7 +145,7 @@ This command runs the function PredictPositions to identify optimal neural netwo
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
     ```
 
-- Tree-features included
+To predict genomic regions that are associated with a phenotype from a multiple alignment and phylogeny, type:
     ```bash
     #unix-based OS
     Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
@@ -158,4 +153,3 @@ This command runs the function PredictPositions to identify optimal neural netwo
     #Windows OS
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     ```
-This command runs the function PredictGenes to identify the genomic region(s) present in the first input file that can be associated with the given phenotype based on the simplest architecture with minimum cross-validation error. Regions identified as associated are listed as the output of this function.
