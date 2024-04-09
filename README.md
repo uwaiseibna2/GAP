@@ -47,7 +47,7 @@ GAP is run in a terminal. Below are detailed instructions for using each of the 
 
 ## PredictSpecies
 
-The PredictSpecies function takes the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the most straightforward architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the most straightforward architecture with the least cross-validation errors. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
+The PredictSpecies function takes the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the most straightforward architecture with minimum cross-validation errors. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species names in the first column and predictions in the second column. 
 
 **Command Structure**
 
@@ -65,7 +65,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
     
 ## PredictPositions
 
-The predictPositions function takes in the paths to the input files and the identifier of a genomic region to be used for predictions. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the smallest cross-validation error. Then, it uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with the position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. Please note that the number of genomic regions for this function is g=1. This file with positional importance is stored under the `results` directory as `PositionalPVals.csv`.
+The PredictPositions function takes the paths to the input files and the identifier of a genomic region for predictions like the PredictSpecies function. Similarly, It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. It trains on all architectures and selects the simplest architecture with the minimum cross-validation error if an architecture with a cross-validation error of zero is not found. GAP then uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with the position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. This file with positional importance is stored under the `results` directory as `PositionalPVals.csv`.
 
 **Command Structure**
 
@@ -121,7 +121,7 @@ Commands to run the three GAP functions are discussed here. Sample commands are 
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-Which runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops the moment it finds an architecture with minimum CV error. Note that the first set of commands excludes the tree features, whereas the latter set includes them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder. 
+Which runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops the moment it finds an architecture with minimum CV error. Note that the first set of commands excludes the tree features, whereas the latter set includes them. 
 
 ## PredictPositions
 **Sample Commands**:
@@ -142,7 +142,7 @@ Which runs the script to identify neural network architectures with minimum CV e
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-This function runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops when it finds an architecture with minimum CV error. Positions within the sequence having p-values<= 0.05 for this architecture are then stored in the `PositionalPvals.csv` file under the `results` directory.
+This function runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops when it finds an architecture with minimum CV error. Positions within the sequence are listed alongside their p-values, and positions having p-values<= 0.05 are identified for this architecture. 
 
 
 ## PredictGenes
@@ -165,4 +165,4 @@ This function runs the script to identify neural network architectures with mini
     #Windows OS
     'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
     ```
-This function lists the associated genes from the list of transcript IDs in Input 2 based on the optimal architecture configuration derived by calculating the minimum CV error. The transcript IDs are stored in the `associated.csv` file under the `results` directory.
+This function lists the associated genes from the gene IDs present in Input 2 based on the optimal architecture configuration derived by calculating the minimum CV error. 
