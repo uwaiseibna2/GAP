@@ -25,11 +25,11 @@ pip3 install package_name
 # GAP Input
 GAP takes in two required input files and an optional third input file. 
 
-**Input 1**: Tab-delimited text file with _n_ rows and two columns, where _n_ is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
+**Input 1**: Tab-delimited file with _n_ rows and two columns, where _n_ is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
 
 **Input 2**: FASTA file containing multiple sequence alignments for the _n_ species at _g_ genomic regions. Each header should include the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all _n_ species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species.
 
-**Input 3 (optional)**: A text file containing the phylogenetic tree of the n species in Newick format. No distances should be included, and the species name should match the first input file.
+**Input 3 (optional)**: A file containing the phylogenetic tree of the _n_ species in Newick format. No distances should be included, and the species names should match those in the first input file.
 
 
 
@@ -46,7 +46,7 @@ GAP is run in a terminal. Below are detailed instructions for using each of the 
 
 ## PredictSpecies
 
-The PredictSpecies function takes the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each of the species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains species genomic region, names, and predictions for unknown species. 
+The PredictSpecies function takes in the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each of the species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains the identifier of the genomic region, names of species with unknown status (NA), and predictions for each of these species (0 for absence, 1 for presence). 
 
 **Command Structure**
 
@@ -64,7 +64,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
     
 ## PredictPositions
 
-The PredictPositions function takes the paths to the GAP input files and the identifier of a genomic region like the PredictSpecies function. Similarly, It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. It trains on all architectures and selects the simplest architecture with the minimum cross-validation error if an architecture with a cross-validation error of zero is not found. GAP then uses the selected model to generate a tab-delimited file containing predictive importance for each position in the genomic region, with the position number in the first column and the Benjamini-Hochberg-adjusted p-value corresponding to predictive importance in the second column. This file with positional importance is stored in the file `PositionalPVals.csv` under the `results` directory.
+The PredictPositions function takes in the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it obtains a _p_ value denoting the predictive importance of each position in the sequence of the genomic region. The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains the _p_ value for each position in the genomic region. 
 
 **Command Structure**
 
