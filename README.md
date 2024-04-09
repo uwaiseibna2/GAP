@@ -25,11 +25,11 @@ pip3 install package_name
 # GAP Input
 GAP takes in two required input files and an optional third input file. 
 
-**Input 1**: Tab-delimited file with _n_ rows and two columns, where _n_ is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
+**Input 1**: Tab-delimited text file with _n_ rows and two columns, where _n_ is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
 
 **Input 2**: FASTA file containing multiple sequence alignments for the _n_ species at _g_ genomic regions. Each header should include the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all _n_ species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species.
 
-**Input 3 (optional)**: A file containing the phylogenetic tree of the _n_ species in Newick format. No distances should be included, and the species names should match those in the first input file.
+**Input 3 (optional)**: Text file containing the phylogenetic tree of the _n_ species in Newick format. No distances should be included, and the species names should match those in the first input file.
 
 
 
@@ -82,7 +82,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 
 ## PredictGenes
 
-The PredictGenes function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a single-column file named `associated.csv` under the `results` folder, which contains the identifiers for all associated genomic regions.
+The PredictGenes function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a single-column file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions.
 
 **Command Structure**
 
@@ -91,15 +91,15 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 ```
 
 **Arguments**
-  - `path_source`: Source of the GAP directory.
-  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
-  - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section.
-  - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section.
+  - `path_source`: Source of the GAP directory
+  - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
+  - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
+  - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
   - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
 
 # Example Application of GAP
 
-Commands to run the three GAP functions mentioned earlier are discussed below. Sample commands are provided for each function alongside explanations for alignment-only and tree-features-based approaches. The `phylogeny.txt` file under the `data-raw` directory contains a sample Newick formatted tree that can be followed while specifying the user-defined phylogenetic tree. To use the tree-features used in GAP analysis, replace the path to phylogeny features with the term `default`; in the following commands, `data-raw/phylogeny.txt` can be replaced by `default` to use these precomputed phylogeny features. 
+Before beginning, ensure that the working directory is set to the directory containing GAP functions and input files.  
 
 ## PredictSpecies
 **Sample Commands**:
