@@ -1,4 +1,4 @@
-packages<-c('ANN2','gtools','parallel','BiocManager','tidyr')
+packages<-c('ANN2','gtools','BiocManager','tidyr')
 for (package in packages){
   if (!requireNamespace(package, quietly = TRUE)) {
     install.packages(package, repos = 'http://cran.us.r-project.org')
@@ -31,8 +31,15 @@ if(use_tree_features)
   }
   if(length(commandArgs(trailingOnly = TRUE)) > 5)
   {
+    if(path_phylo=='default')
+    {
+      path_tree<-'data-raw/tree-features.csv'
+    }
+    else
+    {
     system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
     path_tree<-'data-raw/custom-tree-features.csv'
+    }
   }
 }
 
@@ -367,7 +374,7 @@ get_zero<-function(res,dtEx,unknownData,sps){
 get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
   if(hla>0)
   {
-    print(paste0('This might take a while as we will try all different permutations of ',hidden_layers,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
+    print(paste0('This might take a while as we will try all different permutations of ',hla,' hidden layer architectures with each layer having nodes ranging [1 to number of species]'))
   }
     tryCatch({
       dataset <- get_data(tid, pst, pfi, utf, ptr)
@@ -384,8 +391,6 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
         dir.create(pre)
       }
       write.csv(x[[3]],paste0(pre,'predictions.csv'))
-      weights<-find_weights(x[[4]],utf,dataset[[3]],dataset[[4]])
-      writeLines(as.character(weights),paste0(pre,'weights.txt'))
       return(TRUE)
     }
     else if (x[[1]]<mincv) 
@@ -397,8 +402,6 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
         dir.create(pre)
       }
       write.csv(x[[3]],paste0(pre,'predictions.csv'))
-      weights<-find_weights(x[[4]],utf,dataset[[3]],dataset[[4]])
-      writeLines(as.character(weights),paste0(pre,'weights.txt'))
       return(FALSE)
     }
   }

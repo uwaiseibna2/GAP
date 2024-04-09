@@ -36,4 +36,4 @@ tree = Tree(newick_str, format=1)
 listf = []
 traverse_tree(tree, listf)
 df = create_species_dataframe(listf)
-df.to_csv('data-raw/custom-tree-features.csv')
+df.to_csv('data-raw/custom-tree-features.csv',index=False)

@@ -1,7 +1,16 @@
+packages<-c('ANN2','parallel','BiocManager','tidyr')
+for (package in packages){
+  if (!requireNamespace(package, quietly = TRUE)) {
+    install.packages(package, repos = 'http://cran.us.r-project.org')
+  }
+}
 library(ANN2)
-library(Biostrings)
-library(tidyr)
 library(parallel)
+library(tidyr)
+if(!requireNamespace('Biostrings',quietly = TRUE)){
+BiocManager::install("Biostrings")}
+library(Biostrings)
+
 path_source <- commandArgs(trailingOnly = TRUE)[1]
 use_dendrogram_features<-as.logical(commandArgs(trailingOnly = TRUE)[2])
 path_status<-commandArgs(trailingOnly = TRUE)[3]
@@ -12,14 +21,21 @@ path_tree<-'data-raw/tree-features.csv'
 #implement paths
 if(use_dendrogram_features)
 {
-  if(length(commandArgs(trailingOnly = TRUE)) == 4)
+if(length(commandArgs(trailingOnly = TRUE)) == 4)
   {
     stop("Path to Phylogeny not found")
   }
   if(length(commandArgs(trailingOnly = TRUE)) > 4)
   {
+    if(path_phylo=='default')
+    {
+      path_tree<-'data-raw/tree-features.csv'
+    }
+    else
+    {
     system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
     path_tree<-'data-raw/custom-tree-features.csv'
+    }
   }
 }
 
@@ -270,7 +286,7 @@ train_ANN<-function(data,hl,num_species,gene){
     {
       file.create(path_to_results)
     }
-    writeLines(gene,path_to_results)
+    writeLines(gene,path_to_results,append = TRUE)
   }
   else 
   {
