@@ -286,7 +286,9 @@ train_ANN<-function(data,hl,num_species,gene){
     {
       file.create(path_to_results)
     }
-    writeLines(gene,path_to_results,append = TRUE)
+    con <- file(path_to_results, open = "a")
+    writeLines(gene, con)
+    close(con)
   }
   else 
   {
