@@ -37,7 +37,7 @@ GAP has three functions:
 
 - PredictSpecies - predicts the presence or absence of a phenotype in one or more species from a known association with a genomic region
 - PredictPositions - predicts which positions within a genomic region are associated with a phenotype
-- PredictGenes - predicts genomic regions that are associated with a phenotype
+- PredictRegions - predicts genomic regions that are associated with a phenotype
 
 GAP is run in a terminal. Below are detailed instructions for using each of the GAP functions.
 
@@ -75,14 +75,14 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
 
-## PredictGenes
+## PredictRegions
 
-The PredictGenes function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a single-column file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions.
+The PredictRegions function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a single-column file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions.
 
 **Command Structure**
 
 ```bash
-Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3>
+Rscript PredictRegions.R <path_source> boolean_tree_flag <path_input_1> <path_input_2> <path_input_3>
 ```
 
 **Arguments**
@@ -134,22 +134,22 @@ To predict positions in a genomic region that are associated with a phenotype fr
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
 
-## PredictGenes
+## PredictRegions
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
   ```bash
   #unix-based OS
-  Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  Rscript PredictRegions.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
   ```
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment and phylogeny, type:
   ```bash
   #unix-based OS
-  Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  Rscript PredictRegions.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
