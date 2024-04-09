@@ -28,7 +28,7 @@ GAP takes in two required input files and an optional third input file.
 **Input 1**: Tab-delimited text file with n rows and two columns, where n is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with a 0 indicating absence, a 1 indicating presence, and an NA indicating unknown, i.e., sample file [Input 1](https://github.com/uwaiseibna2/GAP/blob/main/data-raw/species.txt).
 
 
-**Input 2**: FASTA file containing multiple sequence alignments for the n species at _g_ genomic regions. Each header should contain the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species, i.e., sample file [Input 2](https://github.com/uwaiseibna2/GAP/blob/main/data-raw/sample-dataset.fa).
+**Input 2**: FASTA file containing multiple sequence alignments for the n species at _g_ genomic regions. Each header should include the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all n species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species, i.e., sample file [Input 2](https://github.com/uwaiseibna2/GAP/blob/main/data-raw/sample-dataset.fa).
 
 **Input 3 (optional)**: A text file containing the phylogenetic tree of the n species in Newick format. No distances should be included, and the species name should match Input 1, i.e., sample file [Input 3](https://github.com/uwaiseibna2/GAP/blob/main/data-raw/phylogeny.txt) where n = 59 (species used in GAP).
 
@@ -60,7 +60,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `region_id`: Identifier for the genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described in the `GAP Input` section above
 - `path_input_2`: Path to Input 2 file described in the `GAP Input` section above
-- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
+- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
 
     
 ## PredictPositions
@@ -75,10 +75,10 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 **Arguments**:
 - `path_source`: Source of the GAP directory
 - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training
-- `region_id`: Identifier for genomic region on which to train GAP
+- `region_id`: Identifier for the genomic region on which to train GAP
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section.
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section.
-- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
+- `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
 
 
 ## PredictGenes
@@ -96,7 +96,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
   - `boolean_tree_flag`: Boolean (TRUE/FALSE) for tree feature inclusion in model training.
   - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section.
   - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section.
-  - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. If `boolean_tree_flag` is set to `TRUE`, this input must be provided.
+  - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
 
 # Example Application of GAP
 
