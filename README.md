@@ -138,18 +138,18 @@ To predict positions in a genomic region that are associated with a phenotype fr
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
   ```bash
-    #unix-based OS
-    Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
-    
-    #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  #unix-based OS
+  Rscript PredictGenes.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
   ```
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment and phylogeny, type:
   ```bash
-    #unix-based OS
-    Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
-    
-    #Windows OS
-    'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  #unix-based OS
+  Rscript PredictGenes.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  
+  #Windows OS
+  'C:/Program Files/.../Rscript.exe' PredictGenes.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
