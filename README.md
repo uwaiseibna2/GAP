@@ -57,8 +57,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described above in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
-
-    
+  
 ## PredictPositions
 
 The PredictPositions function takes as input the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it obtains a _p_ value denoting the predictive importance of each position in the sequence of the genomic region. The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains the _p_ value for each position in the genomic region. 
@@ -75,7 +74,6 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
-
 
 ## PredictGenes
 
@@ -99,9 +97,8 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 Before beginning, ensure that the working directory is set to the directory containing GAP functions and input files.  
 
 ## PredictSpecies
-**Sample Commands**:
 
-- Alignment-only approach
+To predict a phenotype in one or more species from a multiple alignment, type:
   ```bash
   #unix-based OS
   Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
@@ -109,7 +106,7 @@ Before beginning, ensure that the working directory is set to the directory cont
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
-- Tree-features included
+To predict a phenotype in one or more species from a multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
   Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
