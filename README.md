@@ -100,7 +100,7 @@ Rscript PredictGenes.R <path_source> boolean_tree_flag <path_input_1> <path_inpu
 
 # Example Application of GAP
 
-Commands to run the three GAP functions are discussed here. Sample commands are provided for each function alongside explanations for alignment-only and tree-features-based approaches. The `phylogeny.txt` file under the `data-raw` directory contains a sample Newick formatted tree that can be followed while specifying the user-defined phylogeny.
+Commands to run the three GAP functions are discussed here. Sample commands are provided for each function alongside explanations for alignment-only and tree-features-based approaches. The `phylogeny.txt` file under the `data-raw` directory contains a sample Newick formatted tree that can be followed while specifying the user-defined phylogeny. To use the phylogeny features used in GAP analysis, replace the path to phylogeny features with the term `default`; in the following commands, `data-raw/phylogeny.txt` can be replaced by `default` to use these precomputed phylogeny features. 
 
 ## PredictSpecies
 **Sample Commands**:
@@ -121,7 +121,7 @@ Commands to run the three GAP functions are discussed here. Sample commands are 
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
-Which runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops the moment it finds an architecture with minimum CV error. Note that the first set of commands excludes the tree features, whereas the latter set includes them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder. To use the phylogeny features used in GAP analysis, replace the path to phylogeny features with the term `default`; in the following commands, `data-raw/phylogeny.txt` can be replaced by `default` to use these precomputed phylogeny features. 
+Which runs the script to identify neural network architectures with minimum CV error by exploring different architectures, progressing from 0-hidden layer architecture to 3-hidden layer architectures, and stops the moment it finds an architecture with minimum CV error. Note that the first set of commands excludes the tree features, whereas the latter set includes them. The predicted phenotypes for all species are stored in `Predictions.csv` under the `results` folder. 
 
 ## PredictPositions
 **Sample Commands**:
