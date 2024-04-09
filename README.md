@@ -98,7 +98,7 @@ This example demonstrates the application of GAP to predict the association betw
 
 ## PredictSpecies
 
-To predict a phenotype in one or more species from a multiple alignment, type:
+To predict vitamin C synthesis in the 25 species with unknown status from the _Gulo_ multiple alignment, type:
   ```bash
   #unix-based OS
   Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
@@ -108,7 +108,7 @@ To predict a phenotype in one or more species from a multiple alignment, type:
   ```
 The output of this function is a tab-delimited file named `predictions.csv` in the `results` folder, which contains the names of species with unknown status (NA) in the first column, and predictions for each of these species (0 for absence, 1 for presence) in the second column. 
 
-To predict a phenotype in one or more species from a multiple alignment and phylogenetic tree, type:
+To predict vitamin C synthesis in the 25 species with unknown status from the _Gulo_ multiple alignment and phylogenetic tree relating the species, type:
   ```bash
   #unix-based OS
   Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
@@ -119,7 +119,7 @@ To predict a phenotype in one or more species from a multiple alignment and phyl
 
 ## PredictPositions
 
-To predict positions in a genomic region that are associated with a phenotype from a multiple alignment, type:
+To obtain _p_ values of positions in the _Gulo_ gene for predicting vitamin C synthesis from the multiple alignment, type: 
   ```bash
   #unix-based OS
   Rscript PredictPositions.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
@@ -127,7 +127,7 @@ To predict positions in a genomic region that are associated with a phenotype fr
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   ```
-To predict positions in a genomic region that are associated with a phenotype from a multiple alignment and phylogenetic tree, type:
+To obtain _p_ values of positions in the _Gulo_ gene for predicting vitamin C synthesis from the multiple alignment and phylogenetic tree, type: 
   ```bash
   #unix-based OS
   Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
@@ -140,7 +140,7 @@ The output of this function is a tab-delimited file named `PositionalPVals.csv` 
 
 ## PredictRegions
 
-To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
+To predict genomic regions that are associated with vitamin C synthesis from the multiple alignment, type:
   ```bash
   #unix-based OS
   Rscript PredictRegions.R "./" FALSE input/species.txt input/sample-dataset.fa 
@@ -149,7 +149,7 @@ To predict genomic regions that are associated with a phenotype from a multiple 
   'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ FALSE input/species.txt input/sample-dataset.fa 
   ```
 
-To predict genomic regions that are associated with a phenotype from a multiple alignment and phylogeny, type:
+To predict genomic regions that are associated with vitamin C synthesis from the multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
   Rscript PredictRegions.R "./" TRUE input/species.txt input/sample-dataset.fa input/phylogeny.txt
