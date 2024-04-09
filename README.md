@@ -101,20 +101,20 @@ This example demonstrates the application of GAP outlined to predict the associa
 To predict a phenotype in one or more species from a multiple alignment, type:
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
+  Rscript PredictSpecies.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   ```
 The output of this function is a tab-delimited file named `predictions.csv` in the `results` folder, which contains the names of species with unknown status (NA) in the first column, and predictions for each of these species (0 for absence, 1 for presence) in the second column. 
 
 To predict a phenotype in one or more species from a multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
   ```
 
 ## PredictPositions
@@ -122,18 +122,18 @@ To predict a phenotype in one or more species from a multiple alignment and phyl
 To predict positions in a genomic region that are associated with a phenotype from a multiple alignment, type:
   ```bash
   #unix-based OS
-  Rscript PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
+  Rscript PredictPositions.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   ```
 To predict positions in a genomic region that are associated with a phenotype from a multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
-  Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
   ```
 
 The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains positions in the first column, and _p_ values for these positions in the second column. 
@@ -143,19 +143,19 @@ The output of this function is a tab-delimited file named `PositionalPVals.csv` 
 To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
   ```bash
   #unix-based OS
-  Rscript PredictRegions.R "./" FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  Rscript PredictRegions.R "./" FALSE input/species.txt input/sample-dataset.fa 
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ FALSE data-raw/species.txt data-raw/sample-dataset.fa 
+  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ FALSE input/species.txt input/sample-dataset.fa 
   ```
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment and phylogeny, type:
   ```bash
   #unix-based OS
-  Rscript PredictRegions.R "./" TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  Rscript PredictRegions.R "./" TRUE input/species.txt input/sample-dataset.fa input/phylogeny.txt
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ TRUE input/species.txt input/sample-dataset.fa input/phylogeny.txt
   ```
 
 The output of this function is a file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions in a single column.
