@@ -349,11 +349,12 @@ fit.model <-function(InputVal,idx,ResNN,HiddenLayers,UnknownData,SpcsList){
     predictions=predict(nn.train,UnknownData)
     predicted_pheno=cbind(SpcsList,predictions$predictions)
     weights = nn.train$Rcpp_ANN$getParams()$weights
-    return(list(misclassified,predicted_pheno,weights))
+    return(list(misclassified,predicted_pheno[,-c(1)],weights))
 }
 get_zero<-function(res,dtEx,unknownData,sps){
 
   set<-which(res$CV==min(res$CV))
+  print(set)
   for (subset in set)
   {
     if(is.null(res[subset,]$layers))
@@ -389,7 +390,9 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
       {
         dir.create(pre)
       }
-      write.csv(x[[3]],paste0(pre,'predictions.csv'))
+      df<-data.frame(x[[3]])
+      colnames(df)<-c('species','predictions')
+      write.csv(df,paste0(pre,'predictions.csv'),row.names=FALSE)
       return(TRUE)
     }
     else if (x[[1]]<mincv) 
@@ -400,7 +403,9 @@ get_gene_architecture<-function(tid,pst,pfi,ptr,utf,pre,hla,numsp){
       {
         dir.create(pre)
       }
-      write.csv(x[[3]],paste0(pre,'predictions.csv'))
+      df<-data.frame(x[[3]])
+      colnames(df)<-c('species','predictions')
+      write.csv(df,paste0(pre,'predictions.csv'),row.names=FALSE)
       return(FALSE)
     }
   }
