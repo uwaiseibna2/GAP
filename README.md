@@ -77,7 +77,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 
 ## PredictRegions
 
-The PredictRegions function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions listed in a single column.
+The PredictRegions function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a file named `associated.csv` in the `results` folder, which contains the identifiers for all predicted genomic regions listed in a single column.
 
 **Command Structure**
 
@@ -158,4 +158,4 @@ To predict genomic regions that are associated with a phenotype from a multiple 
   'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ TRUE input/species.txt input/sample-dataset.fa input/phylogeny.txt
   ```
 
-The output of this function is a file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions in a single column.
+The output of this function is a file named `associated.csv` in the `results` folder, which contains the identifiers for all predicted genomic regions in a single column.
