@@ -366,7 +366,6 @@ plot_manhattan<-function(weights){
 get_zero<-function(res,dtEx,unknownData,sps){
 
   set<-which(res$CV==min(res$CV))
-  print(set)
   for (subset in set)
   {
     if(is.null(res[subset,]$layers))
