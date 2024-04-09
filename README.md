@@ -25,7 +25,7 @@ pip3 install package_name
 # GAP Input
 GAP takes in two required input files and an optional third input file. 
 
-**Input 1**: Tab-delimited text file with _n_ rows and two columns, where n is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
+**Input 1**: Tab-delimited text file with _n_ rows and two columns, where _n_ is the number of species. The first column should contain the species name, and the second column should refer to the phenotype status in that species, with 0 indicating absence, 1 indicating presence, and NA indicating unknown. 
 
 **Input 2**: FASTA file containing multiple sequence alignments for the _n_ species at _g_ genomic regions. Each header should include the species name followed by a space and an identifier for the genomic region (e.g., gene ID, gene name, genomic coordinates). Each region must contain sequences for all _n_ species. If the region is entirely absent in a species, then a sequence of gaps "-" can be used for that species.
 
