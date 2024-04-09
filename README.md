@@ -43,7 +43,7 @@ GAP is run in a terminal. Below are detailed instructions for using each of the 
 
 ## PredictSpecies
 
-The PredictSpecies function takes as input the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each of the species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `Predictions.csv` in the `results` folder, which contains the identifier of the genomic region, names of species with unknown status (NA), and predictions for each of these species (0 for absence, 1 for presence). 
+The PredictSpecies function takes as input the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it uses the selected model to predict whether the phenotype of interest is absent (0) or present (1) in each of the species with unknown status (NA) from the first input file. The output of this function is a tab-delimited file named `predictions.csv` in the `results` folder, which contains the names of species with unknown status (NA) in the first column, and predictions for each of these species (0 for absence, 1 for presence) in the second column. 
 
 **Command Structure**
 
@@ -60,7 +60,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
   
 ## PredictPositions
 
-The PredictPositions function takes as input the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it obtains a _p_ value denoting the predictive importance of each position in the sequence of the genomic region. The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains the _p_ value for each position in the genomic region. 
+The PredictPositions function takes as input the paths to the GAP input files and the identifier of a genomic region. It trains a neural network on the specified genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, it obtains a _p_ value denoting the predictive importance of each position in the sequence of the genomic region. The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains positions in the first column, and _p_ values for these positions in the second column. 
 
 **Command Structure**
 
@@ -77,7 +77,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 
 ## PredictRegions
 
-The PredictRegions function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a single-column file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions.
+The PredictRegions function takes as input the paths to the GAP input files. Unlike the previous functions, it does not require a genomic region, as it works on all the genomic regions present in the second input file. It trains a neural network on each genomic region, beginning with the simplest architecture and increasing in complexity, and stops if it identifies an architecture with a cross-validation error of zero. Otherwise, it trains on all architectures and selects the simplest architecture with the minimum cross-validation error. Then, the minimum cross-validation error across all genomic regions is identified, and those regions with this cross-validation error are predicted to be putatively associated with the phenotype. The output of this function is a file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions listed in a single column.
 
 **Command Structure**
 
@@ -106,6 +106,8 @@ To predict a phenotype in one or more species from a multiple alignment, type:
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ FALSE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa
   ```
+The output of this function is a tab-delimited file named `predictions.csv` in the `results` folder, which contains the names of species with unknown status (NA) in the first column, and predictions for each of these species (0 for absence, 1 for presence) in the second column. 
+
 To predict a phenotype in one or more species from a multiple alignment and phylogenetic tree, type:
   ```bash
   #unix-based OS
@@ -134,6 +136,8 @@ To predict positions in a genomic region that are associated with a phenotype fr
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
 
+The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains positions in the first column, and _p_ values for these positions in the second column. 
+
 ## PredictRegions
 
 To predict genomic regions that are associated with a phenotype from a multiple alignment, type:
@@ -153,3 +157,5 @@ To predict genomic regions that are associated with a phenotype from a multiple 
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictRegions.R ./ TRUE data-raw/species.txt data-raw/sample-dataset.fa data-raw/phylogeny.txt
   ```
+
+The output of this function is a file named `associated.csv` under the `results` folder, which contains the identifiers for all predicted genomic regions in a single column.
