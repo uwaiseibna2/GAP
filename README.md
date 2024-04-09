@@ -31,9 +31,6 @@ GAP takes in two required input files and an optional third input file.
 
 **Input 3 (optional)**: Text file containing the phylogenetic tree of the _n_ species in Newick format. No distances should be included, and the species names should match those in the first input file.
 
-
-
-
 # Running GAP
 
 GAP has three functions:
