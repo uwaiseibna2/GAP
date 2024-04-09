@@ -354,7 +354,6 @@ fit.model <-function(InputVal,idx,ResNN,HiddenLayers,UnknownData,SpcsList){
 get_zero<-function(res,dtEx,unknownData,sps){
 
   set<-which(res$CV==min(res$CV))
-  print(set)
   for (subset in set)
   {
     if(is.null(res[subset,]$layers))
