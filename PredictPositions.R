@@ -19,9 +19,9 @@ transcript_id <- commandArgs(trailingOnly = TRUE)[3]
 path_status <- commandArgs(trailingOnly = TRUE)[4]
 path_file <- commandArgs(trailingOnly = TRUE)[5]
 path_phylo <- commandArgs(trailingOnly = TRUE)[6]
-path_tree <- "data-raw/tree-features.csv"
+path_tree <- "input/tree-features.csv"
 path_to_results <- "results/"
-path_order <- "data-raw/order.txt"
+path_order <- "input/order.txt"
 
 # implement paths
 if (use_tree_features) {
@@ -30,10 +30,10 @@ if (use_tree_features) {
   }
   if (length(commandArgs(trailingOnly = TRUE)) > 5) {
     if (path_phylo == "default") {
-      path_tree <- "data-raw/tree-features.csv"
+      path_tree <- "input/tree-features.csv"
     } else {
       system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
-      path_tree <- "data-raw/custom-tree-features.csv"
+      path_tree <- "input/custom-tree-features.csv"
     }
   }
 }
