@@ -17,7 +17,7 @@ path_status<-commandArgs(trailingOnly = TRUE)[3]
 path_file<-commandArgs(trailingOnly = TRUE)[4]
 path_phylo<-commandArgs(trailingOnly=TRUE)[5]
 
-path_tree<-'data-raw/tree-features.csv'
+path_tree<-'input/tree-features.csv'
 #implement paths
 if(use_dendrogram_features)
 {
@@ -29,12 +29,12 @@ if(length(commandArgs(trailingOnly = TRUE)) == 4)
   {
     if(path_phylo=='default')
     {
-      path_tree<-'data-raw/tree-features.csv'
+      path_tree<-'input/tree-features.csv'
     }
     else
     {
     system(paste("python3", "extract_tree_feats.py", shQuote(readLines(path_phylo, warn = FALSE))))
-    path_tree<-'data-raw/custom-tree-features.csv'
+    path_tree<-'input/custom-tree-features.csv'
     }
   }
 }
@@ -47,7 +47,7 @@ mincv<-0
 loading_chars <- c("|", "/", "-", "\\")
 
 
-path_order<-'data-raw/order.txt'
+path_order<-'input/order.txt'
 path_to_results<-"results/associated.txt"
 
 
