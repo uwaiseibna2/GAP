@@ -1,0 +1,6 @@
+((((((((((((((rat,mouse),kangaroo_rat),(guinea_pig,naked_mole-rat)),squirrel),(rabbit,pika)),
+(((((((((human,chimp),gorilla),orangutan),gibbon),(baboon,chinese_rhesus)),(squirrel_monkey,marmoset)),tarsier),(mouse_lemur,bushbaby)),tree_shrew)),
+(((((sheep,cow),dolphin),alpaca),pig),((((cat,(dog,panda)),horse),(microbat,megabat)),(hedgehog,shrew)))),
+((((elephant,rock_hyrax),tenrec),manatee),(sloth,armadillo))),(opossum,(tasmanian_devil,wallaby))),platypus),
+(((((turkey,chicken),zebra_finch),budgerigar),lizard),painted_turtle)),x_tropicalis), coelacanth),
+((((((tetraodon,fugu),nile_tilapia),stickleback),medaka),atlantic_cod),zebrafish));
