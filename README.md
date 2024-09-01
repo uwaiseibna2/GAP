@@ -57,7 +57,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described above in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
-- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out, n=5, 5-fold CV is recommended for faster computation in case of large number of observations/species. 
+- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out, 5-fold CV is recommended for faster computation in case of large number of observations/species. 
   
 ## PredictPositions
 
@@ -75,7 +75,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
-- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out. n=5; 5-fold CV is recommended for faster computation in case of a large number of observations/species. 
+- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out. 5-fold CV is recommended for faster computation in case of a large number of observations/species. 
 
 ## PredictRegions
 
