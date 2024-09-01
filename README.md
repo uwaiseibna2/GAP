@@ -57,7 +57,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described above in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
-- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out.
+- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out, n=5, 5-fold CV is recommended for faster computation in case of large number of observations/species. 
   
 ## PredictPositions
 
@@ -66,7 +66,7 @@ The PredictPositions function takes as input the paths to the GAP input files an
 **Command Structure**
 
 ```bash
-Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3>
+Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3> <cv_fold>
 ```
 **Arguments**:
 - `path_source`: Source of the GAP directory
@@ -75,6 +75,7 @@ Rscript PredictPositions.R <path_source> boolean_tree_flag region_id <path_input
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
+- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out. n=5; 5-fold CV is recommended for faster computation in case of a large number of observations/species. 
 
 ## PredictRegions
 
@@ -109,13 +110,13 @@ To predict vitamin C synthesis in the 25 species with unknown status from the _G
   ```
 The output of this function is a tab-delimited file named `predictions.csv` in the `results` folder, which contains the names of species with unknown status (NA) in the first column, and predictions for each of these species (0 for absence, 1 for presence) in the second column. 
 
-To predict vitamin C synthesis in the 25 species with unknown status from the _Gulo_ multiple alignment and phylogenetic tree relating the species, type:
+To predict vitamin C synthesis in the 25 species with unknown status from the _Gulo_ multiple alignment and phylogenetic tree relating the species with 5-fold cross-validation, type:
   ```bash
   #unix-based OS
-  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
+  Rscript PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt 5
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictSpecies.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt 5
   ```
 
 ## PredictPositions
@@ -128,13 +129,13 @@ To obtain _p_ values of positions in the _Gulo_ gene for predicting vitamin C sy
   #Windows OS
   'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ FALSE ENSMUST00000059970 input/species.txt input/sample-dataset.fa
   ```
-To obtain _p_ values of positions in the _Gulo_ gene for predicting vitamin C synthesis from the multiple alignment and phylogenetic tree, type: 
+To obtain _p_ values of positions in the _Gulo_ gene for predicting vitamin C synthesis from the multiple alignment and phylogenetic tree with 5-fold cross-validation, type: 
   ```bash
   #unix-based OS
-  Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
+  Rscript PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt 5
   
   #Windows OS
-  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt
+  'C:/Program Files/.../Rscript.exe' PredictPositions.R ./ TRUE ENSMUST00000059970 input/species.txt input/sample-dataset.fa input/phylogeny.txt 5
   ```
 
 The output of this function is a tab-delimited file named `PositionalPVals.csv` in the `results` folder, which contains positions in the first column, and _p_ values for these positions in the second column. 
