@@ -48,7 +48,7 @@ The PredictSpecies function takes as input the paths to the GAP input files and 
 **Command Structure**
 
 ```bash
-Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3>
+Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1> <path_input_2> <path_input_3> <cv_fold>
 ```
 **Arguments**:
 - `path_source`: Source of the GAP directory
@@ -57,6 +57,7 @@ Rscript PredictSpecies.R <path_source> boolean_tree_flag region_id <path_input_1
 - `path_input_1`: Path to Input 1 file described above in the `GAP Input` section
 - `path_input_2`: Path to Input 2 file described above in the `GAP Input` section
 - `path_input_3`: (optional) path to the user-defined phylogenetic tree as `Input 3` described above in `GAP Input`. This input must be provided if `boolean_tree_flag` is set to `TRUE`.
+- `cv_fold`: (optional) determines n of n-fold cross-validation where the default used is leave-one-out.
   
 ## PredictPositions
 
