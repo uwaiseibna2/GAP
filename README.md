@@ -161,3 +161,8 @@ To predict genomic regions that are associated with vitamin C synthesis from the
   ```
 
 The output of this function is a file named `associated.csv` in the `results` folder, which contains the identifiers for all predicted genomic regions in a single column.
+
+## Shiny App
+
+GAP is also available as shiny app with reduced functionality. To run the GAP shiny app, simply run the `Shiny_app.R` script and the interactive GUI can be used to explore all three functions with limited applications, but we recommend GAP in a terminal environment for extended use.
+
