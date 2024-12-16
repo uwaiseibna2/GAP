@@ -164,7 +164,7 @@ The output of this function is a file named `associated.csv` in the `results` fo
 
 ## Shiny App
 
-GAP is also available as shiny app with reduced functionality. To run the GAP shiny app, simply run the `Shiny_app.R` script and the interactive GUI can be used to explore all three functions with limited applications, but we recommend GAP in a terminal environment for extended use.
+GAP is also available as shiny app with reduced functionality. To run the GAP shiny app, download all files in the repository and simply run the `Shiny_app.R` script from Rstudio and the interactive GUI can be used to explore all three functions with limited applications, but we recommend GAP in a terminal environment for extended use.
 
 <img width="450" alt="GAP GUI" src="https://github.com/user-attachments/assets/e3e38658-fa25-4212-8250-7b9aa2cf949a" />
 
