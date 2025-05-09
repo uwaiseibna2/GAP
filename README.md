@@ -1,6 +1,6 @@
 # GAP (Genotype-phenotype Association Predictor)
 
-GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2024) learning genotype-phenotype associations from gaps in multi-species sequence alignments.
+GAP is a software implementation of Islam, Campelo dos Santos, Kanjilal, and Assis' (2025) learning genotype-phenotype associations from gaps in multi-species sequence alignments.
 
 In particular, GAP employs a neural network to predict the presence or absence of a phenotype solely from gaps in a multiple alignment, with optional consideration of phylogenetic relationships from a user-defined species tree. GAP can be employed for three distinct problems: predicting a phenotype in one or more species from a known associated region, pinpointing which specific genomic positions within such a region are associated with a phenotype, and extracting a set of candidate genomic regions associated with a phenotype. 
 
@@ -8,7 +8,7 @@ For queries, email: uislam2022@fau.edu.
 
 # Citing GAP
 
-If you use GAP, please cite Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. Learning genotype-phenotype associations from gaps in multi-species sequence alignments, under review (2024). 
+If you use GAP, please cite Islam UI, Campelo dos Santos AL, Kanjilal R, and Assis R. Learning genotype-phenotype associations from gaps in multi-species sequence alignments, Briefings in Bioinformatics, 2025. 
 
 # Getting Started
 
